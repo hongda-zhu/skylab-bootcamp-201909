@@ -28,7 +28,7 @@
         
         <figure class="search-container">
             <form>
-                <input type="text" placeholder="Search.." name="search">
+                <input type="text" placeholder="search.." name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </figure>
@@ -52,29 +52,41 @@
     </header>
 
     <main class="main">
-            <article class="product">
+            <article class="orders">
 
-            <label class="product__label">Resultados <bold>del producto</bold></label>
+            <label class="orders__label">Resultado <bold>de los ordenes</bold></label>
 
-                
-            <figure class="product__image"><img src= "https://dummyimage.com/400x600/297eb6/ffffff" alt=""></figure>
-            
+            <div class="orders__date">
 
-            <p class="product__title">Product 1</p>
-            <p class="product__p">Price: 400$</p>
+                <select class="orders__año" name="año">
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                </select>
 
-            <div class="product__item">
+                <select class="orders__mes" name="mes">
+                        <option value="setiembre">setiembre</option>
+                        <option value="agosto">agosto</option>
+                        <option value="julio">julio</option>
+                </select>
 
-                <button class="product__item-button">+</button> <input class="product__item-input" placeholder="1"></input>
-                <button class="product__item-button">-</button>
+                <select class="orders__pedidos" name="pedido">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                </select>
 
             </div>
 
-            <button class="product__button">comprar!</button>
+            <div class="orders__detail">
+                <p class="orders__numeros">Nº de pedido: 22019442354
+                
+                </p>
 
-               
-        
+                <button class="orders__facturas">factura</button>
+                <button class="orders__detalles">detalles</button>
 
+            </div>
             </article>
         
     </main>
