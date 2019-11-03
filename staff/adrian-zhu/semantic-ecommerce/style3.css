@@ -17,6 +17,13 @@ body {
     ;
 }   
 
+h2{
+    margin: 75px auto auto 350px;
+    color: #3498db;
+
+}
+
+
 .header {
     grid-area: header;
     border-top: 8px solid #297eb6;
@@ -115,9 +122,9 @@ body {
 
 .main p{
     grid-area: p;
-
-    background: #3498db;
-    color: white;
+    font-style: bold;
+    color: #3498db;
+    background: white;
     font-family: sans-serif;
     text-align: center;
     font-size: 100%;
@@ -140,11 +147,6 @@ body {
 
 }
 
-.main .collection h2{
-    margin: 75px auto auto 350px;
-    color: #3498db;
-
-}
 
 .main .collection .detalles {
     
@@ -176,6 +178,7 @@ body {
     padding: 0 15px;
 }
 
+main .results ul,
 main .collection .recomendados ul,
 main .collection .destacados ul{
 
