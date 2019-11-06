@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <title>Calculator</title>
+</head>
+<body>
+  
+    <h1>Skylab Calculator</h1>
+
+    <div class="main">
+      <form name="myCalculator">
+        <input type="text" id="resultview" class="resultview">
+        
+        <table>
+            <tr>
+                <td colspan="2"><input type="button" id="AC" class="button symbol largo" value="AC" onclick="del()"></td>
+                <td><input type="button" id="↺" class="button symbol" value="↺" onclick="back()"></td>
+                <td><input type="button" id="div" class="button symbol" value="÷" onclick="operation('div')"></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="7" class="button number impar" value="7" onclick= "giveNum('7')"></td>
+                <td><input type="button" id="8" class="button number par" value="8" onclick= "giveNum('8')"></td>
+                <td><input type="button" id="9" class="button number impar" value="9" onclick= "giveNum('9')"></td>
+                <td><input type="button" id="mult" class="button symbol" value="x" onclick="operation('mult')"></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="4" class="button number par" value="4" onclick= "giveNum('4')"></td>
+                <td><input type="button" id="5" class="button number impar" value="5" onclick= "giveNum('5')"></td>
+                <td><input type="button" id="6" class="button number par" value="6" onclick= "giveNum('6')"></td>
+                <td><input type="button" id="subs"class="button symbol" value="-" onclick= "operation('subs')"></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="1" class="button number impar" value="1" onclick= "giveNum('1')"></td>
+                <td><input type="button" id="2" class="button number par" value="2" onclick= "giveNum('2')"></td>
+                <td><input type="button" id="3" class="button number impar" value="3" onclick= "giveNum('3')"></td>
+                <td><input type="button" id="add" class="button symbol" value="+" onclick="operation('add')"></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="0" class="button number par" value="0" onclick= "giveNum('0')"></td>
+                <td><input type="button" id="." class="button symbol impar" value="." onclick= "dot()"></td>
+                <td colspan="2"><input id="equal" type="button" class="button symbol par largo" value="=" onclick= "results()"></td>
+            </tr>
+        </table>
+      </form>
+    </div>
+
+<script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>

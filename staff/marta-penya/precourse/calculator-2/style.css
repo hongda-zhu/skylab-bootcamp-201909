@@ -1,0 +1,84 @@
+
+* {
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+body{
+    background-image: url(https://image.freepik.com/foto-gratis/primer-plano-fondo-tablon-madera-textura_23-2148210332.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+
+h1, .button, .resultview {
+    font-family: Georgia;
+}
+
+h1 {
+    background-color: burlywood;
+    margin-top: 2%;
+    margin: 4px;
+    width: 340px;
+    color: white;
+    text-align: center;
+    font-weight: inherit;
+    border-radius: 15px;
+    display: inline-block;
+    align-self: flex-start;
+    position: absolute;
+    
+
+}
+
+.main{
+    margin-top: 15%;
+    width: 345px;
+    align-self: center;
+    position: absolute;
+    border: 2px solid black;
+    background-image: url(https://media.istockphoto.com/photos/wall-texture-picture-id182209851?k=6&m=182209851&s=612x612&w=0&h=A6LBBLS3pG_e8oMq46mXm0xyHejumU-OUAdlqdDnmEs=)
+    }
+
+.button {
+    width: 75px;
+    height: 50px;
+    font-size: 20px; 
+    margin: 4px;
+    Border-radius: 20px;
+}
+
+.resultview {
+    width: 260px;
+    height: 45px;
+    font-size: 20px;
+    margin: 6px;
+    Border-radius: 20px;
+    margin-left: 30px; 
+}
+
+.par {
+   background-color: #fffacd;
+
+}
+
+.impar {
+    background-color: #d2b48c;
+}
+
+.par, .impar {
+    font-weight: bold;
+}
+
+.symbol {
+    background-color:#cd853f	;
+}
+
+.largo {
+    width: 160px;
+}

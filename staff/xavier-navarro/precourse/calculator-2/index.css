@@ -1,0 +1,101 @@
+:root {
+    --calculator-screen: #2b3244; 
+    --calculator-operations: #f08e33; 
+    --calculator-buttons: #dddddd; 
+    --calculator-text: #fff;
+}
+
+*{
+    box-sizing: border-box;
+}
+body {
+    /* background-image: url(images/wood.jpg); */
+    background-image: url("https://cdn.pixabay.com/photo/2016/03/24/13/45/coffee-1276784_960_720.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
+.title {
+    text-align: center;
+    color:#35a0ce;
+    text-shadow: 0px 0px 5px rgb(255, 255, 255);
+}
+.screen {
+    margin: 20px;
+    font-size: 35px;
+}
+button {
+    height: 70px;
+    font-size: 24px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.calculator {
+    margin: 0 auto;
+    width: 300px;
+    display: grid;
+    grid-template-areas:    "header header header"  
+                            "screen screen screen"
+                            "others others operations"
+                            "numbers numbers operations";
+    border: 1px solid #2b3244;
+    background-color:#fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: #191919 2px 3px 8px;
+}
+.header {
+    grid-area: header;
+    display: flex;
+    background-color:white;
+}
+.logo {
+    width: 50px;
+}
+.calculator__title {
+    display: inline;
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.calculator__screen {
+    grid-area: screen;
+    background-color: var(--calculator-screen);
+    color: var(--calculator-text);
+    text-align: right;
+    border-radius: 5px;
+}
+
+.others {
+    grid-area: others;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+.numbers {
+    grid-area: numbers;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.operations {
+    grid-area: operations;
+    display: grid;
+}
+
+.others button {
+    background-color: var(--calculator-buttons);
+}
+.numbers button {
+    background-color: var(--calculator-buttons);
+}
+.operations button {
+    background-color: var(--calculator-operations);
+}
+
+.ac {
+    text-align: left;
+    padding-left: 25px;
+}
+.zero {
+    grid-column: span 2;
+}

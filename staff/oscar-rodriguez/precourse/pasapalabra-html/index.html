@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Pasapalabra</title>
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link href="https://fonts.googleapis.com/css?family=Londrina+Outline|Rajdhani|Righteous&display=swap" rel="stylesheet">
+         
+    </head>
+    <body>
+        <audio id="hit"> <source src="./sound/hit.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="fail"> <source src="./sound/fail.wav" type="audio/wav">
+        </audio>
+        <div class="title">PASAPALABRA</div>
+        <div class="rosco"></div>
+        <div class="wellcome" id="wellcome">
+            Bienvenid@<br>a<br>PASAPALABRA!
+            <br>
+            <input type="text" autofocus autocomplete="off" name="nombre" id="nombre" size="15" placeholder="Pon tu nombre aquí"><br>
+        </div>
+        <div id="timer" class="timer" onclick="startGame()">GO!</div>
+        <div class="bote"><span style="font-size: 20px">BOTE:</span><br><span class="award"><span id="award"></span></span>€</div>
+        <div class="pregunta" id="pregunta">
+            <span id="letra" class="letra"></span><br><br>
+            <span id="def" class="def"></span><br><br>
+            <input type="text" autofocus autocomplete="off" name="palabra" id="palabra" size="15"><br>
+            <button onclick="getPalabra()" style="background-color: green; color: white; margin-top: 5px">GO</button>
+            <button onclick="pasaPalabra()" style="background-color: yellow; color: darkslategray; margin-top: 5px">PASA</button>
+            <button onclick="finishGame()" style="background-color: red; color: white; margin-top: 5px">END</button><br>
+            <span class="def" id="match"></span>
+        </div>
+        <div class="fin" id="fin">Se acabó el juego!</div>
+        <div class="letra" id="score"></div>
+        <div class="ranking" id="ranking">
+        </div>
+    </body>
+    <script src="index.js"></script>
+</html>

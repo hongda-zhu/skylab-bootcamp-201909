@@ -1,0 +1,31 @@
+%header
+    grid-area: header
+    display: flex
+    flex-direction: column-reverse
+    height: 50vh
+
+.header
+    @extend %header
+
+    &__title
+        margin: 0
+        flex: 1 1 auto
+        display: flex
+        align-items: center
+        padding-left: 1rem
+        letter-spacing: .7rem
+        color: white
+        font-size: 2.2rem
+        text-shadow: .1rem .1rem grey
+        font-family: fantasy
+        background-image: url("https://static.iris.net.co/semana/upload/images/2018/9/21/583891_1.jpg")
+        background-size: cover
+        background-position: 100% 30%
+        background-repeat: no-repeat
+
+    &__menu 
+        grid-area: nav
+        display: flex
+        justify-content: flex-end
+        padding-right: 1rem  
+        flex: 0 0 20%

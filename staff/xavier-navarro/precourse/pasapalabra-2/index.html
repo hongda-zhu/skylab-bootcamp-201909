@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pasapalabra</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/80c46885ed.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>    
+        <h1 class="title">Pasapalabra</h1>
+    </header>
+    <main class="container__game">
+        <div class="container__layout">
+            <p class="player-name">
+                Player name: <span id="user"></span>
+            </p>
+            <div class="container__rosco">
+                <div class="icon" id="icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <ul class="alphabet">
+                    <li class="letter">A</li>
+                    <li class="letter">B</li>
+                    <li class="letter">C</li>
+                    <li class="letter">D</li>
+                    <li class="letter">E</li>
+                    <li class="letter">F</li>
+                    <li class="letter">G</li>
+                    <li class="letter">H</li>
+                    <li class="letter">I</li>
+                    <li class="letter">J</li>
+                    <li class="letter">K</li>
+                    <li class="letter">L</li>
+                    <li class="letter">M</li>
+                    <li class="letter">N</li>
+                    <li class="letter">Ñ</li>
+                    <li class="letter">O</li>
+                    <li class="letter">P</li>
+                    <li class="letter">Q</li>
+                    <li class="letter">R</li>
+                    <li class="letter">S</li>
+                    <li class="letter">T</li>
+                    <li class="letter">U</li>
+                    <li class="letter">V</li>
+                    <li class="letter">W</li>
+                    <li class="letter">X</li>
+                    <li class="letter">Y</li>
+                    <li class="letter">Z</li>
+                </ul>
+                <div class="board">
+                    <div class="countdown" id="countdown">150</div>
+                    <div class="score" id="score"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container__information">
+            <div class="container__explication" id="explication">
+                <h2 class="subtitle">
+                    BIENVENIDOS AL JUEGO DE PASAPALABRA DE SKYLAB CODERS ACADEMY!
+                </h2>
+                <p class="explanation">
+                    Basado en el exitoso concurso de televisión Pasapalabra de Telecinco, las normas son muy sencillas.
+                </p>
+                <p class="explanation">
+                    Se mostraran unas definicones por pantalla y el usuario deberá responder con la palabra da la que corresponden. El usuario tiene la opción de decir Pasapalabra y dejar esa definición para más adelante.
+                </p>
+                <p class="explanation">
+                    El programa es sensible a la acentuación, así que se debe introducir la palabra con tilde. Es posible utilizar la tecla <strong>ENTER</strong> para enviar la palabra y el <strong>SPACE</strong> para hacer pasapalabra.
+                </p>
+                <button class="btn--play" onclick="playPasapalabra()">
+                        <i class="fas fa-play"></i> PLAY
+                </button>
+            </div>
+            <div class="container__form" id="player-form">
+                <p class="explanation">
+                    Una vez introducido el nombre empezara la partida.
+                </p>
+                <form onsubmit="playerName(event)">
+                    <label class="label" for="user_name">Introduce tu nombre:</label>
+                    <input class="input--username" id="user_name" name="user_name" type="text" required>
+                    <input type="submit" value="Aceptar" class="btn--submit">
+                </form>
+            </div>
+            <div class="container__game--questions" id="container-quest">
+                <div class="container__questions">
+                    <p id="answerQuestion">
+
+                    </p>
+                    <p id="question">
+
+                    </p>
+                    <p id="help">
+                        Press <strong>ENTER</strong> when you have written the answer.
+                        Write <strong>Pasapalabra</strong> or press <strong>SPACE</strong> if you don't know the answer.
+                    </p>
+                    <input type="text" name="answer" class="input--answer" id="answer">
+                </div>
+                <button class="btn--submit" onclick="endGame()">END GAME</button>
+            </div>
+
+            <div class="container__game--finish" id="end-game">
+                <h2>CONGRATULATIONS!</h2>
+                <h3><i class="fas fa-trophy"></i> TOP PLAYERS RANKING</h3>
+                <ol class="ranking--list" id="ranking">
+
+                </ol>
+                <button class="btn--play" onclick="playPasapalabra()">
+                    PLAY AGAIN
+                </button>
+            </div>
+        </div>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>

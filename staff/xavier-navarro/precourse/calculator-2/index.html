@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator 2</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/80c46885ed.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>    
+        <h1 class="title">Calculator 2</h1>
+    </header>
+    <main>
+        <div class="calculator" id="calculator">
+            <div class="header">
+                <img src="https://pbs.twimg.com/profile_images/718411051340079104/xJ-vRtnD_400x400.jpg" class="logo" alt="Skylab"> <h2 class="calculator__title">SkylabCalculator</h2>
+            </div>
+            <div class="calculator__screen">
+                <h3 class="screen" id="pantalla"></h3>
+            </div>
+            <div id="others" class="calculator__keys others">
+                <button data-others="reset" class="ac">AC</button>
+                <button data-others="undo">&#9100;</button>
+                <!-- <button data-others="undo"><i class="fas fa-undo"></i></button> -->
+            </div>
+            <div id="operations" class="calculator__keys operations">
+                <button data-operation="divide">÷</button>
+                <button data-operation="multiply">x</button>
+                <button data-operation="minus">-</button>
+                <button data-operation="add">+</button>
+                <button data-operation="equals">=</button>
+            </div>
+            <div  id="keys" class="calculator__keys numbers">
+                <button data-number="7">7</button>
+                <button data-number="8">8</button>
+                <button data-number="9">9</button>
+                <button data-number="4">4</button>
+                <button data-number="5">5</button>
+                <button data-number="6">6</button>
+                <button data-number="1">1</button>
+                <button data-number="2">2</button>
+                <button data-number="3">3</button>
+                <button class="zero" data-number="0">0</button>
+                <button data-number=",">,</button>
+            </div>
+        </div>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>

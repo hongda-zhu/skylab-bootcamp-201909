@@ -1,0 +1,49 @@
+main {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+main>header {
+    grid-area: 1 / 2 / 2 / 5;
+    margin-bottom: 5%;
+}
+
+main>article {
+    grid-area: 2 / 2 / 3 / 5;
+}
+
+main>.multiArticle {
+    grid-area: 3 / 2 / 4 / 5;
+}
+
+main>aside {
+    grid-area: 4 / 2 / 5 /5;
+    padding-top: 6vh;
+    padding-bottom: 6vh;
+    font-size: 1.4em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.asidePaddingLeft {
+    padding-left: 4vh;
+}
+
+main>footer {
+    grid-area: 5 / 2 / 6 /5;
+}
+
+.multiArticle {
+    display: flex;
+}
+
+.multiArticle article:nth-child(2) {
+    margin-left: 5vh;
+}
+
+p {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}

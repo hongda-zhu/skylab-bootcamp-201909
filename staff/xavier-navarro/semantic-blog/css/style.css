@@ -1,0 +1,125 @@
+*{
+    box-sizing: border-box;
+    --main-bg-color: #79ccf0;
+    --first-text-color: #000;
+    --second-text-color: #fff;
+    --third-text-color: #79ccf0;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    margin:0;
+}
+.main__container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas:    "header header"
+                            "aside main"
+                            "footer footer";
+    gap: 25px;
+}
+.header {
+    grid-area: header;
+    background-color: var(--main-bg-color);
+}
+.title {
+    color: var(--second-text-color);
+    text-decoration: none;
+    font-size: 32px;
+    text-align: center;
+}
+.main__menu--list {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;    
+}
+.nav-a {
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+}
+.nav-a:hover {
+    text-decoration: underline;
+}
+.aside {
+    grid-area:aside;
+}
+.aside__banner {
+    max-width: 250px;
+    width: 100%;
+}
+.main {
+    grid-area: main;
+}
+.aside,.main {
+    padding: 0 10%;
+}
+.article__container:not(:last-child){
+    border-bottom:1px solid;
+    margin-bottom: 30px;
+}
+[class^="title__article"] {
+    color: #000;
+    text-decoration: none;
+}
+[class$="--main"] {
+    font-size:36px;
+}
+.img{
+    max-width: 600px;
+    width: 100%;
+}
+.comments__container {
+    width: 100%;
+}
+.footer {
+    grid-area: footer;
+    border-top: 1px solid;
+    text-align: center;
+}
+
+/**** BLOG ***/
+
+.comment__box {
+    background-color:#79ccf05e;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 25px;
+}
+.commet__header{
+    font-weight: 700;
+}
+.comment__body{
+    margin:10px 0;
+}
+.commet__footer {
+    font-size:12px;
+}
+.comment__date{
+    font-weight: 700;
+}
+.input__textarea {
+    width: 100%;
+    height: 100px;
+}
+
+@media only screen and (max-width: 768px){
+
+    .main__container {
+        grid-template-columns: 1fr;
+        grid-template-areas:    "header header"
+                                "main"
+                                "footer footer";
+    }
+    .main__menu--list{
+        flex-direction: column;
+    }
+    .aside{
+        display:none;
+    }
+    [class$="--main"] {
+        font-size: 28px;
+    }
+    .article {
+        width:100%;
+    }
+}

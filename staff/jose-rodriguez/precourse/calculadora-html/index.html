@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculadora-html</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1> CALCULATOR-HTML</h1>
+    <main class="calculadora">
+            <form class="grid-content" name="calculadora">
+                    <input id="display" class="display" type="text" maxlength="20" readonly="true" value="0"></div>
+                    <input id="keyAC" class="keyAC options" type="button" value="AC" onclick="AC()">
+                    <input id="DEL" class="DEL options" type="button" value="DEL" onclick="delBut()">
+                    <input id="keyDiv" class="keyDiv operators" type="button" value="/" onclick="operar(4)">             
+                    <input id="key7" class="key7 numbers" type="button" value="7" onclick="getNumber('7')">
+                    <input id="key8" class="key8 numbers" type="button" value="8" onclick="getNumber('8')">
+                    <input id="key9" class="key9 numbers" type="button" value="9" onclick="getNumber('9')">
+                    <input id="keyMul" class="keyMul operators" type="button" value="X" onclick="operar(3)">                       
+                    <input id="key4" class="key4 numbers" type="button" value="4" onclick="getNumber('4')">
+                    <input id="key5" class="key5 numbers" type="button" value="5" onclick="getNumber('5')">
+                    <input id="key6" class="key6 numbers" type="button" value="6" onclick="getNumber('6')">
+                    <input id="keyMinus" class="keyMinus operators" type="button" value="-" onclick="operar(2)">
+                    <input id="key1" class="key1 numbers" type="button" value="1" onclick="getNumber('1')">
+                    <input id="key2" class="key2 numbers" type="button" value="2" onclick="getNumber('2')">
+                    <input id="key3" class="key3 numbers" type="button" value="3" onclick="getNumber('3')">
+                    <input id="keyPlus" class="keyPlus operators" type="button" value="+" onclick="operar(1)">
+                    <input id="key0" class="key0 numbers" type="button" value="0" onclick="getNumber('0')">
+                    <input id="keyDot" class="keyDot numbers" type="button" value="," onclick="dot()">
+                    <input id="keyEval" class="keyEval operators" type="button" value="=" onclick="esIgual()">
+                </form>
+
+    </main>
+</body>
+<script src="./main.js"></script>
+
+</html>

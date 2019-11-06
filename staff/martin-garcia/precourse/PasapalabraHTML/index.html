@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Manjari&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="preguntas.js"></script>
+    <title>Pasapalabra!</title>
+</head>
+
+<body>
+
+    <main class="grid-container">
+        <div class="left">
+            <main>
+                <div>
+                    <div class="bola" id="0">A</div>
+                    <div class="bola" id="1">B</div>
+                    <div class="bola" id="2">C</div>
+                    <div class="bola" id="3">D</div>
+                    <div class="bola" id="4">E</div>
+                    <div class="bola" id="5">F</div>
+                </div>
+                <div>
+                    <div class="bola" id="6">G</div>
+                    <div class="bola" id="7">H</div>
+                    <div class="bola" id="8">I</div>
+                    <div class="bola" id="9">J</div>
+                    <div class="bola" id="10">K</div>
+                    <div class="bola" id="11">L</div>
+                </div>
+                <div>
+                    <div class="bola" id="12">M</div>
+                    <div class="bola" id="13">N</div>
+                    <div class="bola" id="14">Ñ</div>
+                    <div class="bola" id="15">O</div>
+                    <div class="bola" id="16">P</div>
+                    <div class="bola" id="17">Q</div>
+                </div>
+                <div>
+                    <div class="bola" id="18">R</div>
+                    <div class="bola" id="19">S</div>
+                    <div class="bola" id="20">T</div>
+                    <div class="bola" id="21">U</div>
+                    <div class="bola" id="22">V</div>
+                </div>
+                <div>
+                    <div class="bola" id="23">W</div>
+                    <div class="bola" id="24">X</div>
+                    <div class="bola" id="25">Y</div>
+                    <div class="bola" id="26">Z</div>
+                </div>
+
+                <p id="tiempo">Tiempo: 120 </p>
+
+            </main>
+
+        </div>
+        <div class="right">
+            <div id="inicio">
+                <h1>BIENVENID@S AL JUEGO DE PASAPALABRA DE SKYLAB CODERS ACADEMY!</h1>
+                <p>Para cada pregunta podras responder o en su defecto escribir pasapalabra. <br> Para terminar el juego deberás contestar todas las preguntas o en su defecto escribir 'end' <br> Buena Suerte</p>
+                <p>Escribe tu nick: <input type="text" id="nombre" onkeypress="introStart(event)"> </p>
+                <input type="button" class="boton" id="boton" onclick="start('primerNombre')" value="Jugar">
+            </div>
+
+            <div id="inGame" hidden=true>
+                <p id="pregunta"></p>
+                <input type="text" id="respuesta" onkeypress="introResposta(event);"> &nbsp; <input type="button" onclick="responder()" value="Responde!" class="boton"> &nbsp; <input type="button" onclick="pasapalabra()" value="Pasapalabra!" class="boton">
+                <p id="comprobacion">
+                    <p id="comprobacionPregunta"></p>
+
+                </p>
+            </div>
+
+            <div id="reiniciar" hidden=true>
+                <h1>RANKING PASAPALABRA DE SKYLAB CODERS ACADEMY</h1>
+                <h3 id="titulo"></h3>
+                <div id="ranking">
+                </div>
+                <h2>Te apetece otra partida?</h2>
+                <p>Te apetece cambiar de nick?</p> &nbsp; <input type="text" id="segundoNombre">
+                <input type="button" class="boton" id="boton" onclick="start()" value="Volver a jugar">
+            </div>
+
+        </div>
+    </main>
+    <script src="work.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+html, body {
+  height: 100%;
+}
+.section1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.grid {
+  border: 1px grey solid;
+  width: 400px;
+  height: 500px;
+  display: grid;
+  grid-template: repeat(7, 1fr) / repeat(4, 1fr);
+  border-radius: 6%;
+  grid-gap: 11px;
+  padding: 20px;
+  background-color: palevioletred;
+}
+.box {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  color: #4d3232;
+  border: 0;
+  font-size: 2rem;
+}
+.color1 {
+  background-color: #f9d4cf;
+}
+.color2 {
+  background-color: #bcace0;
+}
+#back-arrow:hover {
+  width: 60px;
+}
+#back-arrow {
+  width: 51px;
+}
+.change-size:hover {
+  font-size: 2.5rem;
+}
+#message {
+  grid-area: 1 / 1 / span 1 / span 4;
+  font-size: 2rem;
+  align-items: flex-end;
+  padding: 0.5rem 2rem;
+  color: white;
+  border: 0;
+}
+#display {
+  grid-area: 2 / 1 / span 1 / span 4;
+  font-size: 2.5rem;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0.5rem 2rem;
+  background-color: #ffffff;
+  border-top: 0px grey solid;
+  box-sizing: border-box;
+  align-items: flex-end;
+  color: #4d3232;
+}
+#keyAC {
+  grid-area: 3 / 1 / span 1 / span 2;
+}
+#keyBack {
+  grid-area: 3 / 3 / span 1 / span 1;
+}
+#keyDiv {
+  grid-area: 3 / 4 / span 1 / span 1;
+}
+#key7 {
+  grid-area: 4 / 1 / span 1 / span 1;
+}
+#key8 {
+  grid-area: 4 / 2 / span 1 / span 1;
+}
+#key9 {
+  grid-area: 4 / 3 / span 1 / span 1;
+}
+#keyMult {
+  grid-area: 4 / 4 / span 1 / span 1;
+}
+#key4 {
+  grid-area: 5 / 1 / span 1 / span 1;
+}
+#key5 {
+  grid-area: 5 / 2 / span 1 / span 1;
+}
+#key6 {
+  grid-area: 5 / 3 / span 1 / span 1;
+}
+#keySubt{
+  grid-area: 5 / 4 / span 1 / span 1;
+}
+#key1 {
+  grid-area: 6 / 1 / span 1 / span 1;
+}
+#key2 {
+  grid-area: 6 / 2 / span 1 / span 1;
+}
+#key3 {
+  grid-area: 6 / 3 / span 1 / span 1;
+}
+#keyAdd {
+  grid-area: 6 / 4 / span 1 / span 1;
+}
+#key0 {
+  grid-area: 7 / 1 / span 1 / span 2;
+}
+#keyDot {
+  grid-area: 7 / 3 / span 1 / span 1;
+}
+#keyEqual {
+  grid-area: 7 / 4 / span 1 / span 1
+}

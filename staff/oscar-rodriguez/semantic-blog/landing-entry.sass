@@ -1,0 +1,67 @@
+.landing-entry 
+    padding: 5px
+    overflow: hidden
+
+    &--double-col 
+        grid-column: span 2
+
+    &--double-row 
+        grid-row: span 2
+
+    &--quad 
+        grid-column: span 2
+        grid-row: span 2
+
+    &--image 
+        width: 90%
+        height: 90%
+        margin: auto
+        padding: unset
+        border: unset
+        background: unset
+        border-radius: .6rem
+        filter: drop-shadow(0.2rem 0.2rem 0.3rem black)
+
+    &--image :nth-child(n+2) 
+        display: none
+
+    &--image:hover &__title 
+        display: flex
+        position: absolute
+        top: 0
+        z-index: 1
+
+    &--image:hover &__text 
+        padding: 5%
+        display: flex
+        position: absolute
+        top: 20%
+        z-index: 1
+
+    &__image 
+        width: 100%
+        height: 100%
+        object-fit: cover
+
+    &__title 
+        margin-left: 1.5rem
+        font-size: 1.2rem
+        color: tomato
+        letter-spacing: .3em
+        text-shadow: .1rem .1rem grey
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+
+    &__text 
+        font-size: .8rem
+        color: slategray
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+        text-align: justify
+
+    &__date 
+        width: 100%
+        padding-right: 5%
+        font-size: .8rem
+        font-style: oblique
+        color: silver
+        display: flex
+        justify-content: flex-end

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Conecta 4</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<header>
+    <section class = "logo">
+        <img src="logo_skylab.png" alt="Logo Skylab">
+    </section>
+<nav>
+    <ul id = "menu">
+       <li id = "play">PLAY</li>
+            <!-- The Modal PLAY-->
+            <div id="modalPlay" class="modal">
+
+            <!-- Modal content -->
+                <div class="modal-content">
+                    <span id="closePlay" class = "closeModal">&times;</span>
+                    <h2>Please, you must log in first</h2>
+                </div>  
+            </div> 
+            
+       <li id = "salir">SALIR</li>
+       <li id = "login">LOGIN</li>
+       <li id = "puntuaciones">PUNTUACIONES</li> 
+    </ul>
+</nav>
+
+</header>
+<body>
+
+    <section class = "main">
+        <section id = "welcome">
+            <div id = "instrucciones">
+                
+                <h1 style="text-align: center">BIENVENIDO AL JUEGO CONECTA 4 DE SKYLAB CODERS ACADEMY</h1>
+                
+                <h2>Reglas del juego</h2>
+                    <p>El conecta 4 se juega en una rejilla vertical de 6 filas y 7 columnas. El objetivo es alinear 4 fichas de su color, horizontalmente, verticalmente o en diagonal.</p> 
+                
+                <h2>Desarrollo del juego </h2>
+                    <p>Cada jugador a su turno juega una ficha de su color en la columna de su elección.
+                        
+                    Físicamente, la rejilla está dispuesta de forma vertical, de forma que las fichas son insertadas en una ranura desde arriba y caen hasta la fila más baja no ocupada aún. Así, se elige la columna donde se pone, pero no la fila; la ficha que se acaba de insertar cae hasta la fila más baja aún disponible. Desde luego, no puede jugarse en una columna llena conteniendo ya 6 fichas.
+                        
+                    El primer jugador que consigue alinear 4 fichas de su color, horizontalmente, verticalmente o en diagonal gana la partida. Su fin es por lo tanto construir este alineamiento impidiendo hacerlo a sus adversarios.
+                        
+                    Si la rejilla se llena completamente sin que ningún jugador logre alinear 4 fichas de su color, la partida es declarada nula.
+                        
+                    Este juego está básicamente previsto para sólo 2 jugadores, con fichas rojas y amarillas.</p>
+
+                   <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Connect_Four.gif" alt="connect4">
+            </div>
+            
+        </section>
+        
+        <section id = "tableroContainer">
+                <div id = "avatars">
+                    <div id = "coloresJugadores"></div>
+                </div>
+            
+                <div id = "tablero">
+                    <div id = "0" class = "col pasiva">  
+                        <input id = "F1" class = "celda" value = 0 disabled></input>
+                        <input id = "E1" class = "celda" value = 0 disabled></input>
+                        <input id = "D1" class = "celda" value = 0 disabled></input>
+                        <input id = "C1" class = "celda" value = 0 disabled></input>
+                        <input id = "B1" class = "celda" value = 0 disabled></input>
+                        <input id = "A1" class = "celda" value = 0 disabled></input>
+                    </div>  
+                    <div id = "1" class = "col pasiva">  
+                        <input id = "F2" class = "celda" value = 0 disabled></input>
+                        <input id = "E2" class = "celda" value = 0 disabled></input>
+                        <input id = "D2" class = "celda" value = 0 disabled></input>
+                        <input id = "C2" class = "celda" value = 0 disabled></input>
+                        <input id = "B2" class = "celda" value = 0 disabled></input>
+                        <input id = "A2" class = "celda" value = 0 disabled></input>
+                        
+                    </div>
+                    <div id = "2" class = "col pasiva">  
+                        <input id = "F3" class = "celda" value = 0 disabled></input>
+                        <input id = "E3" class = "celda" value = 0 disabled></input>
+                        <input id = "D3" class = "celda" value = 0 disabled></input>
+                        <input id = "C3" class = "celda" value = 0 disabled></input>
+                        <input id = "B3" class = "celda" value = 0 disabled></input>
+                        <input id = "A3" class = "celda" value = 0 disabled></input>
+                        
+                    </div>
+                    <div id = "3" class = "col pasiva">  
+                        <input id = "F4" class = "celda" value = 0 disabled></input>
+                        <input id = "E4" class = "celda" value = 0 disabled></input>
+                        <input id = "D4" class = "celda" value = 0 disabled></input>
+                        <input id = "C4" class = "celda" value = 0 disabled></input>
+                        <input id = "B4" class = "celda" value = 0 disabled></input>
+                        <input id = "A4" class = "celda" value = 0 disabled></input>
+                        
+                    </div>
+                    <div id = "4" class = "col pasiva">  
+                        <input id = "F5" class = "celda" value = 0 disabled></input>
+                        <input id = "E5" class = "celda" value = 0 disabled></input>
+                        <input id = "D5" class = "celda" value = 0 disabled></input>
+                        <input id = "C5" class = "celda" value = 0 disabled></input>
+                        <input id = "B5" class = "celda" value = 0 disabled></input>
+                        <input id = "A5" class = "celda" value = 0 disabled></input>
+                        
+                    </div>
+                    <div id = "5" class = "col pasiva">  
+                        <input id = "F6" class = "celda" value = 0 disabled></input>
+                        <input id = "E6" class = "celda" value = 0 disabled></input>
+                        <input id = "D6" class = "celda" value = 0 disabled></input>
+                        <input id = "C6" class = "celda" value = 0 disabled></input>
+                        <input id = "B6" class = "celda" value = 0 disabled></input>
+                        <input id = "A6" class = "celda" value = 0 disabled></input>
+                      
+                    </div>
+                    <div id = "6" class = "col pasiva">  
+                        <input id = "F7" class = "celda" value = 0 disabled></input>
+                        <input id = "E7" class = "celda" value = 0 disabled></input>
+                        <input id = "D7" class = "celda" value = 0 disabled></input>
+                        <input id = "C7" class = "celda" value = 0 disabled></input>
+                        <input id = "B7" class = "celda" value = 0 disabled></input>
+                        <input id = "A7" class = "celda" value = 0 disabled></input>
+                        
+                    </div>
+                    
+                </div> 
+            
+        </section> 
+        
+        <footer id = "footer"> Made with love by Manuela Pascual Sáez</footer>
+    </section> 
+    <!-- The Modal -->
+    <div id="modalForm" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            
+            <form action = "" id = "login-form">
+                <span id="closeForm" class = "closeModal">&times;</span>
+                <h2>REGISTRO DE JUGADORES</h2>
+               <p><label for="user1">JUGADOR 1</label><br>
+               <input type="text" id = 'user1' name = 'user1' placeholder="Username Player One" value = '' required></p>
+               <p><label for="user2">JUGADOR 2</label><br>
+               <input type="text" id = 'user2' name = 'user2' placeholder="Username Player Two" value = '' required></p>
+               <button type = "button" onclick="asignarJugadores()">Enviar</button>
+            </form>
+        </div>  
+   
+    </div> 
+    
+    <!-- The Modal STOP-->
+    <div id="modalStop" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                
+                <h2>¿Desea salir?</h2>
+                <button type = 'button' id = 'si'>SI</button>
+                <button type = 'button' id = 'no'>NO</BUTton>
+            </div>  
+       
+    </div> 
+
+    <!-- The Modal Results-->
+    <div id="modalResults" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content empty">
+            <span id="closeResults" class = "closeModal">&times;</span>
+            <h2 id = "resultados">RESULTADO DE LA PARTIDA</h2>
+        </div>  
+
+    </div> 
+
+    <!-- The Modal RANKING-->
+    <div id="modalRanking" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span id="closeRanking" class = "closeModal">&times;</span>
+            <h2>PUNTUACIONES</h2><br>
+            <h3 id = 'puntuacionJugador1'></h3v> <br>
+            <h3 id = 'puntuacionJugador2'></h3>
+        </div>  
+   
+    </div> 
+
+    
+    
+    <script src = "index.js"></script>
+</body>
+</html>

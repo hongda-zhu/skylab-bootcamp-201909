@@ -1,0 +1,33 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+}
+
+main>aside {
+    padding-top: 6vh;
+    padding-bottom: 6vh;
+    font-size: 1.4em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.asidePaddingLeft {
+    padding-left: 4vh;
+}
+
+.multiArticle {
+    display: flex;
+}
+
+.multiArticle article:nth-child(2) {
+    margin-left: 5vh;
+}
+
+p {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}

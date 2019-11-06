@@ -1,0 +1,26 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.article {
+    width: 80%;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.article main>* {
+    margin-top: 3%;
+}
+
+.twitter {
+    color: #3a71b0;
+}

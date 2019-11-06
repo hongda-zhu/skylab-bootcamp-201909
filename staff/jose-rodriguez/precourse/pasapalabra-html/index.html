@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pasapalabra</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<header>
+    <h1>PASAPALABRA</h1>
+</header>
+<body>
+    <div  id="welcome" class="welcome">
+        Bienvenido a Pasapalabra! <br> 
+        Introduce tu nombre para empezar: <input class = "nombre" type="text" id="nombre" autofocus> </input>
+    </div>
+    <div id = "inicio" class = "iniciar" onclick="inicio()">INICIO
+    </div>
+    <div id="control" class="control-panel">
+        <span id="question"></span><br>
+    </div>
+    <div id="form-answer">
+        <label for="answer"></label>
+        <input type="text" name="answer" id="answer" autocomplete="OFF" autofocus>
+    </div>
+
+    <div id="opselect" class="opselect">
+        <input class="button" id="pasa" type="button" value="PASA" onclick="pasapalabra()">
+        <input class="button" id="ans" type="button" value="GO" onclick="answer()">
+        <input class="button" id="end" type="button" value="END" onclick="endGame()">
+    </div>
+
+    <div id="boxcontent" class="boxcontent">
+        <div class="fila">
+            <div id="0" class="letters-nonanswer">A</div>
+            <div id="1" class="letters-nonanswer">B</div>
+            <div id="2" class="letters-nonanswer">C</div>
+            <div id="3" class="letters-nonanswer">D</div>
+            <div id="4" class="letters-nonanswer">E</div>
+            <div id="5" class="letters-nonanswer">F</div>
+            <div id="6" class="letters-nonanswer">G</div>
+            <div id="7" class="letters-nonanswer">H</div>
+            <div id="8" class="letters-nonanswer">I</div>
+            <div id="9" class="letters-nonanswer">J</div>
+            <div id="10" class="letters-nonanswer">K</div>
+            <div id="11" class="letters-nonanswer">L</div>
+            <div id="12" class="letters-nonanswer">M</div>
+            <div id="13" class="letters-nonanswer">N</div>
+        </div>
+        <div class="fila">
+            <div id="14" class="letters-nonanswer">Ñ</div>
+            <div id="15" class="letters-nonanswer">O</div>
+            <div id="16" class="letters-nonanswer">P</div>
+            <div id="17" class="letters-nonanswer">Q</div>
+            <div id="18" class="letters-nonanswer">R</div>
+            <div id="19" class="letters-nonanswer">S</div>
+            <div id="20" class="letters-nonanswer">T</div>
+            <div id="21" class="letters-nonanswer">U</div>
+            <div id="22" class="letters-nonanswer">V</div>
+            <div id="23" class="letters-nonanswer">W</div>
+            <div id="24" class="letters-nonanswer">X</div>
+            <div id="25" class="letters-nonanswer">Y</div>
+            <div id="26" class="letters-nonanswer">Z</div>
+        </div>
+    </div>
+
+    <div class="time-control">
+        <div id="time" class="timer"></div>
+        <div id="score" class="timer"></div>
+    </div>
+    
+    
+    <div id="endButton" class="endButton" style="font-display: 35px">¡GRACIAS POR JUGAR! <br> ¿QUIERES VOLVER A INTENTARLO?</div>
+    <div id = "inicio2" class = "iniciar" onclick="javascript:window.location.reload();">SI</div>
+
+</body>
+<script src="./index.js"></script>
+</html>

@@ -1,0 +1,91 @@
+html {
+  font-size: 4px;
+}
+.instructions-container {
+  text-align: center;
+}
+.instructions-container > p {
+  font-size: 3rem;
+}
+.instructions-container > h2 {
+  font-size: 4rem;
+}
+.instructions-container > img {
+  width: 30rem;
+}
+
+.players-icons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.players-icons-container > a {
+  margin: 2rem;
+  color: grey;
+  font-size: 4rem;
+}
+.players-icons-container > a:hover {
+  margin: 1.5rem;
+  font-size: 4.5rem;
+}
+.instructions-container > h2 {
+  color: rgb(202, 75, 65);
+}
+.fas {
+  color: #6f91a1
+}
+
+/* smartphones, Android phones, landscape iPhone */
+@media screen and (min-device-width:480px) {
+  html {
+    font-size: 5px;
+  }
+  .instructions-container > p {
+    font-size: 2.8rem;
+  }
+  .instructions-container > h2 {
+    font-size: 3.6rem;
+  }
+}
+/* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+@media (min-width:600px) {
+    html {
+    font-size: 7px;
+  }
+  .instructions-container > p {
+    font-size: 2.8rem;
+  }
+  .instructions-container > h2 {
+    font-size: 3.6rem;
+  }
+}
+@media screen and (min-width:640px) {}
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media (min-width:801px) {
+  .instructions-container > p {
+    font-size: 2.5rem;
+  }
+  .instructions-container > h2 {
+    font-size: 3rem;
+  }
+}
+
+/* big landscape tablets, laptops, and desktops */
+@media (min-width:1025px) {
+  html {
+    font-size: 10px;
+  }
+  .instructions-container > p {
+    font-size: 2rem;
+  }
+  .instructions-container > h2 {
+    font-size: 2rem;
+  }
+}
+
+/* hi-res laptops and desktops */
+@media screen and (min-width:1281px) {
+    html {
+    font-size: 12px;
+  }
+}

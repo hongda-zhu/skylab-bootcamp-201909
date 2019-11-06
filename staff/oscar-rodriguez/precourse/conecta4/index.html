@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Londrina+Outline|Chilanka&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Conecta 4</title>
+</head>
+<body>
+    <audio id="snd"><source src="./snd/backsound.mp3" type="audio/mpeg" loop>Audio is not supported...
+    </audio>
+    <header><h1>Conecta 4</h1></header>
+    <nav class="icons"><i class="material-icons" onclick="reiniciar(true)">home</i><i id="playIcon" class="material-icons" onclick="reproducir()">music_video</i></nav>
+    <br>
+    <main>
+        <aside id="player1">
+            <section id="data1" class="data player1">
+                <span id="name1"><input type="text" autofocus autocomplete="off" name="nombre" id="nombre1" size="15" placeholder="Pon tu nombre aquí"></span><br>
+                Victorias: <span id="wins1">0</span><br>
+                Derrotas: <span id="loses1">0</span><br>
+                Empates: <span id="ties1">0</span><br><br>
+                Mejor racha: <span id="best1">0</span>
+                <div id="ready1"><img src="./img/pow.png" class="pow" onclick="ready(1)"></div>
+            </section>
+            <section id="avatar1" class="avatar player1">
+                <div class="slideshow-container">
+                    <div class="player1avatar fade">
+                    <img src="img/av0.png">
+                    </div>
+                    
+                    <div class="player1avatar fade">
+                    <img src="img/av1.png">
+                    </div>
+                    
+                    <div class="player1avatar fade">
+                    <img src="img/av2.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av3.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av4.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av5.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av6.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av7.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av8.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av9.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av10.png">
+                    </div>
+                    <div class="player1avatar fade">
+                        <img src="img/av11.png">
+                    </div>
+
+                    <a class="prev" id="prev1" onclick="plusSlides(-1,'player1avatar')">&#10094;</a>
+                    <a class="next" id="next1" onclick="plusSlides(1,'player1avatar')">&#10095;</a>
+                    
+                    </div>
+            </section>
+        </aside>
+        <section id="wellcome" class="wellcome">
+            
+            <div onclick="go(false)" class="start">.. Player 1 vs. Player 2 ..</div>
+            <div onclick="go(true)" class="start">.. Player 1 vs. Machine ..</div>
+            <div onclick="showRanking()" class="start">.. Ranking ..</div>
+                <div id="rankingBox">
+                    <span id="title" class="title"></span>
+                    <div id="ranking" class="ranking"></div>
+                </div>
+            <div id="music" onclick="reproducir()" class="start">.. Music On ..</div>
+            <div id="close" onclick="cerrar()" class="start close">x</div>
+        </section>
+        <section id="tablero" class="tablero">
+            <div class="column" id="col0" onclick="deslizarFicha(this.id)">
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+            </div>
+            <div class="column" id="col1" onclick="deslizarFicha(this.id)">
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+            </div>
+            <div class="column" id="col2" onclick="deslizarFicha(this.id)">
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+            </div>
+            <div class="column" id="col3" onclick="deslizarFicha(this.id)">
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+            </div>
+            <div class="column" id="col4" onclick="deslizarFicha(this.id)">
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+            </div>
+            <div class="column" id="col5" onclick="deslizarFicha(this.id)">
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+            </div>
+            <div class="column" id="col6" onclick="deslizarFicha(this.id)">
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+                <div class="place"></div>
+            </div>        
+        </section>
+        <aside id="player2">
+            <section id="data2" class="data player2">
+                <span id="name2"><input type="text" autocomplete="off" name="nombre" id="nombre2" size="15" placeholder="Pon tu nombre aquí"></span><br>
+                Victorias: <span id="wins2">0</span><br>
+                Derrotas: <span id="loses2">0</span><br>
+                Empates: <span id="ties2">0</span><br><br>
+                Mejor racha: <span id="best2">0</span>
+                <div id="ready2"><img src="./img/pow.png" class="pow" onclick="ready(2)"></div>
+            </section>
+            <section id="avatar2" class="avatar player2">
+                <div class="slideshow-container">
+                    <div class="player2avatar fade">
+                    <img src="img/av0.png">
+                    </div>
+                    
+                    <div class="player2avatar fade">
+                    <img src="img/av1.png">
+                    </div>
+                    
+                    <div class="player2avatar fade">
+                    <img src="img/av2.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av3.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av4.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av5.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av6.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av7.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av8.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av9.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av10.png">
+                    </div>
+                    <div class="player2avatar fade">
+                        <img src="img/av11.png">
+                    </div>
+
+                    <a class="prev" id="prev2" onclick="plusSlides(-1,'player2avatar')">&#10094;</a>
+                    <a class="next" id="next2" onclick="plusSlides(1,'player2avatar')">&#10095;</a>
+                </div>
+            </section>
+        </aside>
+    </main>
+    <div id="endGame">
+            <h3>FIN DEL JUEGO!</h3>
+            <div class="h4-content">
+                <h4 id="endGameMsg"></h4>
+                <nav>
+                    <div class="start" onclick="reiniciar(false)">Continuar</div>
+                    <div class="start" onclick="reiniciar(true)">Reiniciar</div>
+                    <div onmouseover="esconder('endGame')" onmouseout="mostrar('endGame')" class="ver">
+                        <i class="material-icons">remove_red_eye</i>
+                    </div> 
+                </nav>
+            </div>
+    </div>
+
+</body>
+<script src="index.js"></script>
+</html>

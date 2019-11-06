@@ -1,0 +1,142 @@
+.reload,
+.division,
+.multiplicacion,
+.resta,
+.suma,
+.coma,
+.igual,
+.uno,
+.dos,
+.tres,
+.cuatro,
+.cinco,
+.seis,
+.siete,
+.ocho,
+.nueve,
+.cero {
+    text-align: center;
+    border: solid thin black;
+}
+
+.grid-container * {
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 5%;
+}
+
+.grid-container {
+    width: 20vw;
+    height: 30vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: "display display display display" "AC AC reload division" "siete ocho nueve multiplicacion" "cuatro cinco seis resta" "uno dos tres suma" "cero cero coma igual";
+    font-size: 2em;
+    font-family: sans-serif;
+    font-weight: 200;
+}
+
+.display {
+    grid-area: display;
+    text-align: right;
+    padding-right: 5%;
+    background-color: #303546;
+    color: white;
+}
+
+.AC {
+    grid-area: AC;
+    background-color: #dcdcdc;
+    text-align: left;
+    border: thin solid black;
+}
+
+.reload {
+    grid-area: reload;
+    background-color: #dcdcdc;
+}
+
+.division {
+    grid-area: division;
+    background-color: #e98d35;
+    color: white;
+}
+
+.multiplicacion {
+    grid-area: multiplicacion;
+    background-color: #e98d35;
+    color: white;
+}
+
+.resta {
+    grid-area: resta;
+    background-color: #e98d35;
+    color: white;
+}
+
+.suma {
+    grid-area: suma;
+    background-color: #e98d35;
+    color: white;
+}
+
+.coma {
+    grid-area: coma;
+    background-color: #dcdcdc;
+}
+
+.igual {
+    grid-area: igual;
+    background-color: #e98d35;
+}
+
+.siete {
+    grid-area: siete;
+    background-color: #dcdcdc;
+}
+
+.cuatro {
+    grid-area: cuatro;
+    background-color: #dcdcdc;
+}
+
+.uno {
+    grid-area: uno;
+    background-color: #dcdcdc;
+}
+
+.ocho {
+    grid-area: ocho;
+    background-color: #dcdcdc;
+}
+
+.cinco {
+    grid-area: cinco;
+    background-color: #dcdcdc;
+}
+
+.dos {
+    grid-area: dos;
+    background-color: #dcdcdc;
+}
+
+.cero {
+    grid-area: cero;
+    background-color: #dcdcdc;
+}
+
+.tres {
+    grid-area: tres;
+    background-color: #dcdcdc;
+}
+
+.seis {
+    grid-area: seis;
+    background-color: #dcdcdc;
+}
+
+.nueve {
+    grid-area: nueve;
+    background-color: #dcdcdc;
+}

@@ -1,0 +1,448 @@
+body {
+    background-image: url("./img/fondo.jpg");
+    background-size: 100vw;
+    background-repeat: no-repeat;   
+    font-family: 'Londrina Outline';
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Fredoka One'; 
+    letter-spacing: 20px;
+    font-size: 60px; 
+    color:whitesmoke; 
+    margin-top: 3%;
+    text-shadow: 5px 5px 3px black;
+
+}
+
+.icons {
+    text-shadow: 5px 5px 3px black;
+    cursor: pointer;
+    font-family: Chilanka;
+    font-size: 12px;
+    color: whitesmoke;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+aside {
+    display: none;
+    flex-direction: column;
+}
+
+.player1 {
+    background:  linear-gradient(to bottom, rgba(40, 88, 245, 1), rgba(209, 219, 255, 1));
+}
+
+.player2 {
+    background:  linear-gradient(to bottom, rgba(228, 17, 17, 1), rgba(247, 186, 186, 1));
+}
+
+.tablero {
+    max-width: 550px;
+    width: 50vw;
+    height: 62vh;
+    background: linear-gradient(to right, rgb(40, 88, 245), rgb(228, 17, 17));
+    border-radius: 10px;
+    border: 3px solid whitesmoke;
+    box-shadow: 4px 4px 3px rgb(0, 0, 0);
+    margin: 5px 10px 5px;
+    display: none;
+    flex-direction: row;
+    transition: display 1s ease;
+    animation-name: fade;
+    animation-duration: 2s;
+}
+
+.title {
+    display: none;
+    font-family: 'Fredoka One'; 
+    text-align: center;
+    font-size: 15px; 
+    color:whitesmoke; 
+    text-shadow: 3px 3px 2px black;
+    width: 70%;
+    height: 30px;
+    background: rgb(45, 218, 218);
+    border-radius: 5px;
+    box-shadow: inset 2px 2px 2px black;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 5%;
+    left:5%;
+}
+
+
+#rankingBox {
+    display:none;
+}
+
+.ranking {
+    width: 80%;
+    height: 70%;
+    flex-direction: column;
+    /*justify-content: flex-start;*/
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    bottom:5%;
+    left: 1%;
+}
+
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+.ranking li {
+    margin: 2px;
+    font-family: Chilanka; 
+    text-align: left;
+    padding-left: 5%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 15px; 
+    color:whitesmoke; 
+    border-radius: 5px;
+    border: 2px solid rgb(45, 218, 218);
+    background: rgb(33, 156, 156);
+    cursor: pointer;
+    height: 40px;
+    width: 90%;
+}
+
+.ranking li:hover {
+    border: 2px solid rgb(255, 174, 0);
+    background: rgb(33, 187, 187);
+}
+
+.pow {
+    filter: brightness(0.8) drop-shadow(7px 7px #222);
+    height: 60px;
+    width: 70px;
+    cursor: pointer;
+    position: relative;
+    bottom:-30px;
+}
+.pow:hover {
+    filter: brightness(1) contrast(1.1) drop-shadow(7px 7px #222);
+    cursor: pointer;
+}
+
+h6 {
+    margin: 15px;
+    font-family: Chilanka;
+    font-size: 20px;
+    text-align: center;
+    padding-left: 15px;
+}
+
+.data, .avatar {
+    border-radius: 5px;
+    border: 6px solid whitesmoke;
+    box-shadow: 4px 4px 2px rgb(0, 0, 0);
+    margin: 3px;
+    color: whitesmoke;
+    max-width: 150px;
+}
+
+.data {
+    width: 15vw;
+    height: 30vh;
+    margin-bottom: 10px;
+    font-family: Chilanka;
+    font-size: 16px;
+    text-align: center;
+}
+
+.data:hover, .avatar:hover {
+    filter:brightness(1.1);
+}
+
+.avatar {
+    width: 15vw;
+    height: 20vh;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 14%;
+    height: 100%;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.column:hover {
+    background: rgba(241, 245, 17,0.8);
+}
+
+.place {
+    justify-content: center;
+    box-shadow: 5px 10px 20px inset;
+    border: 1px solid whitesmoke;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    background: rgb(53, 53, 53);
+}
+
+.fichaPlayer0, .fichaPlayer1 {
+    justify-content: center;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+}
+
+.fichaPlayer1 {
+    border: 2px double darkgray;
+    background: rgb(228, 17, 17);
+}
+
+.fichaPlayer0 {
+    border: 2px double darkgray;
+    background: rgb(40, 88, 245);
+}
+
+input[type=text] {
+    border: 3px solid white;
+    border-radius: 4px;
+    outline: none;
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+.player1 input[type=text] {
+    background-color: aquamarine;
+}
+
+.player2 input[type=text] {
+    background-color: rgb(255, 127, 234);
+}
+
+.wellcome {
+    padding: 5px;
+    /*margin-top: 25px;*/
+    background-image: url("./img/wellcome4.jpg");
+    background-size: 100% 100%;
+    border-radius: 10px;
+    width: 40vw;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    filter: drop-shadow(20px 20px 5px #222);
+    position: relative;
+    transition: 2s ease;
+}
+
+.start {
+    font-family: 'Fredoka One'; 
+    font-size: 20px; 
+    color:whitesmoke; 
+    margin: auto;
+    text-shadow: 3px 3px 2px black;
+    cursor: pointer;
+    filter: brightness(0.7);
+    width: 70%;
+    height: 40px;
+    background: rgb(45, 218, 218);
+    border-radius: 5px;
+    box-shadow: inset 2px 2px 2px black;
+    transition: 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid rgb(66, 248, 248);
+}
+
+.start:hover {
+    filter: brightness(1);
+    letter-spacing: 3px;
+    font-size: 25px;
+}
+.close {
+    padding: 0px;
+    font-size: 15px;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    margin: auto;
+    visibility: hidden;
+}
+
+.close:hover {
+    filter: brightness(1);
+    letter-spacing: 0px;
+    font-size: 15px;
+}
+
+#endGame {
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(82, 82, 82, 0.3);
+    color: #535252;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    visibility: hidden;
+    z-index: 100;
+}
+
+h3 {
+    background: #ffe815;
+    margin: 0;
+    margin-top: 40vh;
+    height: 50px;
+    width: 100vw;
+    letter-spacing: 15px;
+    font-size: 40px;
+    color: #535252;
+    border-top: 2px solid whitesmoke;
+    border-bottom: 4px solid #535252;
+}
+
+.h4-content {
+    margin:auto;
+    margin-top: 10px;
+    color: whitesmoke;
+    background: #505050;
+    height: 125px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 3px groove whitesmoke;
+    box-shadow: 5px 5px 2px black;
+    padding: 1%;
+    position: relative;
+}
+
+h4 {
+    margin: 2%;
+    font-size: 40px;
+}
+
+nav {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.button {
+	border-radius:6px;
+	display:inline-block;
+	cursor:pointer;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+    width: 100px;
+    margin:auto;
+}
+
+.blue {
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+    background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+	background-color:#79bbff;
+	color:#ffffff;
+    border:1px solid #84bbf3;
+    text-shadow:0px 1px 0px #528ecc;
+}
+
+.blue:hover {
+	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+	background-color:#378de5;
+}
+
+.red{
+    background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+    background-color:#f24537;
+    border:1px solid #d02718;
+    color:#ffffff;
+    text-shadow:0px 1px 0px #810e05;
+}
+
+.red:hover {
+background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+background-color:#c62d1f;
+}
+
+.ver {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    cursor: pointer;
+}
+
+.player1avatar, .player2avatar {
+    /* padding-top: 10%;*/
+     display: none
+ }
+ 
+ .slideshow-container {
+   padding-top:10%;
+   max-width: 1000px;
+   position: relative;
+   margin: auto;
+ }
+ 
+ .prev, .next {
+   cursor: pointer;
+   position: absolute;
+   top: 50%;
+   width: auto;
+   padding: 16px;
+   margin-top: -22px;
+   color: white;
+   font-weight: bold;
+   font-size: 14px;
+   transition: 0.6s ease;
+   border-radius: 0 3px 3px 0;
+ }
+ 
+ .next {
+   right: 0;
+   border-radius: 3px 0 0 3px;
+ }
+ .prev {
+   left: 0;
+   border-radius: 3px 0 0 3px;
+ }   
+ 
+ .prev:hover, .next:hover {
+   background-color: rgba(0,0,0,0.8);
+ }
+ 
+ .fade {
+   animation-name: fade;
+   animation-duration: 1s;
+ }
+ 
+ @keyframes fade {
+   from {opacity: .4} 
+   to {opacity: 1}
+ }
