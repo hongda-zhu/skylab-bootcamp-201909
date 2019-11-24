@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
 </head>
 <body>
-    <section class="land hide">
+    <section class="land hidden">
         <div class="container-landing">
             <div class="form-landing">
 
@@ -33,20 +33,35 @@
         </div>
     </section>
 
-    <section class="land">
-            <div class="container-landing">
-                <div class="form-landing">
+    <section class="log">
+            <div class="container-login">
+                <div class="form-login">
     
-                    <div class="wrap-landing">
+                    <div class="wrap-login">
     
-                            <h1 class="wrap-landing__title">VICADA$</h1>
+                            <h1 class="wrap-login__title">LOGIN</h1>
+
+                            <div class="wrap-login__input" data-validate="email is required">
+                                <input class="wrap-login__input-container" type="text" name="email" placeholder="Email">
+                                <span class="wrap-login__input-symbol">
+                                    <i class="far fa-envelope"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-login__input" data-validate="email is required">
+                                <input class="wrap-login__input-container" type="text" name="password" placeholder="Password">
+                                <span class="wrap-login__input-symbol">
+                                    <i class="fas fa-unlock-alt"></i>
+                                </span>
+                            </div>
                     
-                            <div class="wrap-landing__btnContainer btnContainer">
+                            <div class="wrap-login__btnContainer btnContainer">
                                 <button class="btnContainer__btn">Login</button>
-                                <button class="btnContainer__btn">Register</button>
                             </div>
                             
-                            <p class="wrap-landing__copyright">@copyright by Adrían Zhu</p>
+                            <!-- <p class="wrap-login__copyright">@copyright by Adrían Zhu</p>
+
+                            <p class="wrap-login__copyright">@copyright by Adrían Zhu</p> -->
                     </div> 
     
                 </div>
