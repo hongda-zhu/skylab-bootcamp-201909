@@ -9,3 +9,9 @@ Tired of having to think what to give and then not like it? With WiShare that to
 ### Use Cases
 
 ![Use Cases](./images/usecases-wishare.png)
+
+## Technical Description
+
+### Data Model
+
+![Data Model]()
