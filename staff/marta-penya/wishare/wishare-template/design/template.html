@@ -13,8 +13,9 @@
 
 <body>
 
+    <!-- welcome panel -->
     <section class="welcome">
-        <section>
+        <section class="welcome__section1">
             <h2 class="welcome__title1">Welcome to</h2>
         </section>
         <section>
@@ -22,13 +23,41 @@
         </section>
         <section class="welcome__intro">
             <p class="welcome__text">Create a WishList </p>
-            <button class="welcome__btn">  <img class="welcome__img"
-                    src="gift.svg"
-                    alt="gift image" /></button>
+            <button class="welcome__btn"> <img class="welcome__img" src="gift.svg" alt="gift image" /></button>
         </section>
     </section>
 
 
+    <!-- register panel -->
+
+    <section class="register">
+        
+        <h1 class="register__title">Register</h1>
+
+        <section class="feedback">
+                <p class="feedback__message">MEEEC error</p>
+            </section>
+        <form class="register__form">
+            <label>Name</label>
+            <input class="register__field" type="text" name="name" placeholder="name">
+            <label>Surname</label>
+            <input class="register__field" type="text" name="surname" placeholder="surname">
+            <label>E-mail</label>
+            <input class="register__field" type="email" name="email" placeholder="e-mail">
+            <label>Birthday</label>
+            <input type="date" name="bday" class="register__field">
+            <label>Password</label>
+            <input class="register__field" type="password" name="password" placeholder="password">
+            <label>Confirm Password</label>
+            <input class="register__field" type="password" name="password" placeholder="password">
+            <button class="register__submit">Register</button>
+            
+        </form>
+        <span>Already registered?</span> <a>Log in</a>
+
+
+
+    </section>
 </body>
 
 </html>

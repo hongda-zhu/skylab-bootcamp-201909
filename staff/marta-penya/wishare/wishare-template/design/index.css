@@ -21,6 +21,11 @@ body {
   flex-wrap: wrap;
   align-items: center;
   align-self: center;
+  flex-direction: column;
+}
+.welcome__section1 {
+  display: flex;
+  height: 30%;
 }
 .welcome__intro {
   display: flex;
@@ -73,6 +78,52 @@ body {
     top: -30px;
     text-shadow: 0 1px 0 #CCC, 0 2px 0 #CCC, 0 3px 0 #CCC, 0 4px 0 #CCC, 0 5px 0 #CCC, 0 6px 0 #CCC, 0 7px 0 #CCC, 0 8px 0 #CCC, 0 9px 0 #CCC, 0 30px 30px rgba(0, 0, 0, 0.3);
   }
+}
+.register {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #0e111f;
+}
+.register__title {
+  color: #eeeff5;
+  font-size: 2rem;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  border: 1px solid white;
+  border-radius: 20px;
+  height: 50%;
+  background-color: #e4e5e95e;
+}
+.register__field {
+  border-radius: 20px;
+  background-color: inherit;
+  margin-bottom: 1rem;
+  width: 60%;
+  color: #eeeff5;
+}
+.register__submit {
+  border-radius: 15px;
+  width: 30%;
+}
+
+.feedback {
+  border: 1px solid white;
+  background-color: #cfc0ff;
+  border-radius: 15px;
+  width: 60%;
+}
+.feedback__message {
+  color: grey;
+  text-align: center;
 }
 
 /*# sourceMappingURL=index.css.map */
