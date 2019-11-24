@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>$ViCaDa</title>
+    <title>$ViKaDa</title>
     <link rel="stylesheet" href="index.css">
     <script src="https://kit.fontawesome.com/80c46885ed.js"></script> 
     <link rel="shortcut icon" href="https://i.redd.it/9o58donfgh331.png" type="image/png">
@@ -13,13 +13,32 @@
     <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <header class="header">
+        <input id="show-menu" name="modal" type="checkbox">
+        <label class="header__hamburger hamburger" for="show-menu"><span class="hamburger__icon"></span></label>
+        <a href="" class="logo">VikaDa$</a>
+        <nav class="header__nav nav">
+            <ul class="nav__menu menu">
+                <li class="menu__item">Spots</li>
+                <li class="menu__item">News</li>
+                <li class="menu__item">Maps</li>
+                <li class="menu__item">Following</li>
+                <li class="menu__item">Profile</li>
+                <!-- <li class="menu__item">
+                    <label class="hamburger__close" for="show-menu">Close</label>
+                </li> -->
+            </ul>
+        </nav>
+    </header>
+
     <section class="land hidden">
         <div class="container-landing">
             <div class="form-landing">
 
                 <div class="wrap-landing">
 
-                        <h1 class="wrap-landing__title">VICADA$</h1>
+                        <h1 class="wrap-landing__title">VIKADA$</h1>
                 
                         <div class="wrap-landing__btnContainer btnContainer">
                             <button class="btnContainer__btn">Login</button>
@@ -33,7 +52,7 @@
         </div>
     </section>
 
-    <section class="log">
+    <section class="log hidden">
             <div class="container-login">
                 <div class="form-login">
     
@@ -76,7 +95,7 @@
             </div>
     </section>
 
-    <section class="reg">
+    <section class="reg hidden">
             <div class="container-register">
                 <div class="form-register">
     
