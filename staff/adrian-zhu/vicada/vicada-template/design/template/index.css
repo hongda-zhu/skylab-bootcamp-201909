@@ -19,6 +19,10 @@ button, input {
   border: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 .hidden {
   display: none;
 }
@@ -153,6 +157,7 @@ button, input {
 }
 
 .form-login {
+  margin: 0 15px;
   padding: 5px 15px 10px 15px;
   background-color: white;
   overflow: hidden;
@@ -179,9 +184,6 @@ button, input {
   width: 100%;
   z-index: 1;
 }
-.wrap-login__input:focus {
-  border: 1px solid;
-}
 .wrap-login__input-container {
   font-size: 18px;
   line-height: 1.2;
@@ -192,6 +194,9 @@ button, input {
   height: 62px;
   border-radius: 3px;
   padding: 0 30px 0 65px;
+}
+.wrap-login__input-container:active {
+  border: 1px solid black;
 }
 .wrap-login__input-symbol {
   font-size: 24px;
@@ -207,7 +212,7 @@ button, input {
   transition: all 0.5s;
 }
 .wrap-login .btnContainer {
-  margin: 1rem 0;
+  margin: 2rem 0;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -215,6 +220,7 @@ button, input {
 }
 .wrap-login .btnContainer__btn {
   margin: 1rem 0;
+  padding: 0.5rem 0;
   font-size: 16px;
   line-height: 2;
   color: white;
@@ -236,6 +242,18 @@ button, input {
   justify-content: center;
   color: #757575;
   letter-spacing: 0.15rem;
+}
+.wrap-login__textContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.wrap-login__textContainer-a {
+  color: black;
+  border-bottom: 1px solid black;
+}
+.wrap-login__textContainer-a:hover {
+  color: #2F3C7E;
 }
 
 @keyframes gradientBG {
