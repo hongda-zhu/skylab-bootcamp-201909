@@ -33,7 +33,7 @@
         </div>
     </section>
 
-    <section class="log hidden">
+    <section class="log">
             <div class="container-login">
                 <div class="form-login">
     
@@ -42,14 +42,14 @@
                             <h1 class="wrap-login__title">LOGIN</h1>
 
                             <div class="wrap-login__input" data-validate="email is required">
-                                <input class="wrap-login__input-container" type="text" name="email" placeholder="Email">
+                                <input class="wrap-login__input-container" type="email" name="email" placeholder="Email">
                                 <span class="wrap-login__input-symbol">
                                     <i class="far fa-envelope"></i>
                                 </span>
                             </div>
 
-                            <div class="wrap-login__input" data-validate="email is required">
-                                <input class="wrap-login__input-container" type="text" name="password" placeholder="Password">
+                            <div class="wrap-login__input" data-validate="password is required">
+                                <input class="wrap-login__input-container" type="password" name="password" placeholder="Password">
                                 <span class="wrap-login__input-symbol">
                                     <i class="fas fa-unlock-alt"></i>
                                 </span>
@@ -60,10 +60,10 @@
                             </div>
 
                             <div class="wrap-login__textContainer">
-                                <span class="wrap-login__textContainer-p">
-                                    Not a member?
-                                </span>
-        
+                                <a class="wrap-login__textContainer-a" href ="#">
+                                    Go back
+                                </a>
+
                                 <a class="wrap-login__textContainer-a" href="#">
                                     Sign up now							
                                 </a> 
@@ -77,42 +77,59 @@
     </section>
 
     <section class="reg">
-            <div class="container-login">
-                <div class="form-login">
+            <div class="container-register">
+                <div class="form-register">
     
-                    <div class="wrap-login">
+                    <div class="wrap-register">
     
-                            <h1 class="wrap-login__title">LOGIN</h1>
+                            <h1 class="wrap-register__title">Register</h1>
 
-                            <div class="wrap-login__input" data-validate="email is required">
-                                <input class="wrap-login__input-container" type="text" name="email" placeholder="Email">
+                            <div class="wrap-register__input" data-validate="name is required">
+                                <input class="wrap-login__input-container" type="text" name="name" placeholder="Name">
+                                <span class="wrap-login__input-symbol">
+                                    <i class="fas fa-sort-alpha-down"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-register__input" data-validate="surname is required">
+                                <input class="wrap-login__input-container" type="text" name="surname" placeholder="Surname">
+                                <span class="wrap-login__input-symbol">
+                                    <i class="fas fa-sort-alpha-up-alt"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-register__input" data-validate="username is required">
+                                <input class="wrap-login__input-container" type="text" name="username" placeholder="Username">
+                                <span class="wrap-login__input-symbol">
+                                    <i class="far fa-user"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-register__input" data-validate="email is required">
+                                <input class="wrap-login__input-container" type="email" name="email" placeholder="Email">
                                 <span class="wrap-login__input-symbol">
                                     <i class="far fa-envelope"></i>
                                 </span>
                             </div>
 
-                            <div class="wrap-login__input" data-validate="email is required">
-                                <input class="wrap-login__input-container" type="text" name="password" placeholder="Password">
+                            <div class="wrap-register__input" data-validate="password is required">
+                                <input class="wrap-login__input-container" type="password" name="password" placeholder="Password">
                                 <span class="wrap-login__input-symbol">
                                     <i class="fas fa-unlock-alt"></i>
                                 </span>
                             </div>
                     
-                            <div class="wrap-login__btnContainer btnContainer">
-                                <button class="btnContainer__btn">Login</button>
+                            <div class="wrap-register__btnContainer btnContainer">
+                                <button class="btnContainer__btn">Register</button>
                             </div>
 
-                            <div class="wrap-login__textContainer">
-                                <span class="wrap-login__textContainer-p">
-                                    Not a member?
-                                </span>
-        
-                                <a class="wrap-login__textContainer-a" href="#">
-                                    Sign up now							
-                                </a> 
+                            <div class="wrap-register__textContainer">
+                                <a class="wrap-register__textContainer-a" href ="#">
+                                    Go back?
+                                </a>
                             </div>
                                 
-                            <p class="wrap-login__copyright">@copyright by Adrían Zhu</p>
+                            <p class="wrap-register__copyright">@copyright by Adrían Zhu</p>
 
                     </div>     
                 </div>
