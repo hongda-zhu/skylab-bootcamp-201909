@@ -1,8 +1,8 @@
-.log
+.reg
     width: 100%
     margin: 0 auto
 
-.container-login
+.container-register
     width: 100%
     min-height: 100vh
     display: flex
@@ -13,8 +13,8 @@
     z-index: 1
 
     background: #2F3C7E
-    background: -webkit-linear-gradient(top, #2F3C7E, #fbeaeb)
-    background: -moz-linear-gradient(top, #2F3C7E, #fbeaeb)
+    background: -webkit-linear-gradient(top, #2F3C7E, #fbeaeb, red)
+    background: -moz-linear-gradient(top, #2F3C7E, #fbeaeb, red)
     animation: gradientBG 15s ease infinite
 
     &::before
@@ -30,15 +30,15 @@
         background-position: center
         opacity: .6 
 
-.form-login
+.form-register
 
-    margin: 0 15px
+    margin: 15px 15px
     padding: 5px 15px 10px 15px
     background-color: white
     overflow: hidden
     opacity: .8
 
-.wrap-login
+.wrap-register
 
     width: 100%
     
@@ -47,7 +47,6 @@
         justify-content: center
         color: #333333
 
-        letter-spacing: .015rem
         text-align: center  
         line-height: 5
         text-transform: full-width
@@ -71,7 +70,7 @@
             border-radius: 3px
             padding: 0 30px 0 65px
 
-            &:active
+            &:focus
                 border: 1px solid black
         
         &-symbol
@@ -136,7 +135,7 @@
 
             &:hover
                 color: #2F3C7E
-
+    
 @keyframes gradientBG
 
     0% 
