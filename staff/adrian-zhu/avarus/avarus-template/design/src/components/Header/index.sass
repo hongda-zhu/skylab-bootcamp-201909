@@ -9,6 +9,12 @@
 
 .logo
     width: 200px
+    display: flex
+    justify-content: center
+    padding-left: 1rem
+
+.button
+    background-color: transparent
 
 .hamburger__icon
     background: #333
@@ -32,7 +38,7 @@
     &:after
         top: -5px
 
-.hamburger__close
+.hamburger-close
     cursor: pointer
 
 .nav
@@ -42,16 +48,17 @@
     display: flex
     justify-content: space-around
     list-style: none
-
+    
 #show-menu, #close-menu
     display: none
 
 @media (max-width: 480px)
     body
-        background: red
+        background: white
 
     .hamburger
         cursor: pointer
+        padding-top: .4rem
 
     .hamburger__icon
         display: block
@@ -62,7 +69,7 @@
     #show-menu:checked ~ .nav
         display: block
         position: absolute
-        top: 60px
+        top: 68px
         left: 0
         width: 200px
         background: aliceblue
@@ -74,5 +81,5 @@
       justify-content: flex-start
       list-style: none
 
-      .menu__item
+      .menu-item
         padding: 1rem

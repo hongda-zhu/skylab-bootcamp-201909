@@ -424,6 +424,13 @@ a {
 
 .logo {
   width: 200px;
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+}
+
+.button {
+  background-color: transparent;
 }
 
 .hamburger__icon {
@@ -449,7 +456,7 @@ a {
   top: -5px;
 }
 
-.hamburger__close {
+.hamburger-close {
   cursor: pointer;
 }
 
@@ -469,11 +476,12 @@ a {
 
 @media (max-width: 480px) {
   body {
-    background: red;
+    background: white;
   }
 
   .hamburger {
     cursor: pointer;
+    padding-top: 0.4rem;
   }
 
   .hamburger__icon {
@@ -487,7 +495,7 @@ a {
   #show-menu:checked ~ .nav {
     display: block;
     position: absolute;
-    top: 60px;
+    top: 68px;
     left: 0;
     width: 200px;
     background: aliceblue;
@@ -500,7 +508,7 @@ a {
     justify-content: flex-start;
     list-style: none;
   }
-  .menu .menu__item {
+  .menu .menu-item {
     padding: 1rem;
   }
 }
