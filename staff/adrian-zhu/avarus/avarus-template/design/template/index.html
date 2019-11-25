@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <!-- <header class="header hidden">
+    <header class="header">
         <input id="show-menu" name="modal" type="checkbox">
         <label class="header-hamburger hamburger" for="show-menu"><span class="hamburger__icon"></span></label>
         <p class="logo">Avarus</p>
@@ -32,9 +32,29 @@
                 </li>
             </ul>
         </nav>
-    </header>  -->
+    </header> 
 
-    <section class="land">
+    <footer class="footer">
+        <div class="footer__others others">
+            <div class="others__copyright">copyright of Adrían Zhu ©2019 </div>
+            <ul class="others__social-media social-media">
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-twitter-square"></i></a>
+                </li>
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-facebook-square"></i></a>
+                </li>
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </li>
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+    <section class="land hidden">
         <div class="container-landing">
             <div class="form-landing">
 
@@ -54,7 +74,7 @@
         </div>
     </section>
 
-    <section class="log">
+    <section class="log hidden">
             <div class="container-login">
                 <div class="form-login">
     
@@ -97,9 +117,9 @@
             </div>
     </section>
 
-    <section class="reg">
+    <section class="reg hidden">
             <div class="container-register">
-                <d class="form-register">
+                <div class="form-register">
     
                     <form class="wrap-register">
     
@@ -146,9 +166,21 @@
                             <p class="wrap-register__copyright">@copyright by Adrían Zhu</p>
 
                     </form>     
-                </d>
+                </div>
             </div>
     </section>
+
+    <section class="search">
+        
+    </section>
+
+    <main class="main">
+        <span class="main-span">Choose the stocks you'd like to give</span>
+        <form class="main-search">
+            <input type="main-search__input" name="query" placeholder="search" class="query">
+            <div class="main-search__button"><i class="fas fa-search"></i></div>
+        </form>
+    </main>
 
 
 </body>

@@ -24,10 +24,6 @@ a {
   color: black;
 }
 
-.hidden {
-  display: none;
-}
-
 .land {
   width: 100%;
   margin: 0 auto;
@@ -511,6 +507,70 @@ a {
   .menu .menu-item {
     padding: 1rem;
   }
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 3rem;
+  background-color: bisque;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1%;
+}
+.footer .footer-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.footer .footer-menu__about-us {
+  font-size: 70%;
+}
+.footer .footer-menu__privacy {
+  font-size: 70%;
+}
+.footer .footer-menu__contact-us {
+  font-size: 70%;
+}
+.footer .footer-menu__conditions {
+  font-size: 70%;
+}
+.footer .others {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.footer .others__copyright {
+  font-size: 70%;
+  width: 60%;
+}
+.footer .others .social-media {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  width: 30%;
+}
+.footer .others .social-media a {
+  color: black;
+}
+.footer .others .social-media__media-icon {
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  justify-content: flex-start;
+  font-size: 6rem;
+  margin: 0 10rem 0 10rem;
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=index.css.map */
