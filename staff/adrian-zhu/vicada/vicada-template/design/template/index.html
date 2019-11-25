@@ -14,10 +14,10 @@
 </head>
 <body>
 
-    <header class="header">
+    <!-- <header class="header hidden">
         <input id="show-menu" name="modal" type="checkbox">
         <label class="header__hamburger hamburger" for="show-menu"><span class="hamburger__icon"></span></label>
-        <a href="" class="logo">VikaDa$</a>
+        <img src="../public/logo.png" class="logo"></img>
         <nav class="header__nav nav">
             <ul class="nav__menu menu">
                 <li class="menu__item">Spots</li>
@@ -25,14 +25,14 @@
                 <li class="menu__item">Maps</li>
                 <li class="menu__item">Following</li>
                 <li class="menu__item">Profile</li>
-                <!-- <li class="menu__item">
+                <li class="menu__item">
                     <label class="hamburger__close" for="show-menu">Close</label>
-                </li> -->
+                </li>
             </ul>
         </nav>
-    </header>
+    </header> -->
 
-    <section class="land hidden">
+    <section class="land">
         <div class="container-landing">
             <div class="form-landing">
 
@@ -52,11 +52,11 @@
         </div>
     </section>
 
-    <section class="log hidden">
+    <section class="log">
             <div class="container-login">
                 <div class="form-login">
     
-                    <div class="wrap-login">
+                    <form class="wrap-login">
     
                             <h1 class="wrap-login__title">LOGIN</h1>
 
@@ -90,16 +90,16 @@
                                 
                             <p class="wrap-login__copyright">@copyright by Adrían Zhu</p>
 
-                    </div>     
+                    </form>     
                 </div>
             </div>
     </section>
 
-    <section class="reg hidden">
+    <section class="reg">
             <div class="container-register">
-                <div class="form-register">
+                <d class="form-register">
     
-                    <div class="wrap-register">
+                    <form class="wrap-register">
     
                             <h1 class="wrap-register__title">Register</h1>
 
@@ -114,13 +114,6 @@
                                 <input class="wrap-login__input-container" type="text" name="surname" placeholder="Surname">
                                 <span class="wrap-login__input-symbol">
                                     <i class="fas fa-sort-alpha-up-alt"></i>
-                                </span>
-                            </div>
-
-                            <div class="wrap-register__input" data-validate="username is required">
-                                <input class="wrap-login__input-container" type="text" name="username" placeholder="Username">
-                                <span class="wrap-login__input-symbol">
-                                    <i class="far fa-user"></i>
                                 </span>
                             </div>
 
@@ -150,8 +143,8 @@
                                 
                             <p class="wrap-register__copyright">@copyright by Adrían Zhu</p>
 
-                    </div>     
-                </div>
+                    </form>     
+                </d>
             </div>
     </section>
 
