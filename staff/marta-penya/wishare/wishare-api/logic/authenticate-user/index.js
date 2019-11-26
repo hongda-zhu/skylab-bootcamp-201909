@@ -1,5 +1,6 @@
 const { validate, errors: { CredentialsError } } = require('wishare-util')
 const { models: { User } } = require('wishare-data')
+const bcrypt = require('bcryptjs')
 
 /**
  * Authenticates a user by her/his email and password.
@@ -17,9 +18,11 @@ module.exports = function (email, password) {
     validate.string.notVoid('password', password)
 
     return (async () => {
-        const user = await User.findOne({ email, password })
+        const user = await User.findOne({ email })
+        if (!user) throw new CredentialsError('wrong e-mail')
 
-        if (!user) throw new CredentialsError('wrong credentials')
+        const match = await bcrypt.compare(password, user.password)
+        if(!match) throw new CredentialsError ('wrong password')
 
         return user.id
     })()

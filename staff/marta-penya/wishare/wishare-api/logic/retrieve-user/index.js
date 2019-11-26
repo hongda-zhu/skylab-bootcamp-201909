@@ -11,8 +11,8 @@ module.exports = function (id) {
         debugger
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const { name, surname, email, birthday } = user.toObject()
+        const { name, surname, email, birthday, description } = user.toObject()
 
-        return { id, name, surname, email, birthday }
+        return { id, name, surname, email, birthday, description }
     })()
 }

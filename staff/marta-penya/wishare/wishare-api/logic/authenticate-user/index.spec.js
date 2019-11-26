@@ -5,6 +5,7 @@ const authenticateUser = require('.')
 const { random } = Math
 const { errors: { ContentError, CredentialsError } } = require('wishare-util')
 const { database, models: { User } } = require('wishare-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - authenticate user', () => {
     before(() => database.connect(TEST_DB_URL))
@@ -26,8 +27,8 @@ describe('logic - authenticate user', () => {
         birthday = new Date(`${year},${month},${day}`)
 
         await User.deleteMany()
-
-        const user = await User.create({ name, surname, email, birthday, password })
+        
+        const user = await User.create({ name, surname, email, birthday, password: await bcrypt.hash(password, 10) })
 
         id = user.id
     })
@@ -55,7 +56,7 @@ describe('logic - authenticate user', () => {
                 expect(error).to.be.an.instanceOf(CredentialsError)
 
                 const { message } = error
-                expect(message).to.equal(`wrong credentials`)
+                expect(message).to.equal(`wrong e-mail`)
             }
         })
 
@@ -71,7 +72,7 @@ describe('logic - authenticate user', () => {
                 expect(error).to.be.an.instanceOf(CredentialsError)
 
                 const { message } = error
-                expect(message).to.equal(`wrong credentials`)
+                expect(message).to.equal(`wrong password`)
             }
         })
     })

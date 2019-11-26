@@ -1,5 +1,6 @@
 const { validate, errors: { ConflictError } } = require('wishare-util')
 const { models: { User } } = require('wishare-data')
+const bcrypt = require('bcryptjs')
 
 /**
  * Allow a user to be registered by completing the formulary fields
@@ -24,12 +25,12 @@ module.exports = function (name, surname, email, year, month, day, password, pas
     validate.string(email)
     validate.string.notVoid('e-mail', email)
     validate.email(email)
-    validate.number(year)
-    validate.number.notVoid('year', year)
-    validate.number(month)
-    validate.number.notVoid('month', month)
-    validate.number(day)
-    validate.number.notVoid('day', day)
+    validate.string(year)
+    validate.string.notVoid('year', year)
+    validate.string(month)
+    validate.string.notVoid('month', month)
+    validate.string(day)
+    validate.string.notVoid('day', day)
     validate.string(password)
     validate.string.notVoid('password', password)
     validate.string(passwordconfirm)
@@ -44,10 +45,10 @@ module.exports = function (name, surname, email, year, month, day, password, pas
 
         if (user) throw new ConflictError(`user with email ${email} already exists`)
 
+        const birthday = new Date(year,month-1,day, 2, 0, 0, 0)
 
-        const birthday = new Date(`${year},${month},${day}`)
-        debugger
+        const hash = await bcrypt.hash(password,10)
 
-        await User.create({ name, surname, email, birthday, password })
+        await User.create({ name, surname, email, birthday, password: hash })
     })()
 }

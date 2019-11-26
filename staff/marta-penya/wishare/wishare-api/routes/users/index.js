@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -11,10 +11,10 @@ const jsonBodyParser = bodyParser.json()
 const router = Router()
 
 router.post('/', jsonBodyParser, (req, res) => {
-    const { body: { name, surname, email, username, password } } = req
+    const { body: { name, surname, email, year, month, day, password, passwordconfirm } } = req
 
     try {
-        registerUser(name, surname, email, username, password)
+        registerUser(name, surname, email, year, month, day, password, passwordconfirm)
             .then(() => res.status(201).end())
             .catch(error => {
                 const { message } = error
@@ -30,10 +30,10 @@ router.post('/', jsonBodyParser, (req, res) => {
 })
 
 router.post('/auth', jsonBodyParser, (req, res) => {
-    const { body: { username, password } } = req
+    const { body: { email, password } } = req
 
     try {
-        authenticateUser(username, password)
+        authenticateUser(email, password)
             .then(id => {
                 const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
 
@@ -69,6 +69,27 @@ router.get('/', tokenVerifier, (req, res) => {
     } catch (error) {
         const { message } = error
 
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { params: { id }, body: { year, month, day, password, description } } = req
+        debugger
+        modifyUser(id, year, month, day, password, description)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
         res.status(400).json({ message })
     }
 })

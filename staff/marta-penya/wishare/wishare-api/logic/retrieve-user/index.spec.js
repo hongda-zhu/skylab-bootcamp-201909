@@ -5,8 +5,9 @@ const { random } = Math
 const retrieveUser = require('.')
 const { errors: { NotFoundError } } = require('wishare-util')
 const { database, models: { User } } = require('wishare-data')
+const bcrypt = require('bcryptjs')
 
-describe.only('logic - retrieve user', () => {
+describe('logic - retrieve user', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, email, year, month, day, birthday, password
@@ -23,11 +24,11 @@ describe.only('logic - retrieve user', () => {
         passwordconfirm = password
 
 
-        birthday = new Date(`${year},${month},${day}`)
+        birthday = new Date(year,month-1,day, 2, 0, 0, 0)
 
         await User.deleteMany()
 
-        const user = await User.create({ name, surname, email, birthday, password })
+        const user = await User.create({ name, surname, email, birthday, password: await bcrypt.hash(password, 10) })
 
         id = user.id
     })
