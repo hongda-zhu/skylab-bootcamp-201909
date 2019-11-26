@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose
+const transactionSchema = require('./transaction')
 
 module.exports = new Schema({
     name: {
@@ -32,6 +33,6 @@ module.exports = new Schema({
         ref: 'Company'
     },
 
-    transactions: [transaction]
+    transactions: [transactionSchema]
 
 })
