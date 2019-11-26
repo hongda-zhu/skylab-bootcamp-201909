@@ -78,7 +78,7 @@
             <div class="container-login">
                 <div class="form-login">
     
-                    <form class="wrap-login">
+                    <form type="submit" class="wrap-login">
     
                             <h1 class="wrap-login__title">LOGIN</h1>
 
@@ -121,7 +121,7 @@
             <div class="container-register">
                 <div class="form-register">
     
-                    <form class="wrap-register">
+                    <form type="submit" class="wrap-register">
     
                             <h1 class="wrap-register__title">Register</h1>
 
@@ -170,18 +170,87 @@
             </div>
     </section>
 
-    <section class="search">
-        
-    </section>
-
     <main class="main">
         <span class="main-span">Choose the stocks you'd like to give</span>
-        <form class="main-search">
-            <input type="main-search__input" name="query" placeholder="search" class="query">
-            <div class="main-search__button"><i class="fas fa-search"></i></div>
+        <form type="submit" class="main-search">
+            <input class="main-search__text" name="query" placeholder="search" class="query">
+            <div class="main-search__btn"><i class="fas fa-search"></i></div>
         </form>
+        <nav class="main-nav">
+            <ul class="main-nav__category category">
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Treding</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>  
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Most Active</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p> 
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Top Gainers</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>  
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Top Losers</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Tech</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>  
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+                
+                <li class="category-company company">
+                        <button class="company-button button">
+                            <p class="button-name">Restaurant</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>
+                        </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                        <button class="company-button button">
+                            <p class="button-name">Food & Drink</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>
+                        </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Sports</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Gaming</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+                <li class="category-company company">
+                    <button class="company-button button">
+                        <p class="button-name">Hobbies</p> <p class="button-signal"> <i class="fas fa-arrow-right"></i> </p>
+                    </button>
+                    <ul class="button-list"></ul>
+                </li>
+
+            </ul>
+        </nav>
     </main>
-
-
 </body>
 </html>
