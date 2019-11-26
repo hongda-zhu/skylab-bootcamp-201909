@@ -31,9 +31,15 @@ a {
   color: black;
 }
 
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
+th {
+  font-size: 0.7rem;
+  padding-left: 0.5rem;
+}
+
+td {
+  font-size: 0.7rem;
+  padding-left: 0.5rem;
+  text-align: center;
 }
 
 .land {
@@ -580,6 +586,9 @@ table, th, td {
   margin: 0 10rem 0 10rem;
 }
 
+.main {
+  flex-grow: 1;
+}
 .main-span {
   display: flex;
   justify-content: center;
@@ -757,6 +766,9 @@ table, th, td {
   justify-content: center;
   margin: 1rem 0;
 }
+.detail .container .stats .tabla {
+  width: 100%;
+}
 .detail .container .about .name {
   display: flex;
   justify-content: center;
@@ -769,6 +781,28 @@ table, th, td {
   display: flex;
   justify-content: center;
   padding-bottom: 1rem;
+}
+
+.hamburger {
+  flex-grow: 1;
+}
+.hamburger .user {
+  display: flex;
+  justify-content: center;
+}
+.hamburger .history {
+  width: 100%;
+}
+.hamburger .history .tabla {
+  display: flex;
+  justify-content: center;
+}
+.hamburger .favorite {
+  width: 100%;
+}
+.hamburger .favorite .tabla {
+  display: flex;
+  justify-content: center;
 }
 
 .hidden {
