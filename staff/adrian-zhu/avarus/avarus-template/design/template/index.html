@@ -34,26 +34,6 @@
         </nav>
     </header> 
 
-    <footer class="footer">
-        <div class="footer__others others">
-            <div class="others__copyright">copyright of Adrían Zhu ©2019 </div>
-            <ul class="others__social-media social-media">
-                <li className="social-media__media-icon">
-                    <a href="#"><i class="fab fa-twitter-square"></i></a>
-                </li>
-                <li className="social-media__media-icon">
-                    <a href="#"><i class="fab fa-facebook-square"></i></a>
-                </li>
-                <li className="social-media__media-icon">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </li>
-                <li className="social-media__media-icon">
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </li>
-            </ul>
-        </div>
-    </footer>
-
     <section class="land hidden">
         <div class="container-landing">
             <div class="form-landing">
@@ -314,8 +294,69 @@
                     </li>
                 </ul>
             </nav>
+
+            <div class="container-buy buy">
+                <span class="buy-text">How much would you like to buy ?</span>
+                <div class="buy-prices prices">
+                    <ul class="prices-list list">
+                        <li class="list-price price">
+                            <button class="price-btn">
+                                $25
+                            </button>
+                        </li>
+                        <li class="list-price price">
+                            <button class="price-btn">
+                                $50
+                            </button>
+                        </li>
+                        <li class="list-price price">
+                            <button class="price-btn">
+                                $100
+                            </button>
+                        </li>
+                        <li class="list-price price">
+                            <button class="price-btn">
+                                $200
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div type="submit" class="buy-search search">
+                    <form class="search-formula formula">
+                        <input class="formula-container" name="query" placeholder="How much" class="query">
+
+                        <button class="formula-btn">Pick stock</button>
+                    </form>
+                    <p class="search-warning">Enter value between $1 - $200</p>
+                    
+                </div>
+
+
+            </div>
+
+
         </div>
     </section>
+
+    <footer class="footer">
+        <div class="footer__others others">
+            <div class="others__copyright">copyright of Adrían Zhu ©2019 </div>
+            <ul class="others__social-media social-media">
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-twitter-square"></i></a>
+                </li>
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-facebook-square"></i></a>
+                </li>
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </li>
+                <li className="social-media__media-icon">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </li>
+            </ul>
+        </div>
+    </footer>
 
 </body>
 </html>

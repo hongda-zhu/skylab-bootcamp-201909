@@ -12,6 +12,9 @@ body {
   line-height: 1.5;
   color: #222222;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 button, input {
@@ -513,7 +516,6 @@ a {
   }
 }
 .footer {
-  position: fixed;
   bottom: 0;
   z-index: 10;
   width: 100vw;
@@ -640,6 +642,7 @@ a {
 
 .detail {
   width: 100%;
+  flex-grow: 1;
 }
 .detail .container {
   width: 100%;
@@ -649,7 +652,7 @@ a {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 2rem 3rem;
+  padding: 1rem 3rem 2rem 3rem;
 }
 .detail .container .description-title {
   padding: 0.5rem 0;
@@ -680,13 +683,54 @@ a {
   justify-content: space-evenly;
   margin: 1rem;
   margin-left: 0;
-  padding-bottom: 2rem;
+  margin-top: 0;
+  padding-bottom: 1rem;
   border-bottom: 1px solid black;
 }
 .detail .container .navegator .list .item-button {
   background-color: transparent;
   border: 1px solid black;
   padding: 0.2rem 0.5rem;
+}
+.detail .container .buy {
+  width: 100%;
+}
+.detail .container .buy-text {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+.detail .container .buy .prices {
+  width: 100%;
+}
+.detail .container .buy .prices .list {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.detail .container .buy .prices .list .price-btn {
+  border: 1px solid black;
+  padding: 0.4rem 0.2rem;
+}
+.detail .container .buy .search {
+  width: 100%;
+}
+.detail .container .buy .search .formula {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.detail .container .buy .search .formula-container {
+  border: 1px solid black;
+}
+.detail .container .buy .search .formula-btn {
+  border: 1px solid black;
+}
+.detail .container .buy .search-warning {
+  font-size: 0.6rem;
+  justify-content: center;
+  display: flex;
 }
 
 .hidden {
