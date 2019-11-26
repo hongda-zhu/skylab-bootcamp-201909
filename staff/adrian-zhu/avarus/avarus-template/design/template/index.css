@@ -31,6 +31,11 @@ a {
   color: black;
 }
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
 .land {
   width: 100%;
   margin: 0 auto;
@@ -731,6 +736,39 @@ a {
   font-size: 0.6rem;
   justify-content: center;
   display: flex;
+}
+.detail .container .charts {
+  width: 100%;
+}
+.detail .container .charts .list {
+  display: flex;
+  justify-content: space-evenly;
+}
+.detail .container .charts .list .item-btn {
+  border-bottom: 1px solid black;
+}
+.detail .container .charts .image {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+.detail .container .charts-btn {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.detail .container .about .name {
+  display: flex;
+  justify-content: center;
+}
+.detail .container .about-description {
+  padding: 1rem 3rem;
+  text-align: center;
+}
+.detail .container .about .box {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
 }
 
 .hidden {
