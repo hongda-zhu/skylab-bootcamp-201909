@@ -19,6 +19,10 @@ button, input {
   border: none;
 }
 
+ul {
+  list-style: none;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -609,6 +613,25 @@ a {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 1.5rem;
+}
+.main-nav .category .company .list {
+  width: 100%;
+  display: flex;
+  padding: 1rem 1rem;
+}
+.main-nav .category .company .list .stock {
+  width: 100%;
+}
+.main-nav .category .company .list .stock .profile {
+  width: 100%;
+}
+.main-nav .category .company .list .stock .profile-title {
+  display: flex;
+  justify-content: center;
+}
+.main-nav .category .company .list .stock .profile-img {
+  margin-left: 0.4rem;
 }
 
 .fa-search {
