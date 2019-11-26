@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema,  ObjectId } = require('mongoose')
 const Message = require('./message')
 
 module.exports = new Schema({

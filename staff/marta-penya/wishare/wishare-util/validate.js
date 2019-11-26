@@ -43,4 +43,10 @@ validate.string.notVoid = function (name, target) {
     if (!target.trim().length) throw new ContentError(`${name} is empty or blank`)
 }
 
+validate.number.notVoid = function (name, target) {
+    target = target.toString()
+    if (!target.trim().length) throw new ContentError(`${name} is empty or blank`)
+    target = parseInt(target)
+}
+
 module.exports = validate
