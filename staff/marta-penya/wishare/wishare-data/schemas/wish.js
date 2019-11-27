@@ -5,7 +5,11 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    img: {
+    link: {
+        type: String,
+        required: true
+    },
+    price: {
         type: String,
         required: true
     },
