@@ -18,10 +18,10 @@ module.exports = function (id) {
 
     return (async () => {
         const user = await User.findById(id)
-        debugger
+        
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        var dir = `./data/users/${id}`
+        const dir = `./data/users/${id}`
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir)
         }
