@@ -1,14 +1,14 @@
- 
 require('dotenv').config()
 
-const express = require('express')
-const { name, version } = require('./package.json')
 const { argv: [, , port], env: { PORT = port || 8080, DB_URL } } = process
 const cors = require('./utils/cors')
-const { database } = require('tasks-data')
 
-const { users, tasks } = require('./routes')
+// MODULES
+const express = require('express')
+const { name, version } = require('./package.json')
 
+// API
+const { database } = require('time2padel-data')
 const api = express()
 
 api.use(cors)
@@ -17,8 +17,11 @@ api.options('*', cors, (req, res) => {
     res.end()
 })
 
+//ROUTES
+const { users, leagues } = require('./routes')
+
 api.use('/users', users)
-api.use('/tasks', tasks)
+api.use('/leagues', leagues)
 
 database
     .connect(DB_URL)
