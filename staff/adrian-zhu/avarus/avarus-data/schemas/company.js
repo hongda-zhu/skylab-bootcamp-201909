@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema, ObjectId} = mongoose
-const stockSchema = require('./stock')
+const stock = require('./stock')
 
 module.exports = new Schema ({
     name: {
@@ -21,12 +21,12 @@ module.exports = new Schema ({
     },
     category: {
         type: String,
-        enum: ['Tech', 'Restaurant', 'Banking', 'Sports', 'Gaming', 'Fashion'],
+        enum: ['tech', 'restaurant', 'banking', 'sports', 'gaming', 'fashion'],
         required: true
     },
     dependency: {
         type: ObjectId,
-        ref:'User'
+        ref:'Company'
     },
-    stocks: [stockSchema]
+    stocks: [stock]
 })

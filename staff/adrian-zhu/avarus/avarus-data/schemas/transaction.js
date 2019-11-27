@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
-const {Schema, ObjectId} = mongoose
+const { Schema, ObjectId } = mongoose
 
 module.exports = new Schema({
-    transactionTime:{
+    time: {
         type: Date,
         required: true
     },
@@ -10,25 +10,25 @@ module.exports = new Schema({
         type: Number,
         required: true
     },
-    amount:{
+    amount: {
         type: Number,
         required: true
     },
     operation: {
         type: String,
-        enum:['Buyin', 'Sellout', 'Preset'],
+        enum: ['buy-in', 'sell-out', 'preset'],
         required: true
     },
-    companyId: {
+    company: {
         type: ObjectId,
-        ref:'Company'
+        ref: 'Company'
     },
-    stocks:{
+    stock: {
         type: ObjectId,
-        ref:'Stock'
+        ref: 'Stock'
     },
-    relatedTransaction:{
+    relatedTo: {
         type: ObjectId,
-        ref:'Transaction'
+        ref: 'Transaction'
     }
 })

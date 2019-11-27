@@ -1,36 +1,36 @@
 const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose
-const transactionSchema = require('./transaction')
+const transaction = require('./transaction')
 
 module.exports = new Schema({
     name: {
         type: String,
         required: true
     },
+
     surname: {
         type: String,
         required: true
     },
+
     username: {
         type: String,
         required: true
     },
+
     email: {
         type: String,
-        required:true,
+        required: true,
         match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     },
+
     password: {
         type: String,
         required: true
     },
 
-    lastAccess: {
-        type: Date
-    },
-
     budget: {
-        type: String,
+        type: Number,
         require: true
     },
 
@@ -39,6 +39,6 @@ module.exports = new Schema({
         ref: 'Company'
     }],
 
-    transactions: [transactionSchema]
+    transactions: [transaction]
 
 })
