@@ -1,5 +1,7 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { ObjectId, models: { User } } = require('wishare-data')
+const fs = require('fs')
+
 
  /**
  * Retrieves the user data
@@ -19,8 +21,17 @@ module.exports = function (id) {
         debugger
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const { name, surname, email, birthday, description } = user.toObject()
+        var dir = `./data/users/${id}`
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir)
+        }
+        
+        const { name, surname, email, birthday, description, image } = user.toObject()
 
-        return { id, name, surname, email, birthday, description }
+        return { id, name, surname, email, birthday, description, image }
     })()
 }
+
+
+
+

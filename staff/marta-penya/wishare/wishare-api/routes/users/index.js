@@ -126,18 +126,29 @@ router.post('/upload', tokenVerifier, (req, res) => {
     const busboy = new Busboy({ headers: req.headers })
     debugger
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-        filename = id
+        filename = 'profile'
         
-        let saveTo = path.join(__dirname, 'images/' + filename +'.png')
+        let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename +'.png')
         file.pipe(fs.createWriteStream(saveTo))
-    });
+    })
 
     busboy.on('finish', () => {
         res.end("That's all folks!")
-    });
+    })
 
     return req.pipe(busboy)
 
-});
+})
+
+
+// router.get('/userimage', tokenVerifier, (req, res) => {
+
+//     const { id } = req
+
+//     fs.createReadStream(`../../data/users/${id}/` + 'profile.png').pipe(res)
+
+
+// })
+
 
 module.exports = router
