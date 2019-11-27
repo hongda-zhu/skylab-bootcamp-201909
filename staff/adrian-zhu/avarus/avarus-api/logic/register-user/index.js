@@ -15,9 +15,7 @@ module.exports = function (name, surname, email, username, password, budget) {
     validate.string.notVoid('username', username)
     validate.string(password)
     validate.string.notVoid('password', password)
-    validate.string(budget)
-    validate.string.notVoid('budget', budget)
-
+    validate.number(budget)
 
     return (async () => {
         const user = await User.findOne({ username })

@@ -32,29 +32,29 @@ router.post('/', jsonBodyParser, (req, res) => {
     }
 })
 
-// //AUTHENTICATE USER
-// router.post('/auth', jsonBodyParser, (req, res) => {
-//     const { body: { username, password } } = req
+//AUTHENTICATE USER
+router.post('/auth', jsonBodyParser, (req, res) => {
+    const { body: { username, password } } = req
 
-//     try {
-//         authenticateUser(username, password)
-//             .then(id => {
-//                 const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
+    try {
+        authenticateUser(username, password)
+            .then(id => {
+                const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
 
-//                 res.json({ token })
-//             })
-//             .catch(error => {
-//                 const { message } = error
+                res.json({ token })
+            })
+            .catch(error => {
+                const { message } = error
 
-//                 if (error instanceof CredentialsError)
-//                     return res.status(401).json({ message })
+                if (error instanceof CredentialsError)
+                    return res.status(401).json({ message })
 
-//                 res.status(500).json({ message })
-//             })
-//     } catch ({ message }) {
-//         res.status(400).json({ message })
-//     }
-// })
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
 
 // //RETRIEVE USER
 // router.get('/', tokenVerifier, (req, res) => {

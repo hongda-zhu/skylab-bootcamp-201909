@@ -1,6 +1,6 @@
 require('dotenv').config()
 const moment = require('moment')
-const { database, models: { Company, Stock, Transaction, User } } = require('avarus-data')
+const { database, models: { Company, Stock } } = require('avarus-data')
 const { env: { TEST_DB_URL } } = process;
 const fetch = require('node-fetch');
 
@@ -51,8 +51,6 @@ const fetch = require('node-fetch');
 
             coca.stocks.push(stock)
         }
-
-        debugger
 
         await coca.save()
     } catch (error) {

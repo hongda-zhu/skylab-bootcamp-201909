@@ -1,14 +1,14 @@
 require('dotenv').config()
-const { env: { DB_URL_TEST } } = process
+const { env: { TEST_DB_URL} } = process
 const { expect } = require('chai')
 const registerUser = require('.')
-const { random, floor } = Math
+const { random } = Math
 const { errors: { ContentError } } = require('avarus-util')
 const { database, models: { User } } = require('avarus-data')
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - register user', () => {
-    before(() => database.connect(DB_URL_TEST))
+describe('logic - register user', () => {
+    before(() => database.connect(TEST_DB_URL))
 
     let name, surname, email, username, password, budget 
     
@@ -18,7 +18,7 @@ describe.only('logic - register user', () => {
         email = `email-${random()}@mail.com`
         username = `username-${random()}`
         password = `password-${random()}`
-        budget = `password-${5000}`
+        budget = 5000
         
 
         return User.deleteMany()
