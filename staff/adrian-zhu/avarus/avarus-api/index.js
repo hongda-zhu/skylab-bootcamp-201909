@@ -8,7 +8,7 @@ const express = require('express')
 const { name, version } = require('./package.json')
 
 // API
-const { database } = require('time2padel-data')
+const { database } = require('avarus-data')
 const api = express()
 
 api.use(cors)
@@ -18,10 +18,10 @@ api.options('*', cors, (req, res) => {
 })
 
 //ROUTES
-const { users, leagues } = require('./routes')
+const { users, company } = require('./routes')
 
 api.use('/users', users)
-api.use('/leagues', leagues)
+api.use('/company', company)
 
 database
     .connect(DB_URL)
