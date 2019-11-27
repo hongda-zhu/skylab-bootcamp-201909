@@ -21,7 +21,7 @@ module.exports = new Schema ({
     },
     category: {
         type: String,
-        enum: ['tech', 'restaurant', 'banking', 'sports', 'gaming', 'fashion'],
+        enum: ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion'],
         required: true
     },
     dependency: {
