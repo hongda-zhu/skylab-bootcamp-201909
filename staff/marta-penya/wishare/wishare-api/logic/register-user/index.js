@@ -1,7 +1,7 @@
 const { validate, errors: { ConflictError } } = require('wishare-util')
 const { models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
-
+const fs = require('fs')
 /**
  * Allow a user to be registered by completing the formulary fields
  * 
@@ -38,7 +38,11 @@ module.exports = function (name, surname, email, year, month, day, password, pas
 
     if(passwordconfirm !== password) throw new ConflictError('password do not matches')
 
+    const dir = `../../images/${id}`
 
+    if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+    }
 
     return (async () => {
         const user = await User.findOne({ email })

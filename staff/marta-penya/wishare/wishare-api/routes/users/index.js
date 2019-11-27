@@ -1,10 +1,13 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, modifyUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, deleteUser, uploadUserImage } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('wishare-util')
+const Busboy = require('busboy')
+const fs = require('fs')
+const path = require('path')
 
 const jsonBodyParser = bodyParser.json()
 
@@ -77,7 +80,7 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { params: { id }, body: { year, month, day, password, description } } = req
         debugger
-        modifyUser(id, year, month, day, password, description)
+        modifyUser(id, year, month, day, password, description, imageURL)
             .then(() =>
                 res.end()
             )
@@ -93,5 +96,48 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
         res.status(400).json({ message })
     }
 })
+
+router.delete('/:id', tokenVerifier, (req, res) => {
+    try {
+        const { params: { id } } = req
+        deleteUser(id)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+
+
+router.post('/upload', tokenVerifier, (req, res) => {
+
+    const { id } = req
+  
+    const busboy = new Busboy({ headers: req.headers })
+    debugger
+    busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+        filename = id
+        
+        let saveTo = path.join(__dirname, 'images/' + filename +'.png')
+        file.pipe(fs.createWriteStream(saveTo))
+    });
+
+    busboy.on('finish', () => {
+        res.end("That's all folks!")
+    });
+
+    return req.pipe(busboy)
+
+});
 
 module.exports = router

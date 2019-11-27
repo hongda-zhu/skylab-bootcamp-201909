@@ -10,12 +10,13 @@ const bcrypt = require('bcryptjs')
 * @param {String} month
 * @param {String} day
 * @param {String} password
-* @param {String} description 
+* @param {String} description
+* @param {String} imageURL 
 *
 * @returns {Promise} - user.  
 */
 
-module.exports = function (id, year, month, day, password, description) {
+module.exports = function (id, year, month, day, password, description, imageURL) {
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
@@ -42,6 +43,10 @@ module.exports = function (id, year, month, day, password, description) {
         validate.string.notVoid('description', description)
     }
 
+    if(imageURL){
+        validate.string(imageURL)
+        validate.string.notVoid('imageURL', imageURL)        
+    }
     return (async () => {
         const user = await User.findById(id)
 
@@ -58,6 +63,8 @@ module.exports = function (id, year, month, day, password, description) {
             update.password = hash
         }     
         description && (update.description = description)
+
+        imageURL && (update.image = imageURL)
 
         await User.updateOne({ _id: id }, { $set: update })
     })()

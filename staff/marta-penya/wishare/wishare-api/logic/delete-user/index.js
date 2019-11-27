@@ -1,13 +1,14 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { ObjectId, models: { User } } = require('wishare-data')
 
- /**
- * Retrieves the user data
+/**
+ * Deletes the user account
  * 
  * @param {ObjectId} id 
  * 
- * @returns {Promise}
+ * @returns {Promise} 
  */
+
 
 module.exports = function (id) {
     validate.string(id)
@@ -16,11 +17,9 @@ module.exports = function (id) {
 
     return (async () => {
         const user = await User.findById(id)
-        debugger
+
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const { name, surname, email, birthday, description } = user.toObject()
-
-        return { id, name, surname, email, birthday, description }
+        await User.deleteOne({ _id: id })
     })()
 }
