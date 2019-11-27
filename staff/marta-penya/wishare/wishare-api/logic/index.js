@@ -4,5 +4,6 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     modifyUser: require('./modify-user'),
     deleteUser: require('./delete-user'),
-    uploadUserImage: require('./upload-user-image')
+    saveProfileImage: require('./save-profile-image'),
+    loadProfileImage: require('./load-profile-image')
 }

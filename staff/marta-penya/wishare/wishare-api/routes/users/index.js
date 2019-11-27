@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, modifyUser, deleteUser, uploadUserImage } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, deleteUser, saveProfileImage, loadProfileImage } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -118,18 +118,19 @@ router.delete('/:id', tokenVerifier, (req, res) => {
 })
 
 
-
-router.post('/upload', tokenVerifier, (req, res) => {
-
-    const { id } = req
+router.post('/upload/:id', (req, res) => {
+    
+    const { params: { id } } = req
   
     const busboy = new Busboy({ headers: req.headers })
-    debugger
-    busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+
+    busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
         filename = 'profile'
+
+        await saveProfileImage(id, file, filename)
         
-        let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename +'.png')
-        file.pipe(fs.createWriteStream(saveTo))
+        // let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename +'.png')
+        // file.pipe(fs.createWriteStream(saveTo))
     })
 
     busboy.on('finish', () => {
@@ -139,6 +140,40 @@ router.post('/upload', tokenVerifier, (req, res) => {
     return req.pipe(busboy)
 
 })
+
+router.get('/profileimage/:id', async (req, res) => {
+
+    const { params: { id } } = req
+
+    const stream = await loadProfileImage(id) 
+    //let goTo = path.join(__dirname, `../../data/users/${id}/profile.png`)
+    //stream = fs.createReadStream(goTo)
+
+    res.setHeader('Content-Type', 'image/jpeg')
+
+    return stream.pipe(res)
+})
+
+// router.post('/upload', tokenVerifier, (req, res) => {
+    
+//     const { id } = req
+  
+//     const busboy = new Busboy({ headers: req.headers })
+
+//     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+//         filename = 'profile'
+        
+//         let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename +'.png')
+//         file.pipe(fs.createWriteStream(saveTo))
+//     })
+
+//     busboy.on('finish', () => {
+//         res.end("That's all folks!")
+//     })
+
+//     return req.pipe(busboy)
+
+// })
 
 
 // router.get('/userimage', tokenVerifier, (req, res) => {

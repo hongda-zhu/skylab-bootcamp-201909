@@ -1,22 +1,21 @@
 require('dotenv').config()
 const { validate } = require('wishare-util')
 const { ObjectId, models: { User } } = require('wishare-data')
-
+const fs = require('fs')
+const path = require('path')
 
 /**
 * Update user information.
 * 
 * @param {ObjectId} id
-* @param {Stream} image
-* 
-* @throws {TypeError} - if userId is not a string or buffer is not a buffer.
-* @throws {Error} - if any param is empty, user is not found or image could not be uploaded.
+* @param {Stream} file
+* @param {Sting} filename 
 *
-* @returns {Object} - user.  
+* @returns {Promise} - user.  
 */
 
 
-module.exports = function (id, image) {
+module.exports = function (id, file, filename) {
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
@@ -26,11 +25,8 @@ module.exports = function (id, image) {
         const user = await User.findById(id)
         if (!user) throw new Error(`user with id ${id} not found`)
 
-                
-        //mirar si hay carpeta creada para cada usuario, crear carpeta en register
-
-        await User.updateOne({ _id: id }, { $set: image })
-
+            let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename + '.png')
+            return file.pipe(fs.createWriteStream(saveTo))            
     })()
 }
 
