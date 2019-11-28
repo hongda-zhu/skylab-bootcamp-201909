@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs')
  * @param {string} email 
  * @param {string} password 
  * 
- * @returns {Promise}
+ * @returns {Promise} with user id
  */
 
 module.exports = function (email, password) {

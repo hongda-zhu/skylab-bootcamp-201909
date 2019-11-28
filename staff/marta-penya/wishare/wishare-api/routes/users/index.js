@@ -6,8 +6,6 @@ const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('wishare-util')
 const Busboy = require('busboy')
-const fs = require('fs')
-const path = require('path')
 
 const jsonBodyParser = bodyParser.json()
 
@@ -79,8 +77,8 @@ router.get('/', tokenVerifier, (req, res) => {
 router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { params: { id }, body: { year, month, day, password, description } } = req
-        debugger
-        modifyUser(id, year, month, day, password, description, imageURL)
+  
+        modifyUser(id, year, month, day, password, description)
             .then(() =>
                 res.end()
             )

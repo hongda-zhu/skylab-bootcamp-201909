@@ -1,13 +1,29 @@
- 
 const { validate, errors: { NotFoundError } } = require('wishare-util')
-const { models: { Wish } } = require('wishare-data')
+const { ObjectId, models: { User, Wish } } = require('wishare-data')
 
-module.exports = function ( id, name, link, price, description) {
+/**
+ * function to creat a new wish 
+ * 
+ * @param {string} id of user 
+ * @param {String} title wish
+ * @param {String} link wish
+ * @param {String} price wish
+ * @param {String} description wish 
+ * 
+ * @returns {Promise}
+ * 
+ */
 
-    validate.string(name)
-    validate.string.notVoid('name', name)
+module.exports = function ( id, title, link, price, description) {
 
+    validate.string(id)
+    validate.string.notVoid('id', id)
+    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+    
     validate.string(title)
+    validate.string.notVoid('title', title)
+
+    validate.string(link)
     validate.string.notVoid('link', link)
 
     validate.string(price)
@@ -20,9 +36,12 @@ module.exports = function ( id, name, link, price, description) {
         const user = await User.findById(id)        
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const wish = new Wish({ name, link, price, description })
+        const wish = new Wish({ title, link, price, description })
+        
         user.wishes.push(wish)
-        user.save()
+        
+        await user.save()
 
+        return wish.id
     })()
 }

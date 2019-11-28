@@ -8,7 +8,8 @@
     "debug": "node inspect .",
     "watch": "npx nodemon .",
     "test": "npx mocha logic/**/*.spec.js",
-    "test-debug": "npx mocha inspect logic/*/*.spec.js"
+    "test-debug": "npx mocha inspect logic/*/*.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.7.11",
+    "nyc": "^14.1.1",
     "path": "^0.12.7",
     "wishare-data": "file:../wishare-data",
     "wishare-util": "file:../wishare-util"

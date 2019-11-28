@@ -3,143 +3,122 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const createWish = require('.')
 const { random } = Math
-const { errors: { ContentError } } = require('wishare-util')
-const { database, models: { Wish } } = require('wishare-data')
+const { errors: { NotFoundError, ContentError } } = require('wishare-util')
+const { database, ObjectId, models: { User, Wish } } = require('wishare-data')
+const bcrypt = require('bcryptjs')
 
 
-describe('logic - register user', () => {
+describe('logic - create wish', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let name, link, price, description 
 
-    beforeEach(() => {
+    let id, title, link, price, description, name, surname, email, birthday, password
+
+
+    beforeEach(async () => {
         name = `name-${random()}`
-        link = `surname-${random()}`
-        price = `email-${random()}@mail.com`
-        description = `username-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        username = `username-${random()}`
+        password = `password-${random()}`
+        year = 1999
+        month = 1
+        day = 25
 
 
-        return Wish.deleteMany()
+        birthday = new Date(year, month - 1, day, 2, 0, 0, 0)
+
+        await Promise.all([User.deleteMany(), Wish.deleteMany()])
+
+        const user = await User.create({ name, surname, email, birthday, password: await bcrypt.hash(password, 10) })
+
+        id = user.id
+
+        title = `title-${random()}`
+        link = `link-${random()}`
+        price = `price-${random()}@mail.com`
+        description = `description-${random()}`
     })
 
-    it('should succeed on correct credentials', async () => {
-        const response = await createWish(name, link, price, description)
 
-        expect(response).to.be.undefined
+    it('should succeed on correct wish create', async () => {
+        const wishId = await createWish(id, title, link, price, description)
 
-        const wish = await Wish.findOne({ name })
-        debugger
-        expect(wish).to.exist
+        expect(wishId).to.exist
+        expect(wishId).to.be.a('string')
+        expect(wishId).to.have.length.greaterThan(0)
 
-        expect(user.name).to.equal(name)
-        expect(user.surname).to.equal(surname)
-        expect(user.email).to.equal(email)
-        expect(user.birthday.toString()).to.equal(birthday.toString())
-        expect(user.birthday).to.instanceOf(Date)
-        const match = await bcrypt.compare(password, user.password)
-        expect(match).to.be.true
+        const _user = await User.findById(id)
+
+        const wish = _user.wishes.find(wish => wish.id === wishId)
+
+        expect(wish.title).to.equal(title)
+        expect(wish.link).to.equal(link)
+        expect(wish.price).to.equal(price)
+        expect(wish.description).to.equal(description)
+
+        expect(_user.wishes.length).to.equal(1)
+
     })
 
-    describe('when user already exists', () => {
-        beforeEach(() => {
-            let  year, month, day
+    it('should fail on wrong user id', async () => {
+        const id = '012345678901234567890123'
 
-            year = '1999'
-            month = '1'
-            day = '25'
-            const birthday = new Date(`${year},${month},${day}`)
+        try {
+            await createWish(id, title, link, price, description)
 
-            User.create({ name, surname, email, birthday, password })
-        })
-
-        it('should fail on already existing user', async () => {
-            try {
-                await registerUser(name, surname, email, year, month, day, password, passwordconfirm)
-
-                throw Error('should not reach this point')
-            } catch (error) {
-                expect(error).to.exist
-                debugger
-                expect(error.message).to.exist
-                expect(typeof error.message).to.equal('string')
-                expect(error.message.length).to.be.greaterThan(0)
-                expect(error.message).to.equal(`user with email ${email} already exists`)
-            }
-        })
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user with id ${id} not found`)
+        }
     })
 
-    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
-        expect(() => registerUser(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => registerUser(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => registerUser([])).to.throw(TypeError, ' is not a string')
-        expect(() => registerUser({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => registerUser(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => registerUser(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => registerUser('')).to.throw(ContentError, 'name is empty or blank')
-        expect(() => registerUser(' \t\r')).to.throw(ContentError, 'name is empty or blank')
+    it('should fail on incorrect id, title, link, price, description', () => {
 
-        expect(() => registerUser(name, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => registerUser(name, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => registerUser(name, [])).to.throw(TypeError, ' is not a string')
-        expect(() => registerUser(name, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => registerUser(name, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => registerUser(name, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createWish(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createWish(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createWish([])).to.throw(TypeError, ' is not a string')
+        expect(() => createWish({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createWish(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createWish(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => registerUser(name, '')).to.throw(ContentError, 'surname is empty or blank')
-        expect(() => registerUser(name, ' \t\r')).to.throw(ContentError, 'surname is empty or blank')
+        expect(() => createWish('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => createWish(' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
-        expect(() => registerUser(name, surname, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => registerUser(name, surname, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => registerUser(name, surname, [])).to.throw(TypeError, ' is not a string')
-        expect(() => registerUser(name, surname, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => registerUser(name, surname, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => registerUser(name, surname, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createWish(id, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createWish(id, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createWish(id, [])).to.throw(TypeError, ' is not a string')
+        expect(() => createWish(id, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createWish(id, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createWish(id, null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => registerUser(name, surname, '')).to.throw(ContentError, 'e-mail is empty or blank')
-        expect(() => registerUser(name, surname, ' \t\r')).to.throw(ContentError, 'e-mail is empty or blank')
+        expect(() => createWish(id, '')).to.throw(ContentError, 'title is empty or blank')
+        expect(() => createWish(id, ' \t\r')).to.throw(ContentError, 'title is empty or blank')
 
-        expect(() => registerUser(name, surname, email, 1)).to.throw (TypeError, '1 is not a string')
-        expect(() => registerUser(name, surname, email, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => registerUser(name, surname, email, [])).to.throw(TypeError, ' is not a string')
-        expect(() => registerUser(name, surname, email, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => registerUser(name, surname, email, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => registerUser(name, surname, email, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createWish(id, title, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createWish(id, title, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createWish(id, title, [])).to.throw(TypeError, ' is not a string')
+        expect(() => createWish(id, title, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createWish(id, title, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createWish(id, title, null)).to.throw(TypeError, 'null is not a string')
 
-        //expect(() => registerUser(name, surname, email, '')).to.throw(ContentError, 'year is empty or blank')
-        //expect(() => registerUser(name, surname, email, ' \t\r')).to.throw(ContentError, 'year is empty or blank')
+        expect(() => createWish(id, title, '')).to.throw(ContentError, 'link is empty or blank')
+        expect(() => createWish(id, title, ' \t\r')).to.throw(ContentError, 'link is empty or blank')
 
-        expect(() => registerUser(name, surname, email, year, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => registerUser(name, surname, email, year, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => registerUser(name, surname, email, year, [])).to.throw(TypeError, ' is not a string')
-        expect(() => registerUser(name, surname, email, year, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => registerUser(name, surname, email, year, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => registerUser(name, surname, email, year, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createWish(id, title, link, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createWish(id, title, link, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createWish(id, title, link, [])).to.throw(TypeError, ' is not a string')
+        expect(() => createWish(id, title, link, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createWish(id, title, link, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createWish(id, title, link, null)).to.throw(TypeError, 'null is not a string')
 
+        expect(() => createWish(id, title, link, '')).to.throw(ContentError, 'price is empty or blank')
+        expect(() => createWish(id, title, link, ' \t\r')).to.throw(ContentError, 'price is empty or blank')
 
-        //expect(() => registerUser(name, surname, email, year, '')).to.throw(ContentError, 'month is empty or blank')
-        //expect(() => registerUser(name, surname, email, year, ' \t\r')).to.throw(ContentError, 'month is empty or blank')
-
-        expect(() => registerUser(name, surname, email, year, month, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => registerUser(name, surname, email, year, month, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => registerUser(name, surname, email, year, month, [])).to.throw(TypeError, ' is not a string')
-        expect(() => registerUser(name, surname, email, year, month, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => registerUser(name, surname, email, year, month, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => registerUser(name, surname, email, year, month, null)).to.throw(TypeError, 'null is not a string')
-
-
-        //expect(() => registerUser(name, surname, email, year, month,  '')).to.throw(ContentError, 'day is empty or blank')
-        //expect(() => registerUser(name, surname, email, year, month, ' \t\r')).to.throw(ContentError, 'day is empty or blank')
-
-
-        expect(() => registerUser(name, surname, email, year, month, day, '')).to.throw(ContentError, 'password is empty or blank')
-        expect(() => registerUser(name, surname, email, year, month, day, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
-
-        expect(() => registerUser(name, surname, email, year, month, day, password, '')).to.throw(ContentError, 'passwordconfirm is empty or blank')
-        expect(() => registerUser(name, surname, email, year, month, day, password, ' \t\r')).to.throw(ContentError, 'passwordconfirm is empty or blank')
     })
 
-    // TODO other cases
-
-    after(() => User.deleteMany().then(database.disconnect))
+    after(() => Promise.all([User.deleteMany(), Wish.deleteMany()]).then(database.disconnect))
 })

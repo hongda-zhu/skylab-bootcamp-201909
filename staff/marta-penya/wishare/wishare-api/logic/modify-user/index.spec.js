@@ -3,7 +3,7 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const modifyUser = require('.')
-const { errors: { NotFoundError } } = require('wishare-util')
+const { errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { database, models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
@@ -18,13 +18,13 @@ describe('logic - modify user', () => {
         email = `email-${random()}@mail.com`
         username = `username-${random()}`
         password = `password-${random()}`
-        year = 1999
-        month = 1
-        day = 25
+        year = '1999'
+        month = '1'
+        day = '25'
         passwordconfirm = password
 
 
-        birthday = new Date(year,month-1,day, 2, 0, 0, 0)
+        birthday = new Date(year, month - 1, day, 2, 0, 0, 0)
 
         await User.deleteMany()
 
@@ -47,8 +47,8 @@ describe('logic - modify user', () => {
 
         const user = await User.findById(id)
 
-        let newbday = new Date(newYear,newMonth-1,newDay, 2, 0, 0, 0)
-        
+        let newbday = new Date(newYear, newMonth - 1, newDay, 2, 0, 0, 0)
+
         expect(user.birthday).to.exist
         expect(user.birthday).to.be.an.instanceOf(Date)
         expect(user.birthday.toString()).to.equal(newbday.toString())
@@ -99,7 +99,7 @@ describe('logic - modify user', () => {
         const newMonth = '2'
         const newDay = '6'
         const newDescription = `new-description-${random()}`
-        
+
         const { password } = await User.findById(id)
 
         const response = await modifyUser(id, newYear, newMonth, newDay, undefined, newDescription)
@@ -108,8 +108,8 @@ describe('logic - modify user', () => {
 
         const user = await User.findById(id)
 
-        let newbday = new Date(newYear,newMonth-1,newDay, 2, 0, 0, 0)
-        
+        let newbday = new Date(newYear, newMonth - 1, newDay, 2, 0, 0, 0)
+
         expect(user.birthday).to.exist
         expect(user.birthday).to.be.an.instanceOf(Date)
         expect(user.birthday.toString()).to.equal(newbday.toString())
@@ -130,7 +130,7 @@ describe('logic - modify user', () => {
         const newMonth = '2'
         const newDay = '6'
         const newPassword = `new-password-${random()}`
-        
+
         const { description } = await User.findById(id)
 
         const response = await modifyUser(id, newYear, newMonth, newDay, newPassword, undefined)
@@ -139,8 +139,8 @@ describe('logic - modify user', () => {
 
         const user = await User.findById(id)
 
-        let newbday = new Date(newYear,newMonth-1,newDay, 2, 0, 0, 0)
-        
+        let newbday = new Date(newYear, newMonth - 1, newDay, 2, 0, 0, 0)
+
         expect(user.birthday).to.exist
         expect(user.birthday).to.be.an.instanceOf(Date)
         expect(user.birthday.toString()).to.equal(newbday.toString())
@@ -153,6 +153,57 @@ describe('logic - modify user', () => {
 
         expect(user.description).to.equal(description)
     })
+    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+        expect(() => modifyUser(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser([])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => modifyUser(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => modifyUser(null)).to.throw(TypeError, 'null is not a string')
 
+        expect(() => modifyUser('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => modifyUser(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+
+        expect(() => modifyUser(id, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, {})).to.throw(TypeError, '[object Object] is not a string')
+
+        expect(() => modifyUser(id, name, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, name, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, name, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, name, {})).to.throw(TypeError, '[object Object] is not a string')
+
+        expect(() => modifyUser(id, name, surname, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, name, surname, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, name, surname, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, name, surname, {})).to.throw(TypeError, '[object Object] is not a string')
+
+        expect(() => modifyUser(id, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, {})).to.throw(TypeError, '[object Object] is not a string')
+
+        expect(() => modifyUser(id, year, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, year, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, year, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, year, {})).to.throw(TypeError, '[object Object] is not a string')
+
+        expect(() => modifyUser(id, year, month, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, year, month, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, year, month, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, year, month, {})).to.throw(TypeError, '[object Object] is not a string')
+
+        expect(() => modifyUser(id, year, month, day, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, year, month, day, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, year, month, day, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, year, month, day, {})).to.throw(TypeError, '[object Object] is not a string')
+
+        expect(() => modifyUser(id, year, month, day, password, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(id, year, month, day, password, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(id, year, month, day, password, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(id, year, month, day, password, {})).to.throw(TypeError, '[object Object] is not a string')
+
+    })
     after(() => User.deleteMany().then(database.disconnect))
 })

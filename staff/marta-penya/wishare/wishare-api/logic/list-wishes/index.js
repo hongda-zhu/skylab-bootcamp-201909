@@ -1,14 +1,12 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { ObjectId, models: { User } } = require('wishare-data')
-const fs = require('fs')
 
-
- /**
- * Retrieves the user data
+/**
+ * Retrieves all user wishes
  * 
- * @param {ObjectId} id 
+ * @param {String} id of the user
  * 
- * @returns {Promise}
+ * @returns {Promise} with all user wishes
  */
 
 module.exports = function (id) {
@@ -16,22 +14,22 @@ module.exports = function (id) {
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
+
     return (async () => {
-        const user = await User.findById(id)
         
+        const user = await User.findById(id).lean()        
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const dir = `./data/users/${id}`
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir)
-        }
-        
-        const { name, surname, email, birthday, description } = user.toObject()
+        const wishes = user.wishes
+            
+        if (!wishes) throw new NotFoundError(`wishes not found`)
+        debugger
+        wishes.forEach(wish => {
+            wish.id = wish._id.toString()
+            delete wish._id
+        })
 
-        return { id, name, surname, email, birthday, description }
+        return wishes
+        debugger
     })()
 }
-
-
-
-

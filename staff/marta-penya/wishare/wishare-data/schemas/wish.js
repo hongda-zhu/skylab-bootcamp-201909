@@ -1,7 +1,7 @@
 const { Schema, ObjectId } = require('mongoose')
 
 module.exports = new Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
