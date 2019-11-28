@@ -1,18 +1,17 @@
 require('dotenv').config()
-const { env: { DB_URL_TEST } } = process
+const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
-const { random, floor } = Math
+const { random } = Math
 const retrieveUser = require('.')
 const { errors: { NotFoundError } } = require('avarus-util')
 const { database, models: { User } } = require('avarus-data')
 const bcrypt = require('bcryptjs')
 
 describe('logic - retrieve user', () => {
-    before(() => database.connect(DB_URL_TEST))
+    before(() => database.connect(TEST_DB_URL))
 
-    let name, surname, email, username, password, index, genders, gender
-    genders = ['Male', 'Female']
-    index = floor(random()* 2)
+    let name, surname, email, username, password
+
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -20,10 +19,10 @@ describe('logic - retrieve user', () => {
         email = `email-${random()}@mail.com`
         username = `username-${random()}`
         password = `password-${random()}`
-        gender = genders[index]
+        budget = 5000
 
         await User.deleteMany()
-        const user = await User.create({ name, surname, email, username, password: await bcrypt.hash(password, 10), gender })
+        const user = await User.create({ name, surname, email, username, password: await bcrypt.hash(password, 10), budget })
         id = user.id
     })
 
@@ -35,14 +34,13 @@ describe('logic - retrieve user', () => {
         expect(user._id).to.not.exist
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
-        expect(user.gender).to.equal(gender)
         expect(user.email).to.equal(email)
         expect(user.username).to.equal(username)
         expect(user.password).to.be.undefined
     })
 
     it('should fail on wrong user id', async () => {
-        const id = '012345678901234567890123'
+        const id = '123123123123'
 
         try {
             await retrieveUser(id)

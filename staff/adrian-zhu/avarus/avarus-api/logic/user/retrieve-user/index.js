@@ -1,7 +1,5 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { ObjectId, models: { User } } = require('avarus-data')
-const bcrypt = require('bcryptjs')
-
 
 module.exports = function (id) {
     validate.string(id)
@@ -15,8 +13,8 @@ module.exports = function (id) {
 
         await user.save()
 
-        const { name, surname, username, gender, email } = user.toObject()
+        const { name, surname, username, email, budget } = user.toObject()
 
-        return { id, name, surname, username, gender, email, username }
+        return { id, name, surname, username, email, budget }
     })()
 }

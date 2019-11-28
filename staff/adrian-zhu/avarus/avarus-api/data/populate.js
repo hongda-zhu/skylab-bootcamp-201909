@@ -10,14 +10,14 @@ const fetch = require('node-fetch');
 
         await Company.deleteMany()
 
-        const coca = new Company({
-            name: 'Coca-Cola',
-            description: 'The Coca-Cola company',
+        const campo = new Company({
+            name: 'campo-campo',
+            description: 'The campo-campo company',
             risk: 'adversion',
             category: 'food'
         })
 
-        await coca.save()
+        await campo.save()
 
         // const now = moment()
 
@@ -35,7 +35,7 @@ const fetch = require('node-fetch');
         //         time: before.toDate()
         //     })
 
-        //     coca.stocks.push(stock)
+        //     campo.stocks.push(stock)
 
         //     console.log(stock.toJSON())
         // }
@@ -49,10 +49,10 @@ const fetch = require('node-fetch');
 
             const stock = new Stock({ price, time })
 
-            coca.stocks.push(stock)
+            campo.stocks.push(stock)
         }
 
-        await coca.save()
+        await campo.save()
     } catch (error) {
         console.error(error)
     }

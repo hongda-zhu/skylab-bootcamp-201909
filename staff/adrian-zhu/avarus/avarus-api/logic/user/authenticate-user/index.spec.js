@@ -7,7 +7,7 @@ const { errors: { ContentError, CredentialsError } } = require('avarus-util')
 const { database, models: { User } } = require('avarus-data')
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - authenticate user', () => {
+describe('logic - authenticate user', () => {
     
     before(() => database.connect(TEST_DB_URL))
 

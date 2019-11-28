@@ -18,10 +18,10 @@ api.options('*', cors, (req, res) => {
 })
 
 //ROUTES
-const { users, company } = require('./routes')
+const { users, companies } = require('./routes')
 
 api.use('/users', users)
-api.use('/company', company)
+api.use('/companies', companies)
 
 database
     .connect(DB_URL)
