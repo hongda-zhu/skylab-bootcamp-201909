@@ -1,14 +1,14 @@
 require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
-const deleteWish = require('.')
+const blockedWish = require('.')
 const { random } = Math
 const { errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { database, ObjectId, models: { User, Wish } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 
-describe('logic - delete wishes', () => {
+describe.only('logic - blocked wish', () => {
     before(() => database.connect(TEST_DB_URL))
 
 
@@ -28,7 +28,7 @@ describe('logic - delete wishes', () => {
 
         birthday = new Date(year, month - 1, day, 2, 0, 0, 0)
 
-        await Promise.all([User.deleteMany(), Wish.deleteMany()])
+        await User.deleteMany()
 
         const user = await User.create({ name, surname, email, birthday, password: await bcrypt.hash(password, 10) })
 
@@ -48,16 +48,28 @@ describe('logic - delete wishes', () => {
     })
 
 
-    it('should succeed on deleting correct user wish', async () => {
+    it('should succeed on retrieveing user wishes', async () => {
+        const user = await User.findById(id)
 
-        const response = await deleteWish(id, wishId)
+        const _wish = user.wishes.find(wish => wish.id === wishId)
+
+        blocked = _wish.blocked
+
+        const response = await blockedWish(id, wishId)
 
         expect(response).to.not.exist
 
         const _user = await User.findById(id)
+
         const wish = _user.wishes.find(wish => wish.id === wishId)
 
-        expect(wish).to.not.exist
+        expect(wish.id).to.exist
+        expect(wish.id.toString()).to.equal(wishId)
+        
+        expect(wish.blocked).to.exist
+        expect(wish.blocked).to.be.a('boolean')
+        expect(wish.blocked).to.equal(true)
+        expect(wish.blocked).to.not.equal(blocked)
 
     })
 
@@ -65,7 +77,7 @@ describe('logic - delete wishes', () => {
         id = 'wrongid'
     
         try {
-            await deleteWish(id, wishId)
+            await blockedWish(id, wishId)
     
             throw Error('should not reach this point')
         } catch (error) {
@@ -78,7 +90,7 @@ describe('logic - delete wishes', () => {
         wishId = 'wrongid'
     
         try {
-            await deleteWish(id, wishId)
+            await blockedWish(id, wishId)
     
             throw Error('should not reach this point')
         } catch (error) {
@@ -87,28 +99,27 @@ describe('logic - delete wishes', () => {
             expect(error.message).to.equal(`wish with id ${wishId} not found`)
         }
     })
-
     it('should fail on incorrect id, wishid, title, link, price or description', () => {
-        expect(() => deleteWish(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => deleteWish(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => deleteWish([])).to.throw(TypeError, ' is not a string')
-        expect(() => deleteWish({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => deleteWish(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => deleteWish(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => blockedWish(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => blockedWish(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => blockedWish([])).to.throw(TypeError, ' is not a string')
+        expect(() => blockedWish({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => blockedWish(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => blockedWish(null)).to.throw(TypeError, 'null is not a string')
     
-        expect(() => deleteWish('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => deleteWish(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => blockedWish('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => blockedWish(' \t\r')).to.throw(ContentError, 'id is empty or blank')
     
-        expect(() => deleteWish(id, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => deleteWish(id, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => deleteWish(id, [])).to.throw(TypeError, ' is not a string')
-        expect(() => deleteWish(id, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => deleteWish(id, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => deleteWish(id, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => blockedWish(id, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => blockedWish(id, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => blockedWish(id, [])).to.throw(TypeError, ' is not a string')
+        expect(() => blockedWish(id, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => blockedWish(id, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => blockedWish(id, null)).to.throw(TypeError, 'null is not a string')
     
-        expect(() => deleteWish(id, '')).to.throw(ContentError, 'wishId is empty or blank')
-        expect(() => deleteWish(id, ' \t\r')).to.throw(ContentError, 'wishId is empty or blank')
+        expect(() => blockedWish(id, '')).to.throw(ContentError, 'wishId is empty or blank')
+        expect(() => blockedWish(id, ' \t\r')).to.throw(ContentError, 'wishId is empty or blank')
 
     })
-    after(() => Promise.all([User.deleteMany(), Wish.deleteMany()]).then(database.disconnect))
+    after(() => User.deleteMany().then(database.disconnect))
 })

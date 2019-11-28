@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createWish, listWishes, modifyWish, deleteWish, saveWishImage, loadWishImage } = require('../../logic')
+const { createWish, listWishes, modifyWish, deleteWish, saveWishImage, loadWishImage, givenWish, blockedWish } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
@@ -129,6 +129,48 @@ router.get('/wish/:wishId', tokenVerifier, async (req, res) => {
     res.setHeader('Content-Type', 'image/jpeg')
 
     return stream.pipe(res)
+})
+
+router.patch('/:wishId/given', tokenVerifier, (req, res) => {
+    try {
+        const { id, params: { wishId }} = req
+        debugger 
+        givenWish(id, wishId)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/:wishId/blocked', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, params: { wishId }, body : {friendId} } = req
+
+        blockedWish(friendId, wishId, id)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
 })
 
 

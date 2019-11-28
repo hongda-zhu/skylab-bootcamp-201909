@@ -27,6 +27,7 @@ module.exports = function (id) {
         wishes.forEach(wish => {
             wish.id = wish._id.toString()
             delete wish._id
+            //delete wish.blocked
         })
 
         return wishes

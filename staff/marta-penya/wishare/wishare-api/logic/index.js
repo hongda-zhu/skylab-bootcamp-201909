@@ -11,5 +11,7 @@ module.exports = {
     modifyWish: require('./modify-wish'),
     deleteWish: require('./delete-wish'),
     saveWishImage: require('./save-wish-image'),
-    loadWishImage: require('./load-wish-image')
+    loadWishImage: require('./load-wish-image'),
+    givenWish: require('./given-wish'),
+    blockedWish: require('./block-wish')
 }
