@@ -13,5 +13,10 @@ module.exports = {
     saveWishImage: require('./save-wish-image'),
     loadWishImage: require('./load-wish-image'),
     givenWish: require('./given-wish'),
-    blockedWish: require('./block-wish')
+    blockedWish: require('./block-wish'),
+    retrieveUsers: require('./retrieve-users'),
+    addFriend: require('./add-friend'),
+    deleteFriend: require('./delete-friend'),
+    saveFriendWish: require('./save-friend-wish'),
+    removeFriendWish: require('./remove-friend-wish')
 }

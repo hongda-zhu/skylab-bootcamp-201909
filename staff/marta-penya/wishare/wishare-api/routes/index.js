@@ -1,4 +1,5 @@
 module.exports = {
     users: require('./users'),
-    wishes: require('./wishes')
+    wishes: require('./wishes'),
+    friends: require('./friends')
 }

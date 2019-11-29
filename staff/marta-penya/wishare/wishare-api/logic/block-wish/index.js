@@ -11,11 +11,15 @@ const { ObjectId, models: { User } } = require('wishare-data')
  * 
  */
 
-module.exports = function ( friendId, wishId, id ) {
+module.exports = function ( id, wishId ) {
 
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new NotFoundError(`user with id ${id} not found`)
+
+    validate.string(wishId)
+    validate.string.notVoid('wishId', wishId)
+    if (!ObjectId.isValid(wishId)) throw new NotFoundError(`user with id ${wishId} not found`)
 
 
     return (async () => {

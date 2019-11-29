@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, modifyUser, deleteUser, saveProfileImage, loadProfileImage } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, deleteUser, saveProfileImage, loadProfileImage, retrieveUsers } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -53,7 +53,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/', tokenVerifier, (req, res) => {
+router.get('/user', tokenVerifier, (req, res) => {
     try {
         const { id } = req
 
@@ -151,6 +151,27 @@ router.get('/profileimage/:id', async (req, res) => {
 
     return stream.pipe(res)
 })
+
+router.get('/', (req, res) => {
+    try {
+
+        retrieveUsers()
+            .then(users => res.json(users))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
 
 // router.post('/upload', tokenVerifier, (req, res) => {
     

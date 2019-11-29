@@ -24,11 +24,16 @@ module.exports = function (id) {
         const dir = `./data/users/${id}`
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir)
-        }
+        } 
         
-        const { name, surname, email, birthday, description } = user.toObject()
+        const { name, surname, email, birthday, description, wishes, savedWishes, friends } = user.toObject()
+            wishes.forEach(wish => {
+                wish.id = wish._id.toString()
+                delete wish._id
+                delete wish.blocked
+            })
 
-        return { id, name, surname, email, birthday, description }
+        return { id, name, surname, email, birthday, description, wishes, savedWishes, friends }
     })()
 }
 
