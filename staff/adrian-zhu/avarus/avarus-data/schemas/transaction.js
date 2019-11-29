@@ -28,7 +28,7 @@ module.exports = new Schema({
         ref: 'Stock'
     },
     relatedTo: {
-        type: ObjectId,
+        type: String,
         ref: 'Transaction'
     }
 })

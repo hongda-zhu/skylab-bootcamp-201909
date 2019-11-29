@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany } = require('../../logic')
+const { createCompany,  } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -10,8 +10,8 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-//CREATE Company
-router.post('/', jsonBodyParser, (req, res) => {
+router.post('/', jsonBodyParser, (req, res) => { 
+    debugger
     const { body: { name, description, image, risk, market, category, dependency, stocks } } = req
 
     try {
@@ -22,6 +22,30 @@ router.post('/', jsonBodyParser, (req, res) => {
 
                 if (error instanceof ConflictError)
                     return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.post('/auth', jsonBodyParser, (req, res) => {
+    
+    const { body: { name, risk, category } } = req
+
+    try {
+        authenticateCompany(name, risk, category )
+            .then(id => {
+                const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
+
+                res.json({ token })
+            })
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof CredentialsError)
+                    return res.status(401).json({ message })
 
                 res.status(500).json({ message })
             })
