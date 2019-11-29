@@ -28,7 +28,7 @@ module.exports = (id, friendId, wishId) => {
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
         const friend = await User.findById(friendId)
-        if(!friend) throw new NotFoundError(`there's no friend with id ${friendId}`)
+        if(!friend) throw new NotFoundError(`there is no friend with id ${friendId}`)
 
         const wish = friend.wishes.find(wish => wish.id === wishId)        
         if (!wish) throw new NotFoundError(`friend does not have wish with id ${wishId}`)

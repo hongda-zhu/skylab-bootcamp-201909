@@ -6,7 +6,7 @@ const fs = require('fs')
  /**
  * Retrieves the user data
  * 
- * @param {ObjectId} id 
+ * @param {ObjectId} id of the user
  * 
  * @returns {Promise}
  */

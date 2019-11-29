@@ -1,5 +1,6 @@
 const { ObjectId, models: { User } } = require('wishare-data')
 const { validate,  errors: { ContentError, NotFoundError, ConflictError }  } = require('wishare-util')
+
 /**
  * Saves a wish from a friend in a user saved wishes list
  * 
@@ -8,6 +9,7 @@ const { validate,  errors: { ContentError, NotFoundError, ConflictError }  } = r
  * @param {ObjectId} wishId of user friend wish
  * 
  */
+
 module.exports = (id, friendId, wishId) => {
     validate.string(id)
     validate.string.notVoid('id', id)
@@ -28,13 +30,13 @@ module.exports = (id, friendId, wishId) => {
 
         const friend = await User.findById(friendId)
 
-        if(!friend) throw new NotFoundError(`there's no friend with id ${friendId}`)
+        if(!friend) throw new NotFoundError(`there is no friend with id ${friendId}`)
 
         const wish = friend.wishes.find(wish => wish.id === wishId)        
         if (!wish) throw new NotFoundError(`friend does not have wish with id ${wishId}`)
 
         const savewish = user.savedWishes.find(wish => wish.wish.toString() === wishId)
-        debugger
+        
         if (savewish) throw new ConflictError(`already saved wish with id ${wishId}`)
 
         user.savedWishes.push({user: friendId, wish})

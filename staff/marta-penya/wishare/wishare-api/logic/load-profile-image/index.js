@@ -5,11 +5,11 @@ const fs = require('fs')
 const path = require('path')
 
 /**
-* Update user information.
+* Load the user profile image
 * 
-* @param {ObjectId} id
+* @param {ObjectId} id of the user
 *
-* @returns {Promise} - user.  
+* @returns {Promise} - data of image  
 */
 
 

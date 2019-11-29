@@ -5,11 +5,11 @@ const fs = require('fs')
 const path = require('path')
 
 /**
-* Update user information.
+* Load the wish image
 * 
-* @param {ObjectId} id
-*
-* @returns {Promise} - user.  
+* @param {ObjectId} id of the user
+* @param {ObjectId} wishId id of the wish
+* @returns {Promise} - data of image  
 */
 
 

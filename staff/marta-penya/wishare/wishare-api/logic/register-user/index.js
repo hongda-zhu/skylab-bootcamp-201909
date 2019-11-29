@@ -3,7 +3,7 @@ const { models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 /**
- * Allow a user to be registered by completing the formulary fields
+ * Allow users to be registered by completing the formulary fields
  * 
  * @param {string} name 
  * @param {string} surname 

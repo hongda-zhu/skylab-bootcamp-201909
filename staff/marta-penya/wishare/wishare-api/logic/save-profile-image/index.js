@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 
 /**
-* Update user information.
+* Saves user profile image.
 * 
 * @param {ObjectId} id
 * @param {Stream} file

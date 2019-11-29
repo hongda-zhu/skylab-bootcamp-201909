@@ -2,7 +2,7 @@ const { validate, errors: { NotFoundError, ContentError } } = require('wishare-u
 const { ObjectId, models: { User } } = require('wishare-data')
 
 /**
- * Deletes the user account
+ * Deletes the indicated wish of the user
  * 
  * @param {ObjectId} id of user
  * @param {ObjectId} wishId wish id

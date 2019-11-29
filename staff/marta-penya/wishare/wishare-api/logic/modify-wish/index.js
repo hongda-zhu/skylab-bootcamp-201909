@@ -2,7 +2,7 @@ const { validate, errors: { NotFoundError, ContentError } } = require('wishare-u
 const { ObjectId, models: { User } } = require('wishare-data')
 
 /**
- * function to modify an existen wish 
+ * function to modify data of an existing wish 
  * 
  * @param {string} id of user 
  * @param {String} title wish

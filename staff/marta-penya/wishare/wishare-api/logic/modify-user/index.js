@@ -3,7 +3,7 @@ const { ObjectId, models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 /**
-* Let's the user update their profile information like birthday, profile image or description.
+* Allow users to update their profile information like birthday, profile image or description.
 *
 * @param {ObjectId} id
 * @param {String} year

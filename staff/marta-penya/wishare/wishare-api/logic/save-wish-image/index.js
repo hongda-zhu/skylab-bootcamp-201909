@@ -5,12 +5,12 @@ const fs = require('fs')
 const path = require('path')
 
 /**
-* Update user information.
+* Saves wish image.
 * 
-* @param {ObjectId} id
-* @param {ObjectId} wishId
-* @param {Stream} file
-* @param {Sting} filename 
+* @param {ObjectId} id of user
+* @param {ObjectId} wishId id of wish
+* @param {Stream} file data of the image
+* @param {Sting} filename name of the image
 *
 * @returns {Promise} - user.  
 */
