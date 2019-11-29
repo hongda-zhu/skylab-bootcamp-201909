@@ -16,9 +16,9 @@ module.exports = function (name, risk, category) {
 
         if (!company) throw new CredentialsError('wrong name')
 
-        if (company.risk === !risk) throw new CredentialsError (`${company.risk} is not equivalent with ${risk}`)
+        if (!(company.risk === risk)) throw new CredentialsError (`wrong risk`)
 
-        if (company.category === !category) throw new CredentialsError(`${company.category} is not equivalent with ${category}`)
+        if (!(company.category === category)) throw new CredentialsError(`wrong category`)
 
         return company.id
     })()

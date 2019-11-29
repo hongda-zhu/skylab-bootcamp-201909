@@ -2,8 +2,20 @@ const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose
 
 module.exports = new Schema({
-    time: {
-        type: Date,
+
+    company: {
+        type: ObjectId,
+        ref: 'Company',
+        required: true
+    },
+    stock: {
+        type: ObjectId,
+        ref: 'Stock',
+        required: true
+    },
+    operation: {
+        type: String,
+        enum: ['buy-in', 'sell-out', 'preset'],
         required: true
     },
     quantity: {
@@ -14,18 +26,9 @@ module.exports = new Schema({
         type: Number,
         required: true
     },
-    operation: {
-        type: String,
-        enum: ['buy-in', 'sell-out', 'preset'],
+    time: {
+        type: Date,
         required: true
-    },
-    company: {
-        type: ObjectId,
-        ref: 'Company'
-    },
-    stock: {
-        type: ObjectId,
-        ref: 'Stock'
     },
     relatedTo: {
         type: String,

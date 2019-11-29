@@ -22,6 +22,7 @@ const { users, companies } = require('./routes')
 
 api.use('/users', users)
 api.use('/companies', companies)
+// api.use('/stocks', stocks)
 
 database
     .connect(DB_URL)

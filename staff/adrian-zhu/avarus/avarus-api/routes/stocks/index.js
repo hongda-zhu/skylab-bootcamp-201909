@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const {  } = require('../../logic')
+const { producePrice } = require('../../logic')
 // const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 // const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -11,10 +11,10 @@ const jsonBodyParser = bodyParser.json()
 const router = Router()
 
 router.post('/stock', jsonBodyParser, (req, res) => {
-    const { body: { level, gender, numberOfTeams, date, time } } = req
+    const { body: {precio} } = req
 
     try {
-        createCompany(level, gender, numberOfTeams, date, time)
+        producePrice(precio)
             .then(() => res.status(201).end())
             .catch(error => {
                 const { message } = error

@@ -67,6 +67,9 @@ describe.only('logic - create company', () => {
 
 
         it('should fail on incorrect name, description, risk, market, category, dependency, image, stocks, or expression type and content', () => {
+
+            debugger
+
             expect(() => createCompany(1)).to.throw(TypeError, '1 is not a string')
             expect(() => createCompany(true)).to.throw(TypeError, 'true is not a string')
             expect(() => createCompany([])).to.throw(TypeError, ' is not a string')

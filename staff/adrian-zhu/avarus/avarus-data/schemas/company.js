@@ -35,5 +35,6 @@ module.exports = new Schema ({
         type: String,
         ref:'Company'
     },
-    stocks: [stock]
+    stocks: [stock],
+    versionKey: false 
 })

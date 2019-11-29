@@ -1,7 +1,7 @@
 const { validate, errors: {NotFoundError } } = require('avarus-util')
 const { ObjectId, models: { Company } } = require('avarus-data')
 
-module.exports = function(id, name, description, image, risk, market, category, dependency, stocks) {
+module.exports = function(id, name, description, risk, market, category, dependency, image, stocks) {
 
   validate.string(id)
   validate.string.notVoid('id', id)

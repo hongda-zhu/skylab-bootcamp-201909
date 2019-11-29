@@ -7,10 +7,13 @@ module.exports = {
     deleteUser: require('./user/delete-user'),
     AddFavorite: require('./user/favorite-user'),
 
-    // Compnay
+    // Company
     createCompany: require('./company/create-company'),
+    producePrice: require('./company/produce-price'),
     authenticateCompany: require('./company/authenticate-company'),
-    retrieveCompanies: require('./company/retrieve-Companies'),
+    retrieveCompanies: require('./company/retrieve-companies'),
     retrieveCompany: require('./company/retrieve-company'),
-    updateCompany: require('./company/update-company')
+    retrievePrice: require('./company/retrieve-price'),
+    editCompany: require('./company/edit-company')
+
 }
