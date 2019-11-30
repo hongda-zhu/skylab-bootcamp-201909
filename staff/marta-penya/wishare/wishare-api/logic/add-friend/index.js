@@ -26,11 +26,16 @@ module.exports = (id, friendId) => {
         const user2 = await User.findById(friendId)
         if (!user2) throw new NotFoundError(`user with id ${friendId} not found`)
 
+        
         const friend = user.friends.includes(ObjectId(friendId))
-
+        
         if(friend) throw new ConflictError(`friend with id ${friendId} is already added`)
 
+        const birthdayfriend = user2.birthday
+
         user.friends.push(friendId.toString())
+
+        user.birthdayFriends.push({user: friendId.toString(), birthday: birthdayfriend})
         
         await user.save()        
         
