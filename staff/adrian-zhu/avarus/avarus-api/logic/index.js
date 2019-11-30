@@ -6,6 +6,7 @@ module.exports = {
     editUser: require('./user/edit-user'),
     deleteUser: require('./user/delete-user'),
     AddFavorite: require('./user/favorite-user'),
+    buyIn: require('./user/buy-in-stock'),
 
     // Company
     createCompany: require('./company/create-company'),

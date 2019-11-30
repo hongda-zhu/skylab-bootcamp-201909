@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, deleteUser, modifyUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, deleteUser, modifyUser, buyIn } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -78,8 +78,6 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { params: { id }, body: { name, surname, username, password} } = req
 
-        debugger
-
         modifyUser(id, name, surname, username, password)
             .then(() => res.status(201).end())
             .catch(error => {
@@ -95,7 +93,6 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-// //DELETE USER
 router.delete('/:id', tokenVerifier, (req, res) => {
 
     try {
@@ -112,6 +109,27 @@ router.delete('/:id', tokenVerifier, (req, res) => {
                     return res.status(404).json({ message })
                 if (error instanceof ConflictError)
                     return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.post('/:id/buyIn', jsonBodyParser, tokenVerifier, (req, res) => {
+    
+    debugger
+    const { params: { id: userId } , body: {companyId, stockId, operation, quantity } } = req
+
+    try {
+        buyIn(userId, companyId, stockId, operation, quantity)
+        .then(() => res.status(201).end())
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof CredentialsError)
+                    return res.status(401).json({ message })
 
                 res.status(500).json({ message })
             })
