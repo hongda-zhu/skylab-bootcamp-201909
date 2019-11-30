@@ -30,8 +30,8 @@ module.exports = new Schema({
         type: Date,
         required: true
     },
-    relatedTo: {
+    relatedTo:[{
         type: String,
         ref: 'Transaction'
-    }
+    }]
 })

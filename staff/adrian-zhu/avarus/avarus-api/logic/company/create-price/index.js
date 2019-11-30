@@ -11,6 +11,9 @@ module.exports = function (companyId, price) {
 
 
     return (async () => {
+
+        debugger
+
         const company = await Company.findById(companyId)
 
         if (!company) throw new NotFoundError(`company with companyId ${companyId} not found`)

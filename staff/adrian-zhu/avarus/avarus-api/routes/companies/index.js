@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, editCompany, producePrice, retrievePrice} = require('../../logic')
+const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, editCompany, createPrice, retrievePrice} = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -123,7 +123,7 @@ router.post('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { params: { id }, body: { price }} = req
 
-        producePrice(id, price)
+        createPrice(id, price)
             .then(() => res.status(200).end())
             .catch(error => {
                 const { message } = error

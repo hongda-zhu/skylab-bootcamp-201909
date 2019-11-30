@@ -1,7 +1,7 @@
-const { validate, errors: { ConflictError } } = require('avarus-util')
+const { validate, errors: { ConflictError, NotFoundError } } = require('avarus-util')
 const {models: { Company, User, Stock, Transaction } } = require('avarus-data')
 
-module.exports = function (userId, companyId, stockId, operation, quantity) { 
+module.exports = function (userId, companyId, stockId, buyInTransactionId, operation, quantity) { 
 
     validate.string(userId)
     validate.string.notVoid('userId', userId)
@@ -12,6 +12,9 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
     validate.string(stockId)
     validate.string.notVoid('stockId', stockId)
 
+    validate.string(buyInTransactionId)
+    validate.string.notVoid('buyInTransactionId', buyInTransactionId)
+
     validate.string(operation)
     validate.string.notVoid('operation', operation)
     validate.matches('operation', operation, 'buy-in', 'sell-out', 'preset')
@@ -20,19 +23,29 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
     return (async () => {
 
-        if (operation !== 'buy-in') throw new ConflictError(`this operation should be buy-in operation`)
+        if(operation !== 'sell-out') throw new ConflictError(`this operation should be sell-out operation`)
 
         const user  = await User.findById( userId )
 
-        if (!user) throw new ConflictError(`user with id ${userId} does not exists`)
+        if (!user) throw new NotFoundError(`user with id ${userId} does not exists`)
 
         const company = await Company.findById(companyId)
 
-        if (!company) throw new ConflictError(`company with id ${companyId}`)
+        if (!company) throw new NotFoundError(`company with id ${companyId} does not exists`)
 
         const stock = await Stock.findById(stockId,  { '__v': 0 }).lean()
 
-        if (!stock) throw new ConflictError(`stock with id ${stockId}`)
+        if (!stock) throw new NotFoundError(`stock with id ${stockId} does not exists`)
+
+        const buyInTransaction = await Transaction.findById(buyInTransactionId)
+
+        if(!buyInTransaction) throw new NotFoundError(`buyInTransaction with id ${buyInTransaction} does not exists`)
+
+        let {quantity: buyInQuantity} = buyInTransaction
+
+        if(buyInQuantity < quantity) throw new ConflictError (`Transaction incompleted: remaining quantity is lower than your request of selling ${quantity}`)
+
+        buyInQuantity -= quantity
 
         const {price} = stock
 
@@ -44,13 +57,17 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
         if(budget < amount) throw new ConflictError(`you have no enough resource to finish this transaction`)
 
-        budget -= amount
-
+        budget += amount 
+        
         user.budget = budget
-
+        
         let time = new Date
 
         const transaction = await Transaction.create({company: companyId, stock: stockId, operation, quantity, amount: amount, time: time})
+
+        const relatedTo = buyInTransaction.relatedTo
+
+        relatedTo.push(transaction._id)
 
         user.transactions.push(transaction)
 

@@ -5,12 +5,14 @@ module.exports = {
     retrieveUser: require('./user/retrieve-user'),
     editUser: require('./user/edit-user'),
     deleteUser: require('./user/delete-user'),
+    deleteStock: require('./user/delete-stock'),
     AddFavorite: require('./user/favorite-user'),
     buyIn: require('./user/buy-in-stock'),
+    sellOut: require('./user/sell-out-stock'),
 
     // Company
     createCompany: require('./company/create-company'),
-    producePrice: require('./company/produce-price'),
+    createPrice: require('./company/create-price'),
     authenticateCompany: require('./company/authenticate-company'),
     retrieveCompanies: require('./company/retrieve-companies'),
     retrieveCompany: require('./company/retrieve-company'),

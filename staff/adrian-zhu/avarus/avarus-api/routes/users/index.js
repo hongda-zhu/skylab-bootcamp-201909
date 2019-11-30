@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, deleteUser, modifyUser, buyIn } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, deleteUser, deleteStock, modifyUser, buyIn, sellOut } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -54,6 +54,8 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 })
 
 router.get('/', tokenVerifier, (req, res) => {
+
+    debugger
     try {
         const { id } = req
 
@@ -117,13 +119,58 @@ router.delete('/:id', tokenVerifier, (req, res) => {
     }
 })
 
-router.post('/:id/buyIn', jsonBodyParser, tokenVerifier, (req, res) => {
+router.delete('/transaction/:transactionId', tokenVerifier, (req, res) => {
+
+    try {
+        const { id, params: { transactionId } } = req
+
+        deleteStock(id, transactionId)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.post('/:id/buyin', jsonBodyParser, tokenVerifier, (req, res) => {
     
-    debugger
     const { params: { id: userId } , body: {companyId, stockId, operation, quantity } } = req
 
     try {
         buyIn(userId, companyId, stockId, operation, quantity)
+        .then(() => res.status(201).end())
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof CredentialsError)
+                    return res.status(401).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.post('/:id/sellout', jsonBodyParser, tokenVerifier, (req, res) => {
+
+    debugger
+    
+    const { params: { id: userId } , body: {companyId, stockId, buyInTransactionId, operation, quantity } } = req
+
+    try {
+        sellOut(userId, companyId, stockId, buyInTransactionId, operation, quantity)
         .then(() => res.status(201).end())
             .catch(error => {
                 const { message } = error
