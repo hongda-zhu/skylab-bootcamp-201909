@@ -1,5 +1,5 @@
 const { validate, errors: { ConflictError, NotFoundError } } = require('avarus-util')
-const {models: { Company, User, Stock, Transaction } } = require('avarus-data')
+const {models: { Company, User, Stock, Transaction, Sellout } } = require('avarus-data')
 
 module.exports = function (userId, companyId, stockId, buyInTransactionId, operation, quantity) { 
 
@@ -47,6 +47,8 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
 
         buyInQuantity -= quantity
 
+        buyInTransaction.quantity = buyInQuantity
+
         const {price} = stock
 
         if (!price) throw new ConflictError(`price is not defined in this stock`)
@@ -58,21 +60,23 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
         if(budget < amount) throw new ConflictError(`you have no enough resource to finish this transaction`)
 
         budget += amount 
+
+        buyInTransaction.amount -= amount
         
         user.budget = budget
         
         let time = new Date
 
-        const transaction = await Transaction.create({company: companyId, stock: stockId, operation, quantity, amount: amount, time: time})
+        const sellOutTransaction = await Sellout.create({company: companyId, stock: stockId, operation, quantity, amount: amount, time: time})
 
         const relatedTo = buyInTransaction.relatedTo
 
-        relatedTo.push(transaction._id)
+        relatedTo.push(sellOutTransaction.id)
 
-        user.transactions.push(transaction)
-
+        buyInTransaction.save()
+        user.transactions[0] = buyInTransaction
         user.save()
 
-        return user.transaction
+        return user.transactions
     })()
 }

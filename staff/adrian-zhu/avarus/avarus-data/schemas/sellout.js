@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose
-const Sellout = require('./sellout')
+const se = require('./')
 
 module.exports = new Schema({
 
@@ -30,9 +30,5 @@ module.exports = new Schema({
     time: {
         type: Date,
         required: true
-    },
-    relatedTo:[{
-        type: ObjectId,
-        ref: 'Sellout'
-    }]
+    }
 })

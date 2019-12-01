@@ -7,13 +7,13 @@ module.exports = function (id) {
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     return (async () => {
-        const user = await User.findById(id)
+        const user = await User.findById(id).populate("sellOut")
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
         await user.save()
 
-        const { name, surname, username, email, budget, favorites, transactions } = user.toObject()
+        const { name, surname, username, email, budget, favorites, transactions } = user
 
         return { id, name, surname, username, email, budget, favorites, transactions }
     })()
