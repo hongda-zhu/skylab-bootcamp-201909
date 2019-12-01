@@ -10,7 +10,7 @@ module.exports = new Schema({
         type: String,
         required: true,
     },
-    send: {
+    date: {
         type: Date,
         required: true,
     }

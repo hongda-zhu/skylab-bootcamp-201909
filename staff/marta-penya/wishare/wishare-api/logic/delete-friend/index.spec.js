@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const { random } = Math
 const deleteFriend = require('.')
 const { errors: { NotFoundError, ContentError, ConflictError } } = require('wishare-util')
-const { database, ObjectId, models: { User } } = require('wishare-data')
+const { database, ObjectId, models: { User, Chat } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 describe('logic - delete friend', () => {
@@ -47,6 +47,8 @@ describe('logic - delete friend', () => {
         user.friends.push(ObjectId(friendId))
 
         await user.save()
+
+        chat = await Chat.create({ owner: id})
     })
 
     it('should succeed on correct friend deleting', async () => {
@@ -59,6 +61,10 @@ describe('logic - delete friend', () => {
         const _friend = _user.friends.find(friend => friend._id.toString() === friendId)
    
         expect(_friend).to.not.exist
+
+        const _chat = await Chat.findOne({ owner: ObjectId(id) })
+
+        expect(_chat.users).not.to.contain(friendId)
     })
 
     it('should fail on wrong user id', async () => {

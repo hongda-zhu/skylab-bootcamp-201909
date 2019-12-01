@@ -2,15 +2,15 @@ require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
-const retrieveFriendBday = require('.')
-const { errors: { NotFoundError, ContentError, ConflictError } } = require('wishare-util')
-const { database, ObjectId, models: { User } } = require('wishare-data')
+const createChat = require('.')
+const { errors: { NotFoundError, ContentError } } = require('wishare-util')
+const { ObjectId, database, models: { User, Chat } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
-describe('logic - retrieve friend bday', () => {
+describe('logic - create chat', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2
+    let id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, friend2Id, friendId
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -57,54 +57,52 @@ describe('logic - retrieve friend bday', () => {
         user.friends.push(friendId.toString())
         user.friends.push(friend2Id.toString())
 
-        const birthdayfriend = friend.birthday
-        const birthdayfriend2 = friend2.birthday
-
-        user.birthdayFriends.push({user: friendId.toString(), birthday: birthdayfriend})
-        user.birthdayFriends.push({user: friend2Id.toString(), birthday: birthdayfriend2})
-
         await user.save()
-        
-    })
-
-    it('should succeed on correct friend birthday', async () => {
-        debugger
-        const response = await retrieveFriendBday(id)
-
-        expect(response).to.exist
-        expect(response.length).to.be.greaterThan(0)
-        expect(response[0]).to.contain(friend2Id)
-        expect(response[0]).to.not.contain(birthdayfriend2)
 
     })
 
-    it('should fail on wrong user id', async () => {
-        const id = '012345678901234567890123'
+    it('should succeed on correct user id', async() => {
+        const chatId = await createChat(id)
 
+        expect(chatId).to.exist
+        expect(chatId).to.be.a('string')
+
+        const chat = await Chat.findById(chatId)
+
+        expect(chat.owner.toString()).to.equal(id)
+    })
+
+    it('should fail on wrong user id', async() => {
+
+        const fakeId = ObjectId().toString()
         try {
-            await retrieveFriendBday(id)
+            await createChat(fakeId)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${id} not found`)
+            expect(error.message).to.equal(`user with id ${fakeId} not found`)
         }
     })
-    
-   
-    it('should fail on incorrect id and friendId data', () => {
-        expect(() => retrieveFriendBday(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveFriendBday(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveFriendBday([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveFriendBday({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveFriendBday(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveFriendBday(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => retrieveFriendBday('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveFriendBday(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+
+        const fakeId = 'sadf'
+
+        expect(() => createChat(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createChat(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createChat([])).to.throw(TypeError, ' is not a string')
+        expect(() => createChat({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createChat(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createChat(null)).to.throw(TypeError, 'null is not a string')
+
+        expect(() => createChat('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => createChat(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => createChat(fakeId)).to.throw(ContentError, `${fakeId} is not a valid id`)
 
     })
 
-    after(() => User.deleteMany().then(database.disconnect))
+
+    after(() => Promise.all([User.deleteMany(), Chat.deleteMany()]).then(database.disconnect))
 })

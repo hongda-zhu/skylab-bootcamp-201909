@@ -36,6 +36,15 @@ module.exports = new Schema({
         type: ObjectId,
         ref: 'User'
     }],
+    birthdayFriends: [{
+        user: {
+            type: ObjectId,
+            ref: 'User'
+        },
+        birthday: {
+            type: Date,
+        }
+    }]   ,
     savedWishes: [{
         user: {
             type: ObjectId,

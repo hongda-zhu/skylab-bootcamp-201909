@@ -7,7 +7,7 @@ const { argv: [, , port], env: { PORT = port || 8080, DB_URL } } = process
 const cors = require('./utils/cors')
 const { database } = require('wishare-data')
 
-const { users, wishes, friends } = require('./routes')
+const { users, wishes, friends, chat } = require('./routes')
 
 const api = express()
 
@@ -20,6 +20,7 @@ api.options('*', cors, (req, res) => {
 api.use('/users', users)
 api.use('/wishes', wishes)
 api.use('/friends', friends)
+api.use('/chat', chat)
 
 database
     .connect(DB_URL)

@@ -19,7 +19,7 @@ module.exports = function ( id, wishId ) {
 
     validate.string(wishId)
     validate.string.notVoid('wishId', wishId)
-    if (!ObjectId.isValid(wishId)) throw new NotFoundError(`user with id ${wishId} not found`)
+    if (!ObjectId.isValid(wishId)) throw new NotFoundError(`wish with id ${wishId} not found`)
 
 
     return (async () => {

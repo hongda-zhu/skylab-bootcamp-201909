@@ -1,4 +1,4 @@
-const { ObjectId, models: { User } } = require('wishare-data')
+const { ObjectId, models: { User, Chat } } = require('wishare-data')
 const { validate,  errors: { ContentError, NotFoundError }  } = require('wishare-util')
 
 /**
@@ -34,7 +34,15 @@ module.exports = (id, friendId) => {
 
         friends.splice(friendRemove, 1)
 
-        await user.save()        
-        
+        await user.save()
+
+        const chat = await Chat.findOne({ owner: ObjectId(id) })
+
+        const friendChatRemove = chat.users.indexOf(ObjectId(friendId))
+
+        chat.users.splice(friendChatRemove, 1)
+
+        await chat.save()
+
     })()
 }

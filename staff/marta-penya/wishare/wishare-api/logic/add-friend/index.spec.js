@@ -4,13 +4,13 @@ const { expect } = require('chai')
 const { random } = Math
 const addFriend = require('.')
 const { errors: { NotFoundError, ContentError, ConflictError } } = require('wishare-util')
-const { database, ObjectId, models: { User } } = require('wishare-data')
+const { database, ObjectId, models: { User, Chat } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 describe('logic - add friend', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, password1
+    let chat, id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, password1
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -43,6 +43,8 @@ describe('logic - add friend', () => {
         id = user.id
 
         friendId = friend.id
+
+        chat = await Chat.create({ owner: id})
     })
 
     it('should succeed on correct friend adding', async () => {
@@ -60,6 +62,11 @@ describe('logic - add friend', () => {
 
         expect(_user.friends).to.exist
         expect(_user.friends).to.have.length.greaterThan(0)
+
+        const _chat = await Chat.findOne({ owner: ObjectId(id) })
+
+        expect(_chat.users).to.contain(friendId)
+
     })
 
     it('should fail on adding a friend who was already been added', async () => {

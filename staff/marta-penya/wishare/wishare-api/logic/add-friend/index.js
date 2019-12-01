@@ -1,4 +1,4 @@
-const { ObjectId, models: { User } } = require('wishare-data')
+const { ObjectId, models: { User, Chat } } = require('wishare-data')
 const { validate,  errors: { ContentError, NotFoundError, ConflictError }  } = require('wishare-util')
 
 /**
@@ -37,7 +37,13 @@ module.exports = (id, friendId) => {
 
         user.birthdayFriends.push({user: friendId.toString(), birthday: birthdayfriend})
         
-        await user.save()        
+        await user.save() 
+        
+        const chat = await Chat.findOne({ owner: ObjectId(id) })
+
+        chat.users.push(friendId.toString())
+
+        await chat.save()
         
     })()
 }
