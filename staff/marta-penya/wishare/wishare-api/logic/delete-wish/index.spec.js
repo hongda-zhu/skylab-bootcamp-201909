@@ -110,5 +110,5 @@ describe('logic - delete wishes', () => {
         expect(() => deleteWish(id, ' \t\r')).to.throw(ContentError, 'wishId is empty or blank')
 
     })
-    after(() => Promise.all([User.deleteMany(), Wish.deleteMany()]).then(database.disconnect))
+    after(() => User.deleteMany().then(database.disconnect))
 })

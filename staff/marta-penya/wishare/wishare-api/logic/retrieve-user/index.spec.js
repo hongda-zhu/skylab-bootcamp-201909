@@ -64,6 +64,7 @@ describe('logic - retrieve user', () => {
         }
     })
     it('should fail on incorrect id data', () => {
+        const wrongId = 'wrong id'
         expect(() => retrieveUser(1)).to.throw(TypeError, '1 is not a string')
         expect(() => retrieveUser(true)).to.throw(TypeError, 'true is not a string')
         expect(() => retrieveUser([])).to.throw(TypeError, ' is not a string')
@@ -73,6 +74,7 @@ describe('logic - retrieve user', () => {
     
         expect(() => retrieveUser('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => retrieveUser(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveUser(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
     
      })
 

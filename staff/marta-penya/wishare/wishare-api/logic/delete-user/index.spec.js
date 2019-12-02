@@ -59,6 +59,8 @@ describe('logic - delete user', () => {
         }
     })
     it('should fail on incorrect id data', () => {
+        const wrongId = 'wrong id'
+
         expect(() => deleteUser(1)).to.throw(TypeError, '1 is not a string')
         expect(() => deleteUser(true)).to.throw(TypeError, 'true is not a string')
         expect(() => deleteUser([])).to.throw(TypeError, ' is not a string')
@@ -68,6 +70,7 @@ describe('logic - delete user', () => {
     
         expect(() => deleteUser('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => deleteUser(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => deleteUser(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
     
      })
     

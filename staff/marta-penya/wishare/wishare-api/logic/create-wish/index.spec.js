@@ -77,6 +77,7 @@ describe('logic - create wish', () => {
 
 
     it('should fail on incorrect id, title, link, price, description', () => {
+        const wrongId = 'wrong id'
 
         expect(() => createWish(1)).to.throw(TypeError, '1 is not a string')
         expect(() => createWish(true)).to.throw(TypeError, 'true is not a string')
@@ -87,6 +88,7 @@ describe('logic - create wish', () => {
 
         expect(() => createWish('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => createWish(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => createWish(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
         expect(() => createWish(id, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => createWish(id, true)).to.throw(TypeError, 'true is not a string')
@@ -120,5 +122,5 @@ describe('logic - create wish', () => {
 
     })
 
-    after(() => Promise.all([User.deleteMany(), Wish.deleteMany()]).then(database.disconnect))
+    after(() => User.deleteMany().then(database.disconnect))
 })

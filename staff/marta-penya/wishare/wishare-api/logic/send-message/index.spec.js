@@ -10,8 +10,6 @@ const bcrypt = require('bcryptjs')
 describe('logic - sendMessage', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    before(() => database.connect(TEST_DB_URL))
-
     let text, id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, friend2Id, friendId, chatId, message1Id, message2Id, users
 
     beforeEach(async () => {
@@ -119,6 +117,7 @@ describe('logic - sendMessage', () => {
 
 
     it('should fail on incorrect chatId, id or text', () => {
+        const wrongId = 'wrong id'
 
         expect(() => sendMessage(1)).to.throw(TypeError, '1 is not a string')
         expect(() => sendMessage(true)).to.throw(TypeError, 'true is not a string')
@@ -126,8 +125,10 @@ describe('logic - sendMessage', () => {
         expect(() => sendMessage({})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => sendMessage(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => sendMessage(null)).to.throw(TypeError, 'null is not a string')
+
         expect(() => sendMessage('')).to.throw(ContentError, 'chatId is empty or blank')
         expect(() => sendMessage(' \t\r')).to.throw(ContentError, 'chatId is empty or blank')
+        expect(() => sendMessage(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
         expect(() => sendMessage(chatId, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => sendMessage(chatId, true)).to.throw(TypeError, 'true is not a string')
@@ -135,8 +136,10 @@ describe('logic - sendMessage', () => {
         expect(() => sendMessage(chatId, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => sendMessage(chatId, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => sendMessage(chatId, null)).to.throw(TypeError, 'null is not a string')
+
         expect(() => sendMessage(chatId, '')).to.throw(ContentError, 'userId is empty or blank')
         expect(() => sendMessage(chatId, ' \t\r')).to.throw(ContentError, 'userId is empty or blank')
+        expect(() => sendMessage(chatId, wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
         expect(() => sendMessage(chatId, id, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => sendMessage(chatId, id, true)).to.throw(TypeError, 'true is not a string')
@@ -144,11 +147,11 @@ describe('logic - sendMessage', () => {
         expect(() => sendMessage(chatId, id, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => sendMessage(chatId, id, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => sendMessage(chatId, id, null)).to.throw(TypeError, 'null is not a string')
+
         expect(() => sendMessage(chatId, id, '')).to.throw(ContentError, 'text is empty or blank')
         expect(() => sendMessage(chatId, id, ' \t\r')).to.throw(ContentError, 'text is empty or blank')
 
     })
-
 
     after(() => Promise.all([User.deleteMany(), Chat.deleteMany()]).then(database.disconnect))
 

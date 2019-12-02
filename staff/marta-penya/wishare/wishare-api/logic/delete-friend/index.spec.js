@@ -95,6 +95,7 @@ describe('logic - delete friend', () => {
     })
 
     it('should fail on incorrect id and friendId data', () => {
+        const wrongId = 'wrong id'
         expect(() => deleteFriend(1)).to.throw(TypeError, '1 is not a string')
         expect(() => deleteFriend(true)).to.throw(TypeError, 'true is not a string')
         expect(() => deleteFriend([])).to.throw(TypeError, ' is not a string')
@@ -104,6 +105,7 @@ describe('logic - delete friend', () => {
 
         expect(() => deleteFriend('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => deleteFriend(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => deleteFriend(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
         expect(() => deleteFriend(id, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => deleteFriend(id, true)).to.throw(TypeError, 'true is not a string')
@@ -114,6 +116,7 @@ describe('logic - delete friend', () => {
 
         expect(() => deleteFriend(id, '')).to.throw(ContentError, 'friendId is empty or blank')
         expect(() => deleteFriend(id, ' \t\r')).to.throw(ContentError, 'friendId is empty or blank')
+        expect(() => deleteFriend(id, wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
     })
 

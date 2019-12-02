@@ -8,7 +8,7 @@ const { database, ObjectId, models: { User, Wish } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 
-describe('logic - list wishes', () => {
+describe('logic - modify wish', () => {
     before(() => database.connect(TEST_DB_URL))
 
 
@@ -282,6 +282,7 @@ describe('logic - list wishes', () => {
         }
     })
     it('should fail on incorrect id, wishid, title, link, price or description', () => {
+
         expect(() => modifyWish(1)).to.throw(TypeError, '1 is not a string')
         expect(() => modifyWish(true)).to.throw(TypeError, 'true is not a string')
         expect(() => modifyWish([])).to.throw(TypeError, ' is not a string')
@@ -298,6 +299,7 @@ describe('logic - list wishes', () => {
         expect(() => modifyWish(id, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => modifyWish(id, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => modifyWish(id, null)).to.throw(TypeError, 'null is not a string')
+        
     
         expect(() => modifyWish(id, '')).to.throw(ContentError, 'wishId is empty or blank')
         expect(() => modifyWish(id, ' \t\r')).to.throw(ContentError, 'wishId is empty or blank')
@@ -331,5 +333,5 @@ describe('logic - list wishes', () => {
         expect(() => modifyWish(id, wishId, title, link, price, ' \t\r')).to.throw(ContentError, 'description is empty or blank')
 
     })
-    after(() => Promise.all([User.deleteMany(), Wish.deleteMany()]).then(database.disconnect))
+    after(() => User.deleteMany().then(database.disconnect))
 })

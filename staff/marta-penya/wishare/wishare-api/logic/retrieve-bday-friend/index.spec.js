@@ -36,7 +36,7 @@ describe('logic - retrieve friend bday', () => {
         birthday1 = new Date(year1, month1 - 1, day1, 2, 0, 0, 0)
 
         email2 = `email-${random()}@mail.com`
-        birthday2 = new Date(1990, 11, 2, 2, 0, 0, 0)
+        birthday2 = new Date(1990, 11, 5, 2, 0, 0, 0)
 
         title = `title-${random()}`
         link = `link-${random()}`
@@ -93,7 +93,8 @@ describe('logic - retrieve friend bday', () => {
     })
     
    
-    it('should fail on incorrect id and friendId data', () => {
+    it('should fail on incorrect id', () => {
+        const wrongId = 'wrong id'
         expect(() => retrieveFriendBday(1)).to.throw(TypeError, '1 is not a string')
         expect(() => retrieveFriendBday(true)).to.throw(TypeError, 'true is not a string')
         expect(() => retrieveFriendBday([])).to.throw(TypeError, ' is not a string')
@@ -103,6 +104,7 @@ describe('logic - retrieve friend bday', () => {
 
         expect(() => retrieveFriendBday('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => retrieveFriendBday(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveFriendBday(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
     })
 

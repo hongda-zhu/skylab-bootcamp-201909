@@ -10,6 +10,7 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
+//create the wish, id from token
 router.post('/', jsonBodyParser, tokenVerifier, (req, res) => {
     const { id, body: { title, link, price, description } } = req
     try {
@@ -28,6 +29,7 @@ router.post('/', jsonBodyParser, tokenVerifier, (req, res) => {
     }
 })
 
+//list all wishes
 router.get('/:id', (req, res) => {
     const { params: { id } } = req
     try {
@@ -46,7 +48,7 @@ router.get('/:id', (req, res) => {
     }
 })
 
-
+// update a wish, wishId from params and id from token, all other inputs from body
 router.patch('/:wishId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, params: { wishId }, body: { title, link, price, description } } = req
@@ -68,6 +70,7 @@ router.patch('/:wishId', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
+//delete a wish
 router.delete('/:wishId', tokenVerifier, (req, res) => {
     try {
         const { id, params: { wishId } } = req
@@ -104,8 +107,6 @@ router.post('/upload/:wishId', tokenVerifier, (req, res) => {
 
         await saveWishImage(id, wishId, file, filename)
         
-        // let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename +'.png')
-        // file.pipe(fs.createWriteStream(saveTo))
     })
 
     busboy.on('finish', () => {
@@ -123,14 +124,13 @@ router.get('/wish/:wishId', tokenVerifier, async (req, res) => {
     const { id, params: { wishId } } = req
 
     const stream = await loadWishImage(id, wishId) 
-    //let goTo = path.join(__dirname, `../../data/users/${id}/profile.png`)
-    //stream = fs.createReadStream(goTo)
 
     res.setHeader('Content-Type', 'image/jpeg')
 
     return stream.pipe(res)
 })
 
+//to mark a wish as given, only the owner of the wish can do it
 router.patch('/:wishId/given', tokenVerifier, (req, res) => {
     try {
         const { id, params: { wishId }} = req
@@ -152,11 +152,12 @@ router.patch('/:wishId/given', tokenVerifier, (req, res) => {
     }
 })
 
+//to mark a wish as given, only the friends of the owner of the wish can do it
 router.patch('/:wishId/blocked', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { id, params: { wishId }, body : {friendId} } = req
+        const { id, params: { wishId } } = req
 
-        blockedWish(friendId, wishId, id)
+        blockedWish(id, wishId)
             .then(() =>
                 res.end()
             )

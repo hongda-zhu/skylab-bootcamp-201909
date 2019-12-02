@@ -118,6 +118,7 @@ describe('logic - retrieve-complete-user', () => {
 
 
     it('should fail on incorrect chat id', () => {
+        const wrongId = 'wrong id'
 
         expect(() => retrieveChat(1)).to.throw(TypeError, '1 is not a string')
         expect(() => retrieveChat(true)).to.throw(TypeError, 'true is not a string')
@@ -128,6 +129,7 @@ describe('logic - retrieve-complete-user', () => {
 
         expect(() => retrieveChat('')).to.throw(ContentError, 'chatId is empty or blank')
         expect(() => retrieveChat(' \t\r')).to.throw(ContentError, 'chatId is empty or blank')
+        expect(() => retrieveChat(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
     })
 

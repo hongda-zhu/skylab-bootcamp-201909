@@ -119,7 +119,6 @@ describe('logic - blocked wish', () => {
     
         expect(() => blockedWish(id, '')).to.throw(ContentError, 'wishId is empty or blank')
         expect(() => blockedWish(id, ' \t\r')).to.throw(ContentError, 'wishId is empty or blank')
-
     })
     after(() => User.deleteMany().then(database.disconnect))
 })

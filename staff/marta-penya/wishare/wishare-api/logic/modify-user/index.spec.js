@@ -153,7 +153,22 @@ describe('logic - modify user', () => {
 
         expect(user.description).to.equal(description)
     })
-    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+    it('should fail on wrong user id', async () => {
+        const id = '012345678901234567890123'
+
+        try {
+            await modifyUser(id)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user with id ${id} not found`)
+        }
+    })
+    it('should fail on incorrect id, year, month, day, password and description type and content', () => {
+        const wrongId = 'wrongid'
+
         expect(() => modifyUser(1)).to.throw(TypeError, '1 is not a string')
         expect(() => modifyUser(true)).to.throw(TypeError, 'true is not a string')
         expect(() => modifyUser([])).to.throw(TypeError, ' is not a string')
@@ -163,46 +178,33 @@ describe('logic - modify user', () => {
 
         expect(() => modifyUser('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => modifyUser(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => modifyUser(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
-        expect(() => modifyUser(id, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => modifyUser(iduser, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(iduser, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(iduser, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(iduser, {})).to.throw(TypeError, '[object Object] is not a string')
 
-        expect(() => modifyUser(id, name, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, name, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, name, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, name, {})).to.throw(TypeError, '[object Object] is not a string')
 
-        expect(() => modifyUser(id, name, surname, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, name, surname, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, name, surname, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, name, surname, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => modifyUser(iduser, year, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(iduser, year, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(iduser, year, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(iduser, year, {})).to.throw(TypeError, '[object Object] is not a string')
 
-        expect(() => modifyUser(id, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => modifyUser(iduser, year, month, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(iduser, year, month, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(iduser, year, month, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(iduser, year, month, {})).to.throw(TypeError, '[object Object] is not a string')
 
-        expect(() => modifyUser(id, year, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, year, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, year, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, year, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => modifyUser(iduser, year, month, day, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(iduser, year, month, day, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(iduser, year, month, day, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(iduser, year, month, day, {})).to.throw(TypeError, '[object Object] is not a string')
 
-        expect(() => modifyUser(id, year, month, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, year, month, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, year, month, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, year, month, {})).to.throw(TypeError, '[object Object] is not a string')
-
-        expect(() => modifyUser(id, year, month, day, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, year, month, day, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, year, month, day, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, year, month, day, {})).to.throw(TypeError, '[object Object] is not a string')
-
-        expect(() => modifyUser(id, year, month, day, password, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => modifyUser(id, year, month, day, password, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => modifyUser(id, year, month, day, password, [])).to.throw(TypeError, ' is not a string')
-        expect(() => modifyUser(id, year, month, day, password, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => modifyUser(iduser, year, month, day, password, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => modifyUser(iduser, year, month, day, password, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => modifyUser(iduser, year, month, day, password, [])).to.throw(TypeError, ' is not a string')
+        expect(() => modifyUser(iduser, year, month, day, password, {})).to.throw(TypeError, '[object Object] is not a string')
 
     })
     after(() => User.deleteMany().then(database.disconnect))

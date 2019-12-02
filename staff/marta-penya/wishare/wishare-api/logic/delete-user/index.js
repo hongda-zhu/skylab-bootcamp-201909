@@ -1,5 +1,5 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
-const { ObjectId, models: { User } } = require('wishare-data')
+const { ObjectId, models: { User, Chat } } = require('wishare-data')
 const fs = require('fs-extra')
 
 /**
@@ -26,5 +26,7 @@ module.exports = function (id) {
 
 
         await User.deleteOne({ _id: id })
+
+        await Chat.deleteOne({ owner: id })
     })()
 }

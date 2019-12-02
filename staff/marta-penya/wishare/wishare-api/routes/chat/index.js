@@ -4,13 +4,14 @@ const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
-const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('wishare-util')
+const { errors: { NotFoundError } } = require('wishare-util')
 const Busboy = require('busboy')
 
 const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
+//create the chat by the owner id, the id comes by token
 router.post('/', tokenVerifier, (req, res) => {    
     try {
         const { id } = req
@@ -25,9 +26,6 @@ router.post('/', tokenVerifier, (req, res) => {
                 if (error instanceof NotFoundError)
                 return res.status(404).json({ message })
 
-                if (error instanceof ConflictError)
-                    return res.status(409).json({ message })
-
                 res.status(500).json({ message })
             })
     } catch ({ message }) {
@@ -35,6 +33,7 @@ router.post('/', tokenVerifier, (req, res) => {
     }
 })
 
+//retrieve chat by chatId, it comes by params
 router.get('/:chatId',tokenVerifier, (req, res) => {    
     try {
         const { params: { chatId } } = req
@@ -56,6 +55,8 @@ router.get('/:chatId',tokenVerifier, (req, res) => {
     }
 })
 
+
+//send a message on chat
 router.post('/:chatId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, body: { text }, params: { chatId } } = req

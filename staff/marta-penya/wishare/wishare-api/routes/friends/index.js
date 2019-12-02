@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { addFriend, deleteFriend, saveFriendWish, removeFriendWish, retrieveBirthdayFriends } = require('../../logic')
+const { addFriend, deleteFriend, saveFriendWish, removeFriendWish, retrieveBirthdayFriends, retrieveFriends } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -11,7 +11,7 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-
+// add a friend in user friend list, id from token and friendId from params
 router.post('/:friendId', tokenVerifier, (req, res) => {
     try {
         const { id, params: { friendId } } = req
@@ -23,6 +23,8 @@ router.post('/:friendId', tokenVerifier, (req, res) => {
 
                 if (error instanceof NotFoundError)
                     return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
 
                 res.status(500).json({ message })
             })
@@ -33,6 +35,7 @@ router.post('/:friendId', tokenVerifier, (req, res) => {
     }
 })
 
+//delete a friend from user friends list
 router.delete('/:friendId', tokenVerifier, (req, res) => {
     try {
         const { id, params: { friendId } } = req
@@ -53,6 +56,7 @@ router.delete('/:friendId', tokenVerifier, (req, res) => {
     }
 })
 
+//save a friend wish in user wishes saved list
 router.post('/wish/:friendId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, params: { friendId }, body: { wishId } } = req
@@ -64,6 +68,8 @@ router.post('/wish/:friendId', tokenVerifier, jsonBodyParser, (req, res) => {
 
                 if (error instanceof NotFoundError)
                     return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
 
                 res.status(500).json({ message })
             })
@@ -74,6 +80,7 @@ router.post('/wish/:friendId', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
+//delete a friend wish in user wishes saved list
 router.delete('/wish/:friendId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, params: { friendId }, body: { wishId } } = req
@@ -85,6 +92,8 @@ router.delete('/wish/:friendId', tokenVerifier, jsonBodyParser, (req, res) => {
 
                 if (error instanceof NotFoundError)
                     return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
 
                 res.status(500).json({ message })
             })
@@ -95,6 +104,7 @@ router.delete('/wish/:friendId', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
+//get friends birthday if it's less than a week to be
 router.get('/birthday', tokenVerifier, (req, res) => {
     try {
         const { id } = req
@@ -113,5 +123,23 @@ router.get('/birthday', tokenVerifier, (req, res) => {
     }
 })
 
+//retrieve
+router.get('/', tokenVerifier, (req, res) => {
+    try {
+        const { id } = req
+        retrieveFriends(id)
+            .then(friends => res.json(friends))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
 
 module.exports = router

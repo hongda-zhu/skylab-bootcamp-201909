@@ -124,6 +124,7 @@ describe('logic - save friend wish', () => {
 
 
     it('should fail on incorrect id and friendId data', () => {
+        const wrongId = 'wrong id'
         expect(() => removeFriendWish(1)).to.throw(TypeError, '1 is not a string')
         expect(() => removeFriendWish(true)).to.throw(TypeError, 'true is not a string')
         expect(() => removeFriendWish([])).to.throw(TypeError, ' is not a string')
@@ -133,6 +134,7 @@ describe('logic - save friend wish', () => {
 
         expect(() => removeFriendWish('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => removeFriendWish(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => removeFriendWish(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
         expect(() => removeFriendWish(id, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => removeFriendWish(id, true)).to.throw(TypeError, 'true is not a string')
@@ -143,6 +145,7 @@ describe('logic - save friend wish', () => {
 
         expect(() => removeFriendWish(id, '')).to.throw(ContentError, 'friendId is empty or blank')
         expect(() => removeFriendWish(id, ' \t\r')).to.throw(ContentError, 'friendId is empty or blank')
+        expect(() => removeFriendWish(id, wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
         expect(() => removeFriendWish(id, friendId, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => removeFriendWish(id, friendId, true)).to.throw(TypeError, 'true is not a string')
@@ -153,6 +156,7 @@ describe('logic - save friend wish', () => {
 
         expect(() => removeFriendWish(id, friendId, '')).to.throw(ContentError, 'wishId is empty or blank')
         expect(() => removeFriendWish(id, friendId, ' \t\r')).to.throw(ContentError, 'wishId is empty or blank')
+        expect(() => removeFriendWish(id, friendId, wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
     })
 

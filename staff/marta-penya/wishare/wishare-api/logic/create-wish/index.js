@@ -1,4 +1,4 @@
-const { validate, errors: { NotFoundError } } = require('wishare-util')
+const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { ObjectId, models: { User, Wish } } = require('wishare-data')
 
 /**

@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - add friend', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let chat, id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, password1
+    let id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, password1
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -111,6 +111,8 @@ describe('logic - add friend', () => {
     })
 
     it('should fail on incorrect id and friendId data', () => {
+        const wrongId = 'wrongid'
+
         expect(() => addFriend(1)).to.throw(TypeError, '1 is not a string')
         expect(() => addFriend(true)).to.throw(TypeError, 'true is not a string')
         expect(() => addFriend([])).to.throw(TypeError, ' is not a string')
@@ -120,6 +122,7 @@ describe('logic - add friend', () => {
 
         expect(() => addFriend('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => addFriend(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => addFriend(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
         expect(() => addFriend(id, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => addFriend(id, true)).to.throw(TypeError, 'true is not a string')
@@ -130,6 +133,7 @@ describe('logic - add friend', () => {
 
         expect(() => addFriend(id, '')).to.throw(ContentError, 'friendId is empty or blank')
         expect(() => addFriend(id, ' \t\r')).to.throw(ContentError, 'friendId is empty or blank')
+        expect(() => addFriend(id, wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
     })
 

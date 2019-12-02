@@ -16,6 +16,7 @@ module.exports = {
     blockedWish: require('./block-wish'),
     retrieveUsers: require('./retrieve-users'),
     addFriend: require('./add-friend'),
+    retrieveFriends: require('./retrieve-friends'),
     deleteFriend: require('./delete-friend'),
     saveFriendWish: require('./save-friend-wish'),
     removeFriendWish: require('./remove-friend-wish'),
