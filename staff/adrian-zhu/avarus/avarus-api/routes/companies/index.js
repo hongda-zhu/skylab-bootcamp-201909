@@ -55,10 +55,9 @@ router.post('/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/', tokenVerifier, (req, res) => {
+router.get('/', (req, res) => {
     
     try {
-        const { } = req
 
         retrieveCompanies( )
             .then(companies => res.json({ companies }))

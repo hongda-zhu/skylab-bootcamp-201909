@@ -67,7 +67,7 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
         
         let time = new Date
 
-        const sellOutTransaction = await Sellout.create({company: companyId, stock: stockId, operation, quantity, amount: amount, time: time})
+        const sellOutTransaction = await Sellout.create({company: companyId, stock: stockId, buyInTransaction: buyInTransactionId, operation, quantity, amount: amount, time: time})
 
         const relatedTo = buyInTransaction.relatedTo
 
@@ -77,6 +77,6 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
         user.transactions[0] = buyInTransaction
         user.save()
 
-        return user.transactions
+        return sellOutTransaction
     })()
 }

@@ -42,7 +42,7 @@ describe('logic - authenticate user', () => {
                 await authenticateUser(username, password)
 
                 throw new Error('should not reach this point')
-            } catch (error) {
+            } catch (error) {   
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(CredentialsError)
 

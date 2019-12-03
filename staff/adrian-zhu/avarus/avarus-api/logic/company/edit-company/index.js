@@ -6,8 +6,6 @@ module.exports = function(id, name, description, risk, market, category, depende
   validate.string(id)
   validate.string.notVoid('id', id)
 
-  if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
-
   if (name) {
     validate.string(name)
     validate.string.notVoid('name', name)
@@ -30,8 +28,7 @@ module.exports = function(id, name, description, risk, market, category, depende
   }
 
   if (dependency) {
-    validate.string(dependency)
-    validate.string.notVoid('dependency', dependency)
+    validate.array(dependency)
   }
 
   if (image) {

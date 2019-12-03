@@ -12,7 +12,7 @@ describe('logic - register user', () => {
 
     let name, surname, email, username, password, budget 
     
-    beforeEach(() => {
+    beforeEach(async() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
@@ -21,7 +21,7 @@ describe('logic - register user', () => {
         budget = 5000
         
 
-        return User.deleteMany()
+        await User.deleteMany()
     })
 
     it('should succeed on correct credentials', async () => {

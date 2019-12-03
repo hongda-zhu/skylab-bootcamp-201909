@@ -49,7 +49,7 @@ describe('logic - retrieve user', () => {
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${id} not found`)
+            expect(error.message).to.equal(`usercase with id ${id} not found`)
         }
     })
 

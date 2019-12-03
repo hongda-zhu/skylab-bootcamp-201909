@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose
-const se = require('./')
+// const se = require('./')
 
 module.exports = new Schema({
 
@@ -12,6 +12,11 @@ module.exports = new Schema({
     stock: {
         type: ObjectId,
         ref: 'Stock',
+        required: true
+    },
+    buyInTransaction:{
+        type: ObjectId,
+        ref:'Transaction',
         required: true
     },
     operation: {

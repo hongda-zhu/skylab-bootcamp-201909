@@ -32,8 +32,7 @@ module.exports = new Schema ({
         required: true
     },
     dependency: {
-        type: String,
-        ref:'Company'
+        type: Array
     },
     stocks: [stock],
     versionKey: false 

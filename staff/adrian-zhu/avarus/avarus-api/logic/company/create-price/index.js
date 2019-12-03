@@ -10,9 +10,7 @@ module.exports = function (companyId, price) {
     validate.number(price)
 
 
-    return (async () => {
-
-        debugger
+    return (async () => { 
 
         const company = await Company.findById(companyId)
 
@@ -28,6 +26,6 @@ module.exports = function (companyId, price) {
 
         company.save()
 
-        return company.stocks
+        return stock
     })()
 }

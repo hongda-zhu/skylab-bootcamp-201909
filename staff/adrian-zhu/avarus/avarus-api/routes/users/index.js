@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, deleteUser, deleteStock, modifyUser, buyIn, sellOut } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, retrieveBuyin, retrieveSellout, deleteUser, deleteStock, deleteBuyin, deleteSellout, modifyUser, buyIn, sellOut } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -163,8 +163,6 @@ router.post('/:id/buyin', jsonBodyParser, tokenVerifier, (req, res) => {
 })
 
 router.post('/:id/sellout', jsonBodyParser, tokenVerifier, (req, res) => {
-
-    debugger
     
     const { params: { id: userId } , body: {companyId, stockId, buyInTransactionId, operation, quantity } } = req
 
@@ -180,6 +178,98 @@ router.post('/:id/sellout', jsonBodyParser, tokenVerifier, (req, res) => {
                 res.status(500).json({ message })
             })
     } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/buyin/:id', (req, res) => {
+
+    const { params: { id } } = req
+
+    try {
+
+        retrieveBuyin(id)
+            .then(buyins => res.json({ buyins }))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/sellout/:id', (req, res) => {
+
+    const { params: { id } } = req
+
+    try {
+
+        retrieveSellout(id)
+            .then(sellouts => res.json({ sellouts }))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+router.delete('/buyin/:id', (req, res) => {
+
+    try {
+
+        const { params: { id } } = req
+
+        deleteBuyin(id)
+            .then(res.end())
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+router.delete('/sellout/:id', (req, res) => {
+
+    try {
+
+        const { params: { id } } = req
+
+        deleteSellout(id)
+            .then(res.end())
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
         res.status(400).json({ message })
     }
 })

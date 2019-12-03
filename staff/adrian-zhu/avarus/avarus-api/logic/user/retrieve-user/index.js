@@ -7,13 +7,14 @@ module.exports = function (id) {
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     return (async () => {
-        const user = await User.findById(id).populate("sellOut")
+        
+        const usercase = await User.findById(id).populate('transactions')
 
-        if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        if (!usercase) throw new NotFoundError(`usercase with id ${id} not found`)
 
-        await user.save()
+        await usercase.save()
 
-        const { name, surname, username, email, budget, favorites, transactions } = user
+        const { name, surname, username, email, budget, favorites, transactions} = usercase
 
         return { id, name, surname, username, email, budget, favorites, transactions }
     })()

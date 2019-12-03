@@ -1,4 +1,4 @@
-const { validate, errors: { ConflictError } } = require('avarus-util')
+const { validate, errors: { ConflictError, NotFoundError } } = require('avarus-util')
 const {models: { Company, User, Stock, Transaction } } = require('avarus-data')
 
 module.exports = function (userId, companyId, stockId, operation, quantity) { 
@@ -20,23 +20,23 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
     return (async () => {
 
-        if (operation !== 'buy-in') throw new ConflictError(`this operation should be buy-in operation`)
+        if (operation !== 'buy-in') throw new ConflictError(`it should be buy-in operation`)
 
         const user  = await User.findById( userId )
 
-        if (!user) throw new ConflictError(`user with id ${userId} does not exists`)
+        if (!user) throw new NotFoundError(`user with id ${userId} does not exists`)
 
         const company = await Company.findById(companyId)
 
-        if (!company) throw new ConflictError(`company with id ${companyId}`)
+        if (!company) throw new NotFoundError(`company with id ${companyId} does not exists`)
 
         const stock = await Stock.findById(stockId,  { '__v': 0 }).lean()
 
-        if (!stock) throw new ConflictError(`stock with id ${stockId}`)
+        if (!stock) throw new NotFoundError(`stock with id ${stockId} does not exists`)
 
         const {price} = stock
 
-        if (!price) throw new ConflictError(`price is not defined in this stock`)
+        if (!price) throw new NotFoundError(`price is not defined in this stock`)
         
         const amount = quantity * price
 
@@ -50,12 +50,12 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
         let time = new Date
 
-        const transaction = await Transaction.create({company: companyId, stock: stockId, operation, quantity, amount: amount, time: time})
+        const transaction = await Transaction.create({company: companyId, stock: stockId, user: userId, operation, quantity, amount: amount, time: time})
 
         user.transactions.push(transaction)
 
         user.save()
 
-        return user.transaction
+        return transaction
     })()
 }

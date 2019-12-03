@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose
-const Sellout = require('./sellout')
+
 
 module.exports = new Schema({
 
@@ -12,6 +12,11 @@ module.exports = new Schema({
     stock: {
         type: ObjectId,
         ref: 'Stock',
+        required: true
+    },
+    user: {
+        type: ObjectId,
+        ref: 'User',
         required: true
     },
     operation: {

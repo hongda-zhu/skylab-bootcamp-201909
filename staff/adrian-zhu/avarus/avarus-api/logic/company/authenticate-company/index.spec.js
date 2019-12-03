@@ -1,13 +1,13 @@
 require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
-const authenticateUser = require('.')
+const authenticateCompany = require('.')
 const { random, floor} = Math
 const { errors: { ContentError, CredentialsError } } = require('avarus-util')
 const { database, models: { Company } } = require('avarus-data')
 
 describe('logic - authenticate company', () => {
-
+    
     before(() => database.connect(TEST_DB_URL))
 
     let risks = ['adversion', 'neutral', 'seeking']
@@ -16,7 +16,7 @@ describe('logic - authenticate company', () => {
 
     let name, description, risk, market, category, dependency, stocks, image 
     
-    beforeEach(() => {
+    beforeEach(async() => {  
         name = `name-${random()}`
         description = `description-${random()}`
         risk = risks[floor(random() * risks.length)]
@@ -27,74 +27,108 @@ describe('logic - authenticate company', () => {
         image = `image ${random()}`
         stocks = []
 
-        return Company.deleteMany()
+        await Company.deleteMany()
+        const company = await Company.create({ name, description, risk, market, category, dependency, stocks, image})
+        id = company.id
+
     })
 
     it('should succeed on correct credentials', async () => {
-        const companyId = await authenticateUser(name, risk, category)
+
+        debugger
+        const companyId = await authenticateCompany(name, risk, category)
 
         expect(companyId).to.exist
         expect(typeof companyId).to.equal('string')
         expect(companyId.length).to.be.greaterThan(0)
-        expect(companyId).to.equal(id)
 
+        expect(companyId).to.equal(id)
     })
 
-    // describe('when wrong credentials', () => {
-    //     it('should fail on wrong username', async () => {
-    //         const username = 'wrong'
+    
 
-    //         try {
-    //             await authenticateUser(username, password)
+    describe('when wrong credentials', () => { 
+        it('should fail on wrong name', async () => {
+            const name = 'wrong'
 
-    //             throw new Error('should not reach this point')
-    //         } catch (error) {
-    //             expect(error).to.exist
-    //             expect(error).to.be.an.instanceOf(CredentialsError)
+            try {
+                await authenticateCompany(name, risk, category)
 
-    //             const { message } = error
-    //             expect(message).to.equal(`wrong username`)
-    //         }
-    //     })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(CredentialsError)
 
-    //     it('should fail on wrong password', async () => {
-    //         const password = 'wrong'
+                const { message } = error
+                expect(message).to.equal(`wrong name`)
+            }
+        })
 
-    //         try {
-    //             await authenticateUser(username, password)
+        it('should fail on wrong risk', async () => {
+            const risk = 'wrong'
 
-    //             throw new Error('should not reach this point')
-    //         } catch (error) {
-    //             expect(error).to.exist
-    //             expect(error).to.be.an.instanceOf(CredentialsError)
+            try {
+                await authenticateCompany(name, risk, category)
 
-    //             const { message } = error
-    //             expect(message).to.equal(`wrong password`)
-    //         }
-    //     })
-    // })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(CredentialsError)
 
-    // it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
-    //     expect(() => authenticateUser(1)).to.throw(TypeError, '1 is not a string')
-    //     expect(() => authenticateUser(true)).to.throw(TypeError, 'true is not a string')
-    //     expect(() => authenticateUser([])).to.throw(TypeError, ' is not a string')
-    //     expect(() => authenticateUser({})).to.throw(TypeError, '[object Object] is not a string')
-    //     expect(() => authenticateUser(undefined)).to.throw(TypeError, 'undefined is not a string')
-    //     expect(() => authenticateUser(null)).to.throw(TypeError, 'null is not a string')
+                const { message } = error
+                expect(message).to.equal(`wrong risk`)
+            }
+        })
 
-    //     expect(() => authenticateUser('')).to.throw(ContentError, 'username is empty or blank')
-    //     expect(() => authenticateUser(' \t\r')).to.throw(ContentError, 'username is empty or blank')
+        it('should fail on wrong category', async () => {
+            const category = 'wrong'
 
-    //     expect(() => authenticateUser(email, 1)).to.throw(TypeError, '1 is not a string')
-    //     expect(() => authenticateUser(email, true)).to.throw(TypeError, 'true is not a string')
-    //     expect(() => authenticateUser(email, [])).to.throw(TypeError, ' is not a string')
-    //     expect(() => authenticateUser(email, {})).to.throw(TypeError, '[object Object] is not a string')
-    //     expect(() => authenticateUser(email, undefined)).to.throw(TypeError, 'undefined is not a string')
-    //     expect(() => authenticateUser(email, null)).to.throw(TypeError, 'null is not a string')
+            try {
+                await authenticateCompany(name, risk, category)
 
-    //     expect(() => authenticateUser(email, '')).to.throw(ContentError, 'password is empty or blank')
-    //     expect(() => authenticateUser(email, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
-    // })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(CredentialsError)
+
+                const { message } = error
+                expect(message).to.equal(`wrong category`)
+            }
+        })
+    })
+
+    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+        expect(() => authenticateCompany(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => authenticateCompany(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => authenticateCompany([])).to.throw(TypeError, ' is not a string')
+        expect(() => authenticateCompany({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => authenticateCompany(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => authenticateCompany(null)).to.throw(TypeError, 'null is not a string')
+
+        expect(() => authenticateCompany('')).to.throw(ContentError, 'name is empty or blank')
+        expect(() => authenticateCompany(' \t\r')).to.throw(ContentError, 'name is empty or blank')
+
+        expect(() => authenticateCompany(name, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => authenticateCompany(name, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => authenticateCompany(name, [])).to.throw(TypeError, ' is not a string')
+        expect(() => authenticateCompany(name, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => authenticateCompany(name, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => authenticateCompany(name, null)).to.throw(TypeError, 'null is not a string')
+
+        expect(() => authenticateCompany(name, '')).to.throw(ContentError, 'risk is empty or blank')
+        expect(() => authenticateCompany(name, ' \t\r')).to.throw(ContentError, 'risk is empty or blank')
+
+        expect(() => authenticateCompany(name, risk, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => authenticateCompany(name, risk, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => authenticateCompany(name, risk, [])).to.throw(TypeError, ' is not a string')
+        expect(() => authenticateCompany(name, risk, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => authenticateCompany(name, risk, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => authenticateCompany(name, risk, null)).to.throw(TypeError, 'null is not a string')
+
+        expect(() => authenticateCompany(name, risk, '')).to.throw(ContentError, 'category is empty or blank')
+        expect(() => authenticateCompany(name, risk, ' \t\r')).to.throw(ContentError, 'category is empty or blank')
+
+    })
 
     after(() => Company.deleteMany().then(database.disconnect))
 })

@@ -6,7 +6,7 @@ const { random, floor } = Math
 const { errors: { ContentError } } = require('avarus-util')
 const { database, models: { Company } } = require('avarus-data')
 
-describe.only('logic - create company', () => {
+describe('logic - create company', () => {
     
     before(() => database.connect(TEST_DB_URL))
 
@@ -16,21 +16,21 @@ describe.only('logic - create company', () => {
 
     let name, description, risk, market, category, dependency, stocks, image 
     
-    beforeEach(() => {
+    beforeEach(() => {  
         name = `name-${random()}`
         description = `description-${random()}`
         risk = risks[floor(random() * risks.length)]
         market = markets[floor(random() * markets.length)]
         category = categories[floor(random() * categories.length)]
         
-        dependency = `dependency ${random()}`
+        dependency = [`dependency ${random()}`]
         image = `image ${random()}`
         stocks = []
 
         return Company.deleteMany()
     })
 
-    it('should succeed on correct credentials', async () => {
+    it('should create a new company on correct set of datas', async () => { debugger
         const result = await createCompany(name, description, risk, market, category, dependency, image, stocks)
 
         expect(result).not.to.exist
@@ -42,7 +42,7 @@ describe.only('logic - create company', () => {
         expect(company.risk).to.equal(risk)
         expect(company.market).to.equal(market)
         expect(company.category).to.equal(category)
-        expect(company.dependency).to.equal(dependency)
+        expect(company.dependency).to.eql(dependency)
         expect(company.image).to.equal(image)
         expect(stocks).to.equal(stocks)
     })
@@ -121,15 +121,12 @@ describe.only('logic - create company', () => {
             expect(() => createCompany(name, description, risk, market, '')).to.throw(ContentError, 'category is empty or blank')
             expect(() => createCompany(name, description, risk, market, ' \t\r')).to.throw(ContentError, 'category is empty or blank')
 
-            expect(() => createCompany(name, description, risk, market, category, 1)).to.throw(TypeError, '1 is not a string')
-            expect(() => createCompany(name, description, risk, market, category, true)).to.throw(TypeError, 'true is not a string')
-            expect(() => createCompany(name, description, risk, market, category, [])).to.throw(TypeError, ' is not a string')
-            expect(() => createCompany(name, description, risk, market, category, {})).to.throw(TypeError, '[object Object] is not a string')
-            expect(() => createCompany(name, description, risk, market, category, undefined)).to.throw(TypeError, 'undefined is not a string')
-            expect(() => createCompany(name, description, risk, market, category, null)).to.throw(TypeError, 'null is not a string')
+            expect(() => createCompany(name, description, risk, market, category, 1)).to.throw(TypeError, '1 is not a Array')
+            expect(() => createCompany(name, description, risk, market, category, true)).to.throw(TypeError, 'true is not a Array')
+            expect(() => createCompany(name, description, risk, market, category, {})).to.throw(TypeError, '[object Object] is not a Array')
+            expect(() => createCompany(name, description, risk, market, category, undefined)).to.throw(TypeError, 'undefined is not a Array')
+            expect(() => createCompany(name, description, risk, market, category, null)).to.throw(TypeError, 'null is not a Array')
         
-            expect(() => createCompany(name, description, risk, market, category, '')).to.throw(ContentError, 'dependency is empty or blank')
-            expect(() => createCompany(name, description, risk, market, category, ' \t\r')).to.throw(ContentError, 'dependency is empty or blank')
 
             expect(() => createCompany(name, description, risk, market, category, dependency, 1)).to.throw(TypeError, '1 is not a string')
             expect(() => createCompany(name, description, risk, market, category, dependency, true)).to.throw(TypeError, 'true is not a string')
@@ -137,7 +134,7 @@ describe.only('logic - create company', () => {
             expect(() => createCompany(name, description, risk, market, category, dependency, {})).to.throw(TypeError, '[object Object] is not a string')
             expect(() => createCompany(name, description, risk, market, category, dependency, undefined)).to.throw(TypeError, 'undefined is not a string')
             expect(() => createCompany(name, description, risk, market, category, dependency, null)).to.throw(TypeError, 'null is not a string')
-        
+  
             expect(() => createCompany(name, description, risk, market, category, dependency, '')).to.throw(ContentError, 'image is empty or blank')
             expect(() => createCompany(name, description, risk, market, category, dependency, ' \t\r')).to.throw(ContentError, 'image is empty or blank')
 

@@ -6,5 +6,5 @@ module.exports = {
     Company: model('Company', company),
     Stock: model('Stock', stock),
     Transaction: model('Transaction', transaction),
-    Sellout: model('sellOut', sellout)
+    Sellout: model('Sellout', sellout)
 }

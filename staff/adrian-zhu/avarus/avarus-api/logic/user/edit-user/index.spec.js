@@ -6,7 +6,7 @@ const modufyUser = require('.')
 const { errors: { NotFoundError } } = require('avarus-util')
 const { database, models: { User } } = require('avarus-data')
 
-describe('logic - modify user', () => {
+describe('logic - edit user', () => {
   before(() => database.connect(TEST_DB_URL))
 
   let id, name, surname, email, password
@@ -91,4 +91,5 @@ describe('logic - modify user', () => {
     })
 
   })
+  after(() => User.deleteMany().then(database.disconnect))
 })

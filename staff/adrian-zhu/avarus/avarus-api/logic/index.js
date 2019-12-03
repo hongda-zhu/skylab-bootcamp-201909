@@ -3,10 +3,10 @@ module.exports = {
     authenticateUser: require('./user/authenticate-user'),
     registerUser: require('./user/register-user'),
     retrieveUser: require('./user/retrieve-user'),
-    editUser: require('./user/edit-user'),
+    retrieveBuyin: require('./user/retrieve-buyIn'),
+    retrieveSellout: require('./user/retrieve-sellout'),
+    editUser: require('../logic/user/edit-user'),
     deleteUser: require('./user/delete-user'),
-    deleteStock: require('./user/delete-stock'),
-    AddFavorite: require('./user/favorite-user'),
     buyIn: require('./user/buy-in-stock'),
     sellOut: require('./user/sell-out-stock'),
 

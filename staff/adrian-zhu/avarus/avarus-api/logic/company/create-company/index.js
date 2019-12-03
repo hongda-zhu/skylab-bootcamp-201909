@@ -2,8 +2,6 @@ const { validate, errors: { ConflictError } } = require('avarus-util')
 const {models: { Company } } = require('avarus-data')
 
 module.exports = function (name, description, risk, market, category, dependency, image, stocks) { 
-
-    debugger
    
     validate.string(name)
     validate.string.notVoid('name', name)
@@ -20,8 +18,7 @@ module.exports = function (name, description, risk, market, category, dependency
     validate.string(category)
     validate.string.notVoid('category', category)
     
-    validate.string(dependency)
-    validate.string.notVoid('dependency', dependency)
+    validate.array(dependency)
     
     validate.string(image)
     validate.string.notVoid('image', image)
