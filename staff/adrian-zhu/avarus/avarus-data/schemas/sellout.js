@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose
-
+// const se = require('./')
 
 module.exports = new Schema({
 
@@ -14,9 +14,9 @@ module.exports = new Schema({
         ref: 'Stock',
         required: true
     },
-    user: {
+    buyInTransaction:{
         type: ObjectId,
-        ref: 'User',
+        ref:'Transaction',
         required: true
     },
     operation: {
@@ -35,9 +35,5 @@ module.exports = new Schema({
     time: {
         type: Date,
         required: true
-    },
-    relatedTo:[{
-        type: ObjectId,
-        ref: 'Sellout'
-    }]
+    }
 })

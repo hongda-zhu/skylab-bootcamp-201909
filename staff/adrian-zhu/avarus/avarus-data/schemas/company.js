@@ -1,32 +1,39 @@
 const mongoose = require('mongoose')
-const { Schema, ObjectId} = mongoose
-const stockSchema = require('./stock')
+const { Schema} = mongoose
+const stock = require('./stock')
 
 module.exports = new Schema ({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
         required: true
     },
     image: {
-        type: String
+        type: String,
+        require: true
     },
     risk:{
         type: String,
         enum: ['adversion', 'neutral', 'seeking'],
         required: true
     },
+    market:{
+        type: String,
+        enum: ['bear', 'bull', 'neutral'],
+        required: true 
+    },
     category: {
         type: String,
-        enum: ['Tech', 'Restaurant', 'Banking', 'Sports', 'Gaming', 'Fashion'],
+        enum: ['tech', 'food', 'finance', 'sports', 'gaming', 'fashion'],
         required: true
     },
     dependency: {
-        type: ObjectId,
-        ref:'User'
+        type: Array
     },
-    stocks: [stockSchema]
+    stocks: [stock],
+    versionKey: false 
 })
