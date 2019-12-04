@@ -30,14 +30,12 @@ router.post('/', jsonBodyParser, (req, res) => {
 })
 
 router.post('/auth', jsonBodyParser, (req, res) => {
-    
     const { body: { username, password } } = req
 
     try {
         authenticateUser(username, password)
             .then(id => {
                 const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
-
                 res.json({ token })
             })
             .catch(error => {

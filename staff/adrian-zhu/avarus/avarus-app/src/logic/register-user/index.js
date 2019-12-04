@@ -1,7 +1,6 @@
+const call = require('../../utils/call')
 const { validate, errors: { ConflictError } } = require('avarus-util')
-const { models: { User } } = require('avarus-data')
-const bcrypt = require('bcryptjs')
-
+const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (name, surname, email, username, password, budget) {
     validate.string(name)
@@ -18,13 +17,17 @@ module.exports = function (name, surname, email, username, password, budget) {
     validate.number(budget)
 
     return (async () => {
-        const user = await User.findOne({ username })
 
-        if (user) throw new ConflictError(`user with username ${username} already exists`)
+        const res = await call(`${API_URL}/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, surname, email,username, password, budget })
+        })
+        if (res.status === 201) return
 
-        const hash = await bcrypt.hash(password, 10)
+        if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 
-        await User.create({ name, surname, email, username, password: hash, budget })
-
+        throw new Error(JSON.parse(res.body).message)
     })()
+
 }
