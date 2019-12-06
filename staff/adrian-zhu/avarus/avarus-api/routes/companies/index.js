@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, editCompany, createPrice, retrievePrice} = require('../../logic')
+const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, retrievePrice} = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -55,11 +55,13 @@ router.post('/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/', (req, res) => {
-    
-    try {
+router.get('/:id', (req, res) => {
 
-        retrieveCompanies( )
+    const {params: { id } } = req
+    
+    try { debugger
+
+        retrieveCompanies(id)
             .then(companies => res.json({ companies }))
             .catch(error => {
                 const { message } = error
@@ -76,7 +78,7 @@ router.get('/', (req, res) => {
     }
 })
 
-router.get('/:id', tokenVerifier, (req, res) => {
+router.get('/company/:id', tokenVerifier, (req, res) => {
     
     try {
         const { id } = req
@@ -97,6 +99,53 @@ router.get('/:id', tokenVerifier, (req, res) => {
         res.status(400).json({ message })
     }
 })
+
+
+router.get('/category/:category',jsonBodyParser, (req, res) => {
+
+
+    try { 
+        const { params: { category } } = req
+
+        retrieveCompanyCategory(category)
+            .then(company => res.json({ company }))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/name/:query',jsonBodyParser, (req, res) => {
+
+    try { 
+        const { params: { query } } = req
+
+        retrieveCompanyName(query)
+            .then(company => res.json({ company }))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
 
 router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     try {

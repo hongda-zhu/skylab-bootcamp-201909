@@ -1,53 +1,57 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './index.sass'
+import { withRouter, Link } from 'react-router-dom'
+import Feedback from '../Feedback'
+import authenticateUser from '../../logic'
 
-export default function ({ onRegister, onLogin }) {
+export default (function ({ onLogin, error, onClose }) {
 
-    // function Landing({history}) {
-    //     history.push('/register')
-    // }
+    return  <section className="log hidden">
+        <div className="container-login">
+            <div className="form-login">
+        
+                <form type="submit" className="wrap-login" onSubmit={function(event) {
+                    event.preventDefault()
 
-    return  <section class="log hidden">
-        <div class="container-login">
-            <div class="form-login">
+                    const { username: {value: username}, password: {value: password}} = event.target
+
+                    onLogin(username, password)
+                }} >
         
-                <form type="submit" class="wrap-login">
+                        <h1 className="wrap-login__title">LOGIN</h1>
         
-                        <h1 class="wrap-login__title">LOGIN</h1>
-        
-                        <div class="wrap-login__input" data-validate="email is required">
-                            <input class="wrap-login__input-container" type="email" name="email" placeholder="Email" />
-                            <span class="wrap-login__input-symbol">
-                                <i class="far fa-envelope"></i>
+                        <div className="wrap-login__input" data-validate="username is required">
+                            <input className="wrap-login__input-container" type="username" name="username" placeholder="Username" />
+                            <span className="wrap-login__input-symbol">
+                                <i className="far fa-envelope"></i>
                             </span>
                         </div>
         
-                        <div class="wrap-login__input" data-validate="password is required">
-                            <input class="wrap-login__input-container" type="password" name="password" placeholder="Password" />
-                            <span class="wrap-login__input-symbol">
-                                <i class="fas fa-unlock-alt"></i>
+                        <div className="wrap-login__input" data-validate="password is required">
+                            <input className="wrap-login__input-container" type="password" name="password" placeholder="Password" />
+                            <span className="wrap-login__input-symbol">
+                                <i className="fas fa-unlock-alt"></i>
                             </span>
                         </div>
-                
-                        <div class="wrap-login__btnContainer btnContainer">
-                            <button class="btnContainer__btn">Login</button>
+
+                        <div className="form-login__btnContainer btnContainer">
+                            <input className="btnContainer__btn" type="submit" value ="Login"></input>
                         </div>
+                </form>
         
-                        <div class="wrap-login__textContainer">
-                            <a class="wrap-login__textContainer-a" href ="#">
+                        <div className="form-login__textContainer">
+                            <Link className="form-login__textContainer-a" to ="/">
                                 Go back
-                            </a>
+                            </Link>
         
-                            <a class="wrap-login__textContainer-a" href="#">
+                            <Link className="form-login__textContainer-a" to="/register">
                                 Sign up now							
-                            </a> 
+                            </Link> 
                         </div>
-                            
-                        <p class="wrap-login__copyright">@copyright by Adrían Zhu</p>
-        
-                </form>     
-            </div>
+                        <p className="form-login__copyright">@copyright by Adrían Zhu</p>     
+                </div>
+                {error && < Feedback message={error} onClose={onClose}/>}
         </div>
     </section>
 
-}
+})

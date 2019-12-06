@@ -3,9 +3,9 @@ const { validate, errors: { CredentialsError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 
 
-module.exports = function (email, password) {
-    validate.string(email)
-    validate.string.notVoid('email', email)
+module.exports = function (username, password) {
+    validate.string(username)
+    validate.string.notVoid('username', username)
     validate.string(password)
     validate.string.notVoid('password', password)
 
@@ -14,7 +14,7 @@ module.exports = function (email, password) {
             
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ email, password})
+            body: JSON.stringify({ username, password})
         })
         
         if(res.status === 200) return JSON.parse(res.body).token

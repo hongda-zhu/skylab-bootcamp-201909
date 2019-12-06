@@ -21,7 +21,7 @@ module.exports = function (name, surname, email, username, password, budget) {
         const res = await call(`${API_URL}/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, surname, email,username, password, budget })
+            body: JSON.stringify({ name, surname, email, username, password, budget })
         })
         if (res.status === 201) return
 

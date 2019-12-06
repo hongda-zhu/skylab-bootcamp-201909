@@ -1,22 +1,22 @@
 const { validate, errors: { NotFoundError } } = require('avarus-util')
-const { models: { Company } } = require('avarus-data')
+const { models: { User, Company } } = require('avarus-data')
 
 module.exports = function (id) {
 
     validate.string(id)
     validate.string.notVoid('id', id)
 
-    return (async () => {
+    return (async () => { 
 
-        const authenticateCompany = await Company.findById(id)
+        const authenticateUser = await User.findById(id)
 
-        if(!authenticateCompany) throw new NotFoundError(`we can't found this company with id ${id}`)
+        if(!authenticateUser) throw new NotFoundError(`we can't found any user with id ${id}`)
 
         if (!Company) throw new NotFoundError(`Module with name ${Company} does not exist`)
 
-        const company = await Company.find().lean()
+        const companies = await Company.find().lean()
 
-        company.forEach(company => {
+        companies.forEach(company => {
 
             company.id = company._id.toString()
             delete company._id
