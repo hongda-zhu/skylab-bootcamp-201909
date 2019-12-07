@@ -12,6 +12,7 @@
         justify-content: center
         width: 100%
         padding: 1rem 0
+        flex-direction: column
         
         &__btn
             border: 1px solid black
@@ -21,6 +22,10 @@
             border: 1px solid black
             padding: .5rem 1rem
             width: 60%
+
+        &__box
+            display: flex
+            justify-content: center
 
     &-nav
         display: flex
@@ -55,13 +60,22 @@
 
                         .profile
                             width: 100%
-
+                            display: flex
+                            align-items: center
+                            flex-direction: column
+                            padding: 1rem 2rem
+                            margin: 1rem 8rem
+                            border: 1px solid black
+    
                             &-title
                                 display: flex
                                 justify-content: center
+                                margin: 1rem
                             
                             &-img
                                 margin-left: .4rem
+                                display: flex
+                                justify-content: center
 
 
         

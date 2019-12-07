@@ -18,7 +18,7 @@ module.exports = function (id) {
 
         debugger
 
-        const transaction = await Transaction.find({ operation: "buy-in" }).populate('relatedTo')
+        const transaction = await Transaction.find({ operation: "buy-in" }).populate('relatedTo')                                                                                                     
         /* {path: 'Sellout'} */
         transaction.forEach(transaction => {
 

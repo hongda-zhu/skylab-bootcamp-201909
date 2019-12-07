@@ -134,7 +134,7 @@ export default withRouter(function ({ history }) {
       
       {/* <MainContext.Provider value={{setName}} >
       </MainContext.Provider> */}
-      {token && <> <Footer /> </>} 
+      {token && <> <Footer /></>} 
       
       {error && <Feedback message={error} onClose={handleCloseError}/>}
 

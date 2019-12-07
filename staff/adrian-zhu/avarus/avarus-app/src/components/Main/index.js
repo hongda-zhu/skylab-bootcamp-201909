@@ -9,7 +9,7 @@ import {retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
 
 function Main ({error, onClose }) { 
 
-    const [companies, setCompanies] = useState()
+    const [companiesCategory, setCompaniesCategory] = useState([])
 
     const [companiesName, setCompaniesName] = useState()
 
@@ -21,11 +21,12 @@ function Main ({error, onClose }) {
 
     }
 
-    async function handleCategoryQuery(Category) {
+    async function handleCategoryQuery(categoryType) {
       
-        const companies = await retrieveCompanyByCategory(Category)
+        const companiesCategory = await retrieveCompanyByCategory(categoryType)
 
-        setCompanies(companies)
+        setCompaniesCategory(companiesCategory)
+        
   
     }
 
@@ -34,9 +35,9 @@ function Main ({error, onClose }) {
     <span className="main-span">Choose the stocks you'd like to give</span>
 
                                                             
-    <Search handleNameQuery={handleSearchName} companies={companiesName}/> 
+    <Search handleNameQuery={handleSearchName} companies={companiesName} message={error} onClose={onClose}/> 
     
-    <Category handleCategoryQuery={handleCategoryQuery} companies={companies}/>
+    <Category handleCategoryQuery={handleCategoryQuery} companies={companiesCategory}  message={error} onClose={onClose}/>
 
     {error && < Feedback message={error} onClose={onClose}/>}
 

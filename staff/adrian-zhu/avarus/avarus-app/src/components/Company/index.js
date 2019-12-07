@@ -1,13 +1,13 @@
 import React from 'react'
+import './index.sass'
 
-export default function ({ company }) { 
+export default function ({ company }) { debugger
 
-    const {company: {name, image, risk, description}} = company
+    const {name, image, description} = company
 
-    return <a href="#" className="stock-profile profile">
-        <p className="profile-title">{name}</p>
+    return <a href="" className="profile">
         <img src={image} className="profile-img"></img>
-        <p>{risk}</p>
-        <p>{description}</p>
+        <h3 className="profile-title">{name}</h3>
+        <p className="profile-description">{description}</p>
     </a>
 }

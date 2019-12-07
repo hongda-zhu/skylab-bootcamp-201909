@@ -108,7 +108,7 @@ router.get('/category/:category',jsonBodyParser, (req, res) => {
         const { params: { category } } = req
 
         retrieveCompanyCategory(category)
-            .then(company => res.json({ company }))
+            .then(company => res.json( company ))
             .catch(error => {
                 const { message } = error
 
@@ -130,7 +130,7 @@ router.get('/name/:query',jsonBodyParser, (req, res) => {
         const { params: { query } } = req
 
         retrieveCompanyName(query)
-            .then(company => res.json({ company }))
+            .then(company => res.json(company))
             .catch(error => {
                 const { message } = error
 
