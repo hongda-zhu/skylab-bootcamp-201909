@@ -6,8 +6,15 @@ module.exports = function (token) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
-    return (async () => {
-        const res = await call(`${API_URL}/companies`, {
+    return (async () => { debugger
+
+        // const [, payload,] = token.split('.')
+        // const { sub } = JSON.parse(atob(payload))
+        // const id = sub
+        // console.log(id)
+
+
+        const res = await call(`${API_URL}/companies/`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

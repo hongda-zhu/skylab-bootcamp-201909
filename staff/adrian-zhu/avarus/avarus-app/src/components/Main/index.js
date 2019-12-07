@@ -1,43 +1,63 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './index.sass'
 import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
-import Category from '../Category'
-import {retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
+import CompanyList from '../CompanyList';
+import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
+import { set } from 'mongoose'
 
 
 function Main ({error, onClose }) { 
 
-    const [companiesCategory, setCompaniesCategory] = useState([])
+    const [companies, setCompanies] = useState([])
 
-    const [companiesName, setCompaniesName] = useState()
+    const {token} = sessionStorage
+
+    // const [companiesName, setCompaniesName] = useState()
+
+    // (function(){
+    // })()
+
+    useEffect(()=>{
+        (async()=>{
+
+            try{
+
+                const companies = await retrieveCompanies(token)
+
+                setCompanies(companies)
+
+            }catch(message){
+                console.log('Cabron')
+            }
+
+        })()
+    }, [token])
 
     async function handleSearchName(query) {
       
-        const companiesName = await retrieveCompanyByName(query)
+        const companies = await retrieveCompanyByName(query)
 
-        setCompaniesName(companiesName)
+        setCompanies(companies)
 
     }
 
     async function handleCategoryQuery(categoryType) {
       
-        const companiesCategory = await retrieveCompanyByCategory(categoryType)
+        const companies = await retrieveCompanyByCategory(categoryType)
 
-        setCompaniesCategory(companiesCategory)
-        
-  
+        setCompanies(companies)
+    
     }
 
     return  <main className="main">
 
     <span className="main-span">Choose the stocks you'd like to give</span>
-
-                                                            
-    <Search handleNameQuery={handleSearchName} companies={companiesName} message={error} onClose={onClose}/> 
     
-    <Category handleCategoryQuery={handleCategoryQuery} companies={companiesCategory}  message={error} onClose={onClose}/>
+    <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose}/>
+
+    {/* {companies && < CompanyList companies={companies}/>} */}
 
     {error && < Feedback message={error} onClose={onClose}/>}
 

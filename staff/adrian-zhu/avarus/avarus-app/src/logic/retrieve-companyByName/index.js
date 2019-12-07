@@ -14,7 +14,7 @@ module.exports = function (query) {
         if (res.status === 200) {
             const companies = JSON.parse(res.body)
 
-            return companies
+            return [companies]
         }
 
         if (res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)

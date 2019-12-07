@@ -1,18 +1,19 @@
 const { validate, errors: { NotFoundError } } = require('avarus-util')
 const { models: { User, Company } } = require('avarus-data')
 
-module.exports = function (id) {
+module.exports = function () {
 
-    validate.string(id)
-    validate.string.notVoid('id', id)
+    // id
+    // validate.string(id)
+    // validate.string.notVoid('id', id)
 
     return (async () => { 
 
-        const authenticateUser = await User.findById(id)
+        // const authenticateUser = await User.findById(id)
 
-        if(!authenticateUser) throw new NotFoundError(`we can't found any user with id ${id}`)
+        // if(!authenticateUser) throw new NotFoundError(`we can't found any user with id ${id}`)
 
-        if (!Company) throw new NotFoundError(`Module with name ${Company} does not exist`)
+        // if (!Company) throw new NotFoundError(`Module with name ${Company} does not exist`)
 
         const companies = await Company.find().lean()
 
@@ -24,7 +25,7 @@ module.exports = function (id) {
             
         })
 
-        return company
+        return companies
     })()
 
 }

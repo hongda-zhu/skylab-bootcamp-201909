@@ -55,14 +55,16 @@ router.post('/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/:id', (req, res) => {
+router.get('/', tokenVerifier, (req, res) => {
 
-    const {params: { id } } = req
+    // '/:id'
+    // const {params: { id } } = req
+    // id
     
     try { debugger
 
-        retrieveCompanies(id)
-            .then(companies => res.json({ companies }))
+        retrieveCompanies()
+            .then(companies => res.json( companies ))
             .catch(error => {
                 const { message } = error
 
