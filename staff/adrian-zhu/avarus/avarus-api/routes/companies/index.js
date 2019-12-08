@@ -80,13 +80,13 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
-router.get('/company/:id', tokenVerifier, (req, res) => {
+router.get('/company/:id', (req, res) => {
     
     try {
-        const { id } = req
+        const { params: {id} } = req
 
         retrieveCompany(id)
-            .then(company => res.json({ company }))
+            .then(company => res.json(company))
             .catch(error => {
                 const { message } = error
 

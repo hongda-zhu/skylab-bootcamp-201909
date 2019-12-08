@@ -2,23 +2,20 @@ const call = require('../../utils/call')
 const { validate, errors: { CredentialsError, NotFoundError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token) {
-    validate.string(token)
-    validate.string.notVoid('token', token)
+module.exports = function (id) {
+    validate.string(id)
+    validate.string.notVoid('id', id)
 
     return (async () => { debugger  
 
-        const res = await call(`${API_URL}/companies/`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+        const res = await call(`${API_URL}/companies/company/${id}`, {
+            method: 'GET'
         })
 
         if (res.status === 200) {
-            const companies = JSON.parse(res.body)
             
-            return companies
+            return JSON.parse(res.body)
+            
         }
 
         if (res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)

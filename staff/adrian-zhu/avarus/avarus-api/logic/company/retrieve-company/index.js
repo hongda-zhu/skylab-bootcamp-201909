@@ -11,9 +11,11 @@ module.exports = function (id) {
 
         if (!company) throw new NotFoundError(`company with id ${id} not found`)
 
+        debugger
+
         await company.save()
 
-        const { name, description, risk, market, category, dependency, image, stocks } = company.toObject()
+        const { name, description, risk, market, category, dependency, image, stocks } = company
 
         return { id, name, description, risk, market, category, dependency, image, stocks }
     })()

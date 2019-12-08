@@ -5,9 +5,9 @@ import Register from '../Register'
 import Login from '../Login'
 import Header from '../Header'
 import Main from '../Main/'
+import Detail from '../Detail'
 import Footer from '../Footer'
 import Feedback from '../Feedback'
-import MainContext from '../Context'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { registerUser, authenticateUser, retrieveUser, retrieveCompanies } from '../../logic'
  
@@ -43,6 +43,7 @@ export default withRouter(function ({ history }) {
       })()
 
     }, [sessionStorage.token])
+
 
     async function listCompanies(token) {
       
@@ -131,13 +132,17 @@ export default withRouter(function ({ history }) {
       {token && <> <Header name={name} budget={budget} onLogout={handleLogout} /></>} 
       
       <Route path = '/main' render = {() => token ? <> <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} /> </>: <Redirect to="/" /> } />
+
+      <Route path = '/detail/:id' render={({ match: { params: { id } } })  => <Detail id = {id} />} />
       
       {/* <MainContext.Provider value={{setName}} >
       </MainContext.Provider> */}
       {token && <> <Footer /></>} 
       
       {error && <Feedback message={error} onClose={handleCloseError}/>}
-
+      
+      
 
   </>
+
 })

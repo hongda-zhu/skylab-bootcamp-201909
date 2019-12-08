@@ -3,9 +3,7 @@ import './index.sass'
 import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
-import CompanyList from '../CompanyList';
 import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
-import { set } from 'mongoose'
 
 
 function Main ({error, onClose }) { 
@@ -20,6 +18,7 @@ function Main ({error, onClose }) {
     // })()
 
     useEffect(()=>{
+
         (async()=>{
 
             try{
@@ -33,6 +32,7 @@ function Main ({error, onClose }) {
             }
 
         })()
+        
     }, [token])
 
     async function handleSearchName(query) {

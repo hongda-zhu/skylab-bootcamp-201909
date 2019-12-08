@@ -16,7 +16,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
         handleCategoryQuery(categoryType)
     }
 
-    function handleSubmitSearch (event) { debugger
+    function handleSubmitSearch (event) { 
 
         event.preventDefault()
         
@@ -40,10 +40,10 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
         </form>
 
         <div>
-            <select name="categoryType" className="input__select" onChange={handleGoToCategory} >
+        <select name="categoryType" className="input__select" onChange={handleGoToCategory} >
 
-        {config.map(category => {return <option key={category.id} value= {category.name}>{category.contentText}</option>})}
-            </select>
+        {config.map(category => {return <option key={category._id} value= {category.name}>{category.contentText}</option>})}
+        </select>
             
         </div>
         

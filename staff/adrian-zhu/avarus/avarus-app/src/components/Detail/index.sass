@@ -60,6 +60,10 @@
                 display: flex
                 justify-content: center
                 padding: .5rem 0
+                margin: .7rem 0
+
+            &-button
+                border: 1px solid black
         
             .prices
                 width: 100%
@@ -95,6 +99,7 @@
                     font-size: .6rem
                     justify-content: center
                     display: flex
+                    padding-bottom: 1rem
 
         .charts
             width: 100%
@@ -121,12 +126,24 @@
         .stats
             .tabla
                 width: 100%
+                padding-bottom: 1rem
+            
         
         .about
 
-            .name
+            .information
                 display: flex
-                justify-content: center
+                flex-direction: column
+                width: 100%
+                
+                &-headquarter
+                    display: flex
+                    justify-content: center
+
+                &-position
+                    font-size: small
+                    display: flex
+                    justify-content: center
 
             &-description
                 padding: 1rem 3rem
