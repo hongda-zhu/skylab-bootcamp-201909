@@ -1,33 +1,50 @@
 const { validate, errors: { ContentError, NotFoundError } } = require('avarus-util')
 const { ObjectId, models: { Company, Stock } } = require('avarus-data')
-const {priceProducer} = require('../../../utils')
+
+const STOCKS_INTERVAL = 1000 //* 60 * 60 // ms
 
 module.exports = function () {
-    // validate.string(companyId)
-    // validate.string.notVoid('companyId', companyId)
-    // if (!ObjectId.isValid(companyId)) throw new ContentError(`${companyId} is not a valid companyId`)
-
-    return (async () => { 
-  
+    return (async () => {
         const companies = await Company.find()
 
-        await Promise.all(companies.map(async company => {  
-
+        await Promise.all(companies.map(async company => {
             if (!company) throw new NotFoundError(`company with companyId ${companyId} not found`)
 
-            const price = await priceProducer(company)
+            if (!company.stocks.length) {
+                const stock = new Stock({ price: 15, time: new Date('2019-12-01') })
 
-            const lastAccess = new Date()
+                company.stocks.push(stock)
+            }
 
-            const stock = await Stock.create({price, time: lastAccess})
-    
-            delete stock.__v
-    
-            company.stocks.push(stock._doc)
-            
+            const lastStock = company.stocks[company.stocks.length - 1]
+
+            let lastTime = lastStock.time.getTime()
+
+            const diff = Date.now() - lastTime
+
+            const gap = Math.floor(diff / STOCKS_INTERVAL)
+
+            let lastPrice = lastStock.price
+
+            for (let i = 0; i < gap; i++) {
+                const newPrice = calculatePrice(company.market, lastPrice)
+
+                const newTime = lastTime + STOCKS_INTERVAL
+
+                const newStock = new Stock({ price: newPrice, time: new Date(newTime) })
+
+                company.stocks.push(newStock)
+
+                lastTime = newTime
+                lastPrice = newPrice
+            }
+
+            await company.save()
         }))
-
-        
-
     })()
 }
+
+function calculatePrice(market, previousPrice) {
+    // TODO switch (market)
+    return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.0009 - 0.0004)) + 0.0004))
+} 
