@@ -1,8 +1,8 @@
 import React from 'react'
 
 export default function ({}) {
-    return <div class="container-stats stats">
-    <table class="stats-tabla tabla">
+    return <div className="container-stats stats">
+    <table className="stats-tabla tabla">
         <tr>
             <th>Open:</th>
             <td>143</td>

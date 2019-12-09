@@ -12,28 +12,34 @@ function Main ({error, onClose }) {
 
     const {token} = sessionStorage
 
-    // const [companiesName, setCompaniesName] = useState()
-
-    // (function(){
-    // })()
-
     useEffect(()=>{
 
         (async()=>{
 
             try{
 
-                const companies = await retrieveCompanies(token)
+                console.log(companies)
 
-                setCompanies(companies)
+                handleSearchAll()
 
             }catch(message){
-                console.log('Cabron')
+
+                console.log(`${message}`)
+
             }
 
         })()
         
-    }, [token])
+    }, [])
+
+
+
+    async function handleSearchAll(){
+
+        const companies = await retrieveCompanies(token)
+                
+        setCompanies(companies)
+    }
 
     async function handleSearchName(query) {
       

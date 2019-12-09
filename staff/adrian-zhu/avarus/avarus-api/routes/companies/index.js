@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, retrievePrice} = require('../../logic')
+const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, producePrice,retrievePrice} = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -11,7 +11,7 @@ const jsonBodyParser = bodyParser.json()
 const router = Router()
 
 router.post('/', jsonBodyParser, (req, res) => { 
-    debugger
+    
     const { body: { name, description, risk, market, category, dependency, image, stocks } } = req
 
     try {
@@ -33,8 +33,7 @@ router.post('/', jsonBodyParser, (req, res) => {
 router.post('/auth', jsonBodyParser, (req, res) => {
     
     const { body: { name, risk, category } } = req
-    debugger
-
+    
     try {
         authenticateCompany(name, risk, category )
             .then(id => {
@@ -61,7 +60,7 @@ router.get('/', tokenVerifier, (req, res) => {
     // const {params: { id } } = req
     // id
     
-    try { debugger
+    try { 
 
         retrieveCompanies()
             .then(companies => res.json( companies ))
@@ -168,12 +167,36 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-router.post('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {
+router.post('/:id/price', jsonBodyParser, (req, res) => {debugger
 
-    try {
+    try { 
+
         const { params: { id }, body: { price }} = req
 
         createPrice(id, price)
+            .then(() => res.status(200).end())
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.post('/price', jsonBodyParser, (req, res) => {debugger
+
+    try { 
+
+        // '/:id/price'
+        // const { params: { id }, body: { price }} = req
+        // id, price
+
+        producePrice()
             .then(() => res.status(200).end())
             .catch(error => {
                 const { message } = error

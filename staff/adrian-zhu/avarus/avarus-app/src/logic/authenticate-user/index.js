@@ -1,4 +1,4 @@
- const call = require('../../utils/call')
+const call = require('../../utils/call')
 const { validate, errors: { CredentialsError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 

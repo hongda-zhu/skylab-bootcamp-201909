@@ -141,8 +141,6 @@ export default withRouter(function ({ history }) {
       
       {error && <Feedback message={error} onClose={handleCloseError}/>}
       
-      
-
   </>
-
+  
 })

@@ -13,6 +13,7 @@ module.exports = {
     // Company
     createCompany: require('./company/create-company'),
     createPrice: require('./company/create-price'),
+    producePrice: require('./company/produce-price'),
     authenticateCompany: require('./company/authenticate-company'),
     retrieveCompanies: require('./company/retrieve-companies'),
     retrieveCompany: require('./company/retrieve-company'),

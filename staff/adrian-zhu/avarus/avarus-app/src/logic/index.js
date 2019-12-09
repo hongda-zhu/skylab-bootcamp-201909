@@ -1,4 +1,5 @@
 module.exports = {
+    createPrice: require('./create-price'),
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),

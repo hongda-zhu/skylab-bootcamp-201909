@@ -15,6 +15,14 @@ module.exports = function (id) {
 
         const {stocks} = company.toObject()
 
+        stocks.forEach(stock => {
+
+            stock.id = stock._id.toString()
+            delete stock._id
+            delete stock.__v
+            
+        })
+
         return stocks
     })()
 }

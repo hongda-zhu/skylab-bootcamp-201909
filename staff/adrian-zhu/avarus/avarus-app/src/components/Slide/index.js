@@ -3,7 +3,7 @@ import React from 'react'
 import config from './config'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
-export default withRouter(function ({handleslideName}) { debugger
+export default withRouter(function ({handleslideName}) {
 
     // const {id, name, image, description} = company
 
@@ -23,8 +23,6 @@ export default withRouter(function ({handleslideName}) { debugger
             }}> <p className="button-name">{slide.contentText}</p>
 
             </button>
-
-                    
                 </li>
             })}
     </ul>

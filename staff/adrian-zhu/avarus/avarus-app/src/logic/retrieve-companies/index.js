@@ -6,7 +6,7 @@ module.exports = function (token) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
-    return (async () => { debugger  
+    return (async () => {  
 
         const res = await call(`${API_URL}/companies/`, {
             method: 'GET',

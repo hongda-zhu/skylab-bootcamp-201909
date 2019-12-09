@@ -5,11 +5,14 @@ import Buy from '../Buy'
 import Charts from '../Charts'
 import Stats from '../Stats'
 import About from '../About'
+import {priceProducer} from '../../utils'
 import { Link } from 'react-router-dom';
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import {retrieveCompanyDetail} from '../../logic'
+import {retrieveCompanyDetail, createPrice} from '../../logic'
+import { format } from 'path'
+const moment = require('moment')
 
-export default withRouter(function ({history, id}) { debugger
+export default withRouter(function ({id, history}) { 
 
     const [slide, setSlide] = useState('buy')
 
@@ -20,15 +23,34 @@ export default withRouter(function ({history, id}) { debugger
         // const { token } = sessionStorage;
   
         (async () => { 
-          
-           const companyDetail = await retrieveCompanyDetail(id)
 
-           setDetail(companyDetail)
-                
-                
+            const companyDetail = await retrieveCompanyDetail(id)
+
+            let lastStock = companyDetail.stocks[companyDetail.stocks.length -1]
+
+            const now = moment(new Date()).format('DD/MM/YYYY ')
+
+            const stockTime = moment(lastStock.time).format('DD/MM/YYYY')
+
+            // if(stockTime !== now){ 
+
+            //     new Promise(async(resolve, reject)=>{ 
+
+            //         for(let i = 0; i < 5; i++){ 
+            //             let price =  await priceProducer(companyDetail)
+            //             await createPrice(companyDetail.id, price)
+            //         }
+            //         resolve()
+                    
+            //     })
+
+            // }
+
+            setDetail(companyDetail)
         })()
   
       }, [setDetail])
+
 
     async function handleslideName(slideName){
         

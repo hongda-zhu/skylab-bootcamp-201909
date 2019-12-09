@@ -1,11 +1,39 @@
 .main
     flex-grow: 1
+    background-color: white 
+    margin: 2rem
+    padding-bottom: 1rem
+    border: 1px solid #bdbdbd
+
+
+    .select
+        display: flex
+        justify-content: center
+
+        &-box
+            padding: 0.3rem 0.3rem
+            background-color: #bdbdbd
+            color: white
+            padding: 12px
+            width: 16rem
+            border: none
+            font-size: 1rem
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2)
+            -webkit-appearance: button
+            appearance: button
+            outline: none
+
+
+    &-print
+        display: flex
+        justify-content: center
     
     &-span
         display: flex
         justify-content: center
         padding: 1rem
-        margin: 1rem
+        background-color: #1976d2
+        color: whitesmoke
 
     &-search
         display: flex
@@ -31,7 +59,6 @@
         display: flex
         justify-content: space-between
         margin: 1rem 0
-        padding: 0 3.7rem
         width: 100%
 
         .category

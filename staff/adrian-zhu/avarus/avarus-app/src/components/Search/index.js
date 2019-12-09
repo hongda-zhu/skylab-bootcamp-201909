@@ -26,10 +26,9 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
     
     }
 
-    return<nav className="main-nav">
-
+    return<section>
+    <nav className="main-nav">
         <form type="submit" className="main-search" onSubmit={handleSubmitSearch}>
-
             <div className="main-search__box">
 
                 <input className="main-search__text" name="query" placeholder="search" />
@@ -38,18 +37,24 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
             </div>
         </form>
+    </nav> 
 
-        <div>
-        <select name="categoryType" className="input__select" onChange={handleGoToCategory} >
-
+    <div className="main-select select">
+        <select name="categoryType" className="select-box" onChange={handleGoToCategory} >
+        <option value ="" selected disabled hidden>Choose here</option>
         {config.map(category => {return <option key={category._id} value= {category.name}>{category.contentText}</option>})}
         </select>
             
-        </div>
-        
-        {companies && < CompanyList companies={companies}/>}
-    </nav> 
+    </div>
 
+    <div className="main-print">
+
+        {companies && < CompanyList companies={companies}/>}
+
+    </div>
+
+    </section>
+    
     
 })
 

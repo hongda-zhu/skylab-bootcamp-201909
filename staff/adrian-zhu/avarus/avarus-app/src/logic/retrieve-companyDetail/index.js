@@ -6,7 +6,7 @@ module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)
 
-    return (async () => { debugger  
+    return (async () => {   
 
         const res = await call(`${API_URL}/companies/company/${id}`, {
             method: 'GET'

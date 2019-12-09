@@ -1,8 +1,7 @@
- const { validate, errors: { ContentError, NotFoundError } } = require('avarus-util')
+const { validate, errors: { ContentError, NotFoundError } } = require('avarus-util')
 const { ObjectId, models: { Company, Stock } } = require('avarus-data')
 
 module.exports = function (companyId, price) {
-
     validate.string(companyId)
     validate.string.notVoid('companyId', companyId)
     if (!ObjectId.isValid(companyId)) throw new ContentError(`${companyId} is not a valid companyId`)
@@ -10,13 +9,15 @@ module.exports = function (companyId, price) {
     validate.number(price)
 
 
-    return (async () => { 
-
+    return (async () => {  debugger
+  
         const company = await Company.findById(companyId)
 
         if (!company) throw new NotFoundError(`company with companyId ${companyId} not found`)
 
-        let lastAccess = new Date
+        const lastAccess = new Date()
+        
+        // .toISOString().replace('-', '/').split('T')[0].replace('-', '/')
 
         const stock = await Stock.create({price, time: lastAccess})
 
