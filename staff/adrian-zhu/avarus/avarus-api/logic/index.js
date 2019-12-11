@@ -18,6 +18,7 @@ module.exports = {
     retrieveCompanies: require('./company/retrieve-companies'),
     retrieveCompany: require('./company/retrieve-company'),
     retrievePrice: require('./company/retrieve-price'),
+    retriveAvgPrice: require('./company/retrieve-avgPrice'),
     retrieveCompanyCategory: require('./company/retrieve-companyCategory'),
     retrieveCompanyName: require('./company/retrieve-companyByName'),
     editCompany: require('./company/edit-company')

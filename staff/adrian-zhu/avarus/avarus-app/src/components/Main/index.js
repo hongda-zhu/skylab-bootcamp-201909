@@ -3,7 +3,7 @@ import './index.sass'
 import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
-import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
+import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory, producePrice} from '../../logic'
 
 
 function Main ({error, onClose }) { 
@@ -21,6 +21,7 @@ function Main ({error, onClose }) {
                 console.log(companies)
 
                 handleSearchAll()
+                // producePrice()
 
             }catch(message){
 

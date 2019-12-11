@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, producePrice,retrievePrice} = require('../../logic')
+const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, producePrice,retriveAvgPrice, retrievePrice} = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -54,7 +54,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/', tokenVerifier, (req, res) => {
+router.get('/', (req, res) => {
 
     // '/:id'
     // const {params: { id } } = req
@@ -188,15 +188,12 @@ router.post('/:id/price', jsonBodyParser, (req, res) => {debugger
     }
 })
 
-router.post('/price', jsonBodyParser, (req, res) => {debugger
+router.post('/price', (req, res) => {debugger
 
     try { 
 
-        // '/:id/price'
-        // const { params: { id }, body: { price }} = req
-        // id, price
-
         producePrice()
+            // .then(arr => res.json(arr))
             .then(() => res.status(200).end())
             .catch(error => {
                 const { message } = error
@@ -210,6 +207,31 @@ router.post('/price', jsonBodyParser, (req, res) => {debugger
         res.status(400).json({ message })
     }
 })
+
+
+router.get('/:id/avgprice', (req, res) => {
+
+    const { params: { id }} = req
+    try { 
+
+        retriveAvgPrice(id)
+            
+            .then(arrPrices => res.json(arrPrices))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+
+        res.status(400).json({ message })
+
+    }
+})
+
 
 
 router.get('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {

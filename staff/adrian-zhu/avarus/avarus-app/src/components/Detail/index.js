@@ -8,48 +8,62 @@ import About from '../About'
 import {priceProducer} from '../../utils'
 import { Link } from 'react-router-dom';
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import {retrieveCompanyDetail, createPrice} from '../../logic'
+import {retrieveCompanyDetail} from '../../logic'
 import { format } from 'path'
 const moment = require('moment')
 
 export default withRouter(function ({id, history}) { 
 
     const [slide, setSlide] = useState('buy')
-
     const [detail, setDetail] = useState()
+    const [error, setError] = useState()
+    const [lastPrice, setLastPrice] = useState()
+    let refresher
+        
+    useEffect(()=>{
+        if (typeof refresher !== 'number' ) refresher = setInterval(()=>{
 
-    useEffect(() => { 
+            (async()=>{  
 
-        // const { token } = sessionStorage;
-  
-        (async () => { 
+                try{
 
-            const companyDetail = await retrieveCompanyDetail(id)
-
-            let lastStock = companyDetail.stocks[companyDetail.stocks.length -1]
-
-            const now = moment(new Date()).format('DD/MM/YYYY ')
-
-            const stockTime = moment(lastStock.time).format('DD/MM/YYYY')
-
-            // if(stockTime !== now){ 
-
-            //     new Promise(async(resolve, reject)=>{ 
-
-            //         for(let i = 0; i < 5; i++){ 
-            //             let price =  await priceProducer(companyDetail)
-            //             await createPrice(companyDetail.id, price)
-            //         }
-            //         resolve()
+                    const companyDetail = await retrieveCompanyDetail(id)
                     
-            //     })
 
-            // }
+                    setDetail(companyDetail)
 
-            setDetail(companyDetail)
-        })()
-  
-      }, [setDetail])
+                    debugger
+    
+                    let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+
+                    setLastPrice(lastPrice)
+                    
+                } catch(error){
+
+                    setError(error.message)
+                    
+                }
+            })()
+        }, 60000);
+ 
+        (async()=>{
+            try{
+
+                const companyDetail = await retrieveCompanyDetail(id)
+
+                setDetail(companyDetail)
+
+                let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+
+                setLastPrice(lastPrice)
+                
+            } catch(error){
+                setError(error.message)                
+            }
+        })() 
+
+        return () => { clearInterval(refresher)}
+    },[error, detail, lastPrice])
 
 
     async function handleslideName(slideName){
@@ -70,12 +84,15 @@ export default withRouter(function ({id, history}) {
         }
    }
 
-   async function goBackMain(event){
-       event.stopPropagation()
-       event.preventDefault()
-       history.push('/main')
+    async function goBackMain(event){
+        event.stopPropagation()
+        event.preventDefault()
+        // history.push('/main')
+        history.goBack()
 
-   } 
+    } 
+
+    
 
     return <>{  detail && <section className="detail hidden">
     <div className="detail-container container">
@@ -84,18 +101,19 @@ export default withRouter(function ({id, history}) {
             <p className="description-title">{detail.name}</p>
             <button className ="description-button" onClick={goBackMain} >goBack</button>
             <img src="https://dummyimage.com/200x250/000/fff" className="description-image" />
-            <p className="description-currentValue">55$</p>
+            <p className="description-currentValue">${lastPrice}</p>
             <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> 3.06 (5.59%)</p>
             <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> 3.06 (5.59%)</p> 
         </div>
 
         <nav className="container-navegator navegator">
 
+
             <Slide handleslideName={handleslideName} />
 
-            {slide === 'buy' && <Buy />}
-            {slide === 'charts' && <Charts />}
-            {slide === 'stats' && <Stats />}
+            {/* {slide === 'buy' && <Buy />} */}
+            {slide === 'charts' && <Charts id={id} />}
+            {slide === 'stats' && <Stats id={id} />}
             {slide === 'about' && <About Headquarters={detail.description}/>}
         </nav>
 

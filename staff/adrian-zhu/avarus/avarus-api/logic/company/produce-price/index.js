@@ -1,7 +1,8 @@
 const { validate, errors: { ContentError, NotFoundError } } = require('avarus-util')
 const { ObjectId, models: { Company, Stock } } = require('avarus-data')
+const moment = require('moment')
 
-const STOCKS_INTERVAL = 1000 //* 60 * 60 // ms
+const STOCKS_INTERVAL = 60000 //* 60 * 60 // ms
 
 module.exports = function () {
     return (async () => {
@@ -11,7 +12,7 @@ module.exports = function () {
             if (!company) throw new NotFoundError(`company with companyId ${companyId} not found`)
 
             if (!company.stocks.length) {
-                const stock = new Stock({ price: 15, time: new Date('2019-12-01') })
+                const stock = new Stock({ price: 150, time: new Date('2019-12-11 00:00:00') })
 
                 company.stocks.push(stock)
             }
@@ -21,13 +22,13 @@ module.exports = function () {
             let lastTime = lastStock.time.getTime()
 
             const diff = Date.now() - lastTime
-
+            
             const gap = Math.floor(diff / STOCKS_INTERVAL)
 
             let lastPrice = lastStock.price
 
             for (let i = 0; i < gap; i++) {
-                const newPrice = calculatePrice(company.market, lastPrice)
+                let newPrice = calculatePrice(company.market, lastPrice)
 
                 const newTime = lastTime + STOCKS_INTERVAL
 
@@ -46,5 +47,11 @@ module.exports = function () {
 
 function calculatePrice(market, previousPrice) {
     // TODO switch (market)
-    return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.0009 - 0.0004)) + 0.0004))
+
+    if(Math.floor(Math.random()*10) > 6.4) {
+        return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.0009 - 0.0004)) + 0.0004))
+    } else {
+        return previousPrice - (previousPrice * (Math.floor(Math.random() * (0.0009 - 0.0004)) + 0.0004))
+    }
+
 } 

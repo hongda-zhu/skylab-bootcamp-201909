@@ -9,21 +9,38 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     function handleGoToCategory (event){ 
 
-        event.preventDefault()
+        try {
+            event.preventDefault()
                     
-        const categoryType = event.target.value
-        
-        handleCategoryQuery(categoryType)
+            const categoryType = event.target.value
+            
+            handleCategoryQuery(categoryType)
+
+        } catch ({message}) {
+
+            console.log(message)
+
+        }
+
+
     }
 
     function handleSubmitSearch (event) { 
 
-        event.preventDefault()
-        
-        const {query: {value: query}} = event.target
+        try {
 
-        handleNameQuery(query)
-    
+            event.preventDefault()
+            
+            const {query: {value: query}} = event.target
+
+            handleNameQuery(query)
+
+        } catch({message}) {
+
+            console.log(message)
+            
+        }
+
     }
 
     return<section>
@@ -41,7 +58,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     <div className="main-select select">
         <select name="categoryType" className="select-box" onChange={handleGoToCategory} >
-        <option value ="" selected disabled hidden>Choose here</option>
+        <option value ="" defaultValue disabled hidden>Choose here</option>
         {config.map(category => {return <option key={category._id} value= {category.name}>{category.contentText}</option>})}
         </select>
             

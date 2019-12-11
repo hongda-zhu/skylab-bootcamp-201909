@@ -10,6 +10,7 @@ import Footer from '../Footer'
 import Feedback from '../Feedback'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { registerUser, authenticateUser, retrieveUser, retrieveCompanies } from '../../logic'
+
  
 
 export default withRouter(function ({ history }) {
@@ -19,9 +20,9 @@ export default withRouter(function ({ history }) {
 
     const [budget, setBudget] = useState()
 
-    const [companies, setCompanies] = useState([])
-
     const [error, setError] = useState()
+
+    // const [id, setId] = useState()
 
 
     useEffect(() => { 
@@ -34,10 +35,11 @@ export default withRouter(function ({ history }) {
               
               const {name, budget} = await retrieveUser(token)
 
+              
               setName(name)
               setBudget(budget)
 
-              // await listCompanies(token)
+
           }
 
       })()
@@ -45,14 +47,6 @@ export default withRouter(function ({ history }) {
     }, [sessionStorage.token])
 
 
-    async function listCompanies(token) {
-      
-      const companies = await retrieveCompanies(token)
-
-      setCompanies(companies)
-
-    }
-    
 
   
     async function handleRegister(name, surname, email, username, password){
