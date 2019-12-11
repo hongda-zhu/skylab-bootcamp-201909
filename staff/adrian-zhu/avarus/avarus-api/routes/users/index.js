@@ -188,7 +188,7 @@ router.get('/buyin/:id', (req, res) => {
     try {
 
         retrieveBuyin(id)
-            .then(buyins => res.json({ buyins }))
+            .then(buyin => res.json({ buyin }))
             .catch(error => {
                 const { message } = error
 

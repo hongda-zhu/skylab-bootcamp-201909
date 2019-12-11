@@ -20,7 +20,7 @@ export default function ({userId, companyId, stockId}) {
         }
     }
 
-    return <div className="container-buy buy">
+    return <div className="boxes-buy buy">
     <span className="buy-text">How many would you like to buy ?</span>
     <div className="buy-prices prices">
         <ul className="prices-list list">

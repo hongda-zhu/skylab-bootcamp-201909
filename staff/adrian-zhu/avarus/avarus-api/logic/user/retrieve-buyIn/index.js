@@ -18,17 +18,19 @@ module.exports = function (id) {
 
         debugger
 
-        const transaction = await Transaction.find({ operation: "buy-in" }).populate('relatedTo')                                                                                                     
-        /* {path: 'Sellout'} */
-        transaction.forEach(transaction => {
+        const transaction = await Transaction.findById( id ).populate('user company relatedTo ')
+        
+        const {_id, company, stock, user, operation, quantity, amount, time} = transaction   
 
-            transaction.id = transaction._id.toString()
-            delete transaction._id
-            delete transaction.__v
-            
-        })
-
-        return transaction
+        let stockId = stock.toString()
+        
+        const stocked = company.stocks.filter(stocke => {
+            if(stocke.id === stockId) return stock
+       })
+       
+       const stockSelected = stocked[0]
+        
+        return {_id, company, stockSelected, user, operation, quantity, amount, time} 
     })()
 
 }

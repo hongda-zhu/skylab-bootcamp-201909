@@ -73,7 +73,7 @@ export default withRouter(function ({userId, companyId, history}) {
     },[error, detail, lastPrice])
 
 
-    async function handleslideName(slideName){
+    async function handleslideName(slideName, detail){
         
         switch(slideName){
             case 'buy':
@@ -99,7 +99,6 @@ export default withRouter(function ({userId, companyId, history}) {
 
     } 
 
-    
 
     return <>{  detail && <section className="detail hidden">
     <div className="detail-container container">
@@ -116,7 +115,7 @@ export default withRouter(function ({userId, companyId, history}) {
         <nav className="container-navegator navegator">
 
 
-            <Slide handleslideName={handleslideName} />
+            <Slide handleslideName={handleslideName} detail={detail}/>
 
             {slide === 'buy' && <Buy userId={userId} companyId={companyId} stockId={stockId}/>} 
             {slide === 'charts' && <Charts id={companyId} />}

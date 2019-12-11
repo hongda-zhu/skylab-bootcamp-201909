@@ -9,10 +9,6 @@ import TransactionsItem from '../TransactionsItem'
 
 function Transactions ({userId, transactions, error, onClose }) { 
 
-    console.log(transactions)
-    debugger
-
-    
 
     return <section className="transactions">
 

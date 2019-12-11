@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema} = mongoose
-const stock = require('./stock')
+const Stock = require('./stock')
 
 module.exports = new Schema ({
     name: {
@@ -34,6 +34,6 @@ module.exports = new Schema ({
     dependency: {
         type: Array
     },
-    stocks: [stock],
+    stocks: [Stock],
     versionKey: false 
 })

@@ -123,20 +123,21 @@ export default withRouter(function ({ history }) {
 
 
   return <> 
+       {token && <> <Header name={name} budget={budget} onLogout={handleLogout} /></>} 
+      
       <Route exact path='/' render={() => !token ? <Landing />: <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} /> }/>
       <Route path = '/register' render ={() => !token ? <Register onRegister={handleRegister} error={error} onClose={handleCloseError}/> : <Redirect to="/main" /> }  />
       <Route path = '/login' render = {() => !token ? <Login onLogin={handleLogin} error={error} onClose={handleCloseError}/> : <Redirect to="/" /> } />  
 
 
-      {token && <> <Header name={name} budget={budget} onLogout={handleLogout} /></>} 
-      
+ 
       <Route path = '/main' render = {() =>  <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} /> } />
 
       <Route path = '/detail/:id' render={({ match: { params: { id:companyId } } })  => token && id ? <> <Detail userId={id} companyId={companyId} /> </>: <Redirect to="/" />  } />
 
       <Route path = '/transactions' render={() => transactions && token && id && <Transactions     userId={id} transactions={transactions} error={error} onClose={handleCloseError} />  } />
       
-      <Route path = '/transactions/:id' render={({ match: { params: { id:transactionId } } })  => token && id ? <> <Operations transactionId={transactionId} /> </>: <Redirect to="/" />  } />
+      <Route path = '/detailTransactions/:id/' render={({ match: { params: { id:transactionId } } })  => token && id ? <> <Operations transactionId={transactionId} error={error} onClose={handleCloseError}/> </>: <Redirect to="/" />  } />
   
       {/* <MainContext.Provider value={{setName}} >
       </MainContext.Provider> */}

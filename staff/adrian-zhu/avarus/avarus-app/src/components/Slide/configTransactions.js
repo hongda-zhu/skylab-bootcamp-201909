@@ -1,20 +1,16 @@
 export default [
 
     {
-        name: 'buy',
-        contentText: 'Buy'
+        name: 'goback',
+        contentText: 'goBack'
     },
     {
-        name: 'charts',
-        contentText: 'Charts'
+        name: 'history',
+        contentText: 'History'
     },
     {
-        name: 'stats',
-        contentText: 'Stats'
-    },
-    {
-        name: 'about',
-        contentText: 'About'
+        name: 'comments',
+        contentText: 'Comments'
     }
 
 ]

@@ -15,7 +15,7 @@ export default withRouter(function ({ history, transaction, goToDetail }) {
     function goToDetail() { 
         if(!transaction.id) transaction.id = transaction._id
 
-        console.log('tonto')
+        history.push(`/detailTransactions/${transaction.id }`)
         
     }
 
