@@ -24,6 +24,7 @@ export default withRouter(function ({ history, name, budget, onLogout}) {
                 <li className="menu-item"><Link to="/history">History</Link></li>
                 <li className="menu-item"><Link to="/favorite">Favorite</Link></li>
                 <li className="menu-item"><Link to="/profile">Profile</Link></li>
+                <li className="menu-item"><Link to="/main">Main</Link></li>
                 <li className="menu-item">
                     <label className="hamburger-close" htmlFor="show-menu">Close</label>
                 </li>

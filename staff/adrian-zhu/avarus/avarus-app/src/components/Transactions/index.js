@@ -18,8 +18,8 @@ function Transactions ({userId, transactions, error, onClose }) {
 
     <span className="transactions-span">Aquí son transaciones</span>
 
-    {transactions &&  <ul className="button-list list">
-        {transactions.map(transaction => <li className="list-stock stock" key={transaction.id}><TransactionsItem transaction={transaction} /></li>)}
+    {transactions &&  <ul className="transactions-lists lists">
+        {transactions.map(transaction => <li className="lists-transaction" key={transaction.id}><TransactionsItem transaction={transaction} /></li>)}
     </ul>}
 
     {error && < Feedback message={error} onClose={onClose}/>}
