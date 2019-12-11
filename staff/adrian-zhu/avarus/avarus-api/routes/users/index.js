@@ -141,15 +141,16 @@ router.delete('/transaction/:transactionId', tokenVerifier, (req, res) => {
 })
 
 router.post('/:id/buyin', jsonBodyParser, (req, res) => {
-    
+    debugger
     const { params: { id: userId } , body: {companyId, stockId, operation, quantity } } = req
 
     try {
         buyIn(userId, companyId, stockId, operation, quantity)
-        .then(() => res.status(201).end())
-            .catch(error => {
+        // .then(() => res.status(201).end())
+        .then(transaction => res.json({ transaction }))
+            .catch(error => { debugger
                 const { message } = error
-
+                
                 if (error instanceof CredentialsError)
                     return res.status(401).json({ message })
 

@@ -12,6 +12,8 @@ function Main ({error, onClose }) {
 
     const {token} = sessionStorage
 
+    // const {error, setError} = useState()
+
     useEffect(()=>{
 
         (async()=>{
@@ -37,25 +39,50 @@ function Main ({error, onClose }) {
 
     async function handleSearchAll(){
 
-        const companies = await retrieveCompanies(token)
-                
-        setCompanies(companies)
+        try {
+            
+            const companies = await retrieveCompanies(token)
+                    
+            setCompanies(companies)
+
+        }catch({message}){
+            
+            console.log(`${message}`)
+
+        }
+
     }
 
     async function handleSearchName(query) {
-      
-        const companies = await retrieveCompanyByName(query)
 
-        setCompanies(companies)
+        try {
+
+            const companies = await retrieveCompanyByName(query)
+    
+            setCompanies(companies)
+
+        }catch({message}){
+            
+            console.log(`${message}`)
+
+        }
 
     }
 
     async function handleCategoryQuery(categoryType) {
-      
-        const companies = await retrieveCompanyByCategory(categoryType)
 
-        setCompanies(companies)
+        try {
+
+            const companies = await retrieveCompanyByCategory(categoryType)
     
+            setCompanies(companies)
+
+        }catch({message}){
+            
+            console.log(`${message}`)
+
+        }
+
     }
 
     return  <main className="main">
@@ -63,8 +90,6 @@ function Main ({error, onClose }) {
     <span className="main-span">Choose the stocks you'd like to give</span>
     
     <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose}/>
-
-    {/* {companies && < CompanyList companies={companies}/>} */}
 
     {error && < Feedback message={error} onClose={onClose}/>}
 

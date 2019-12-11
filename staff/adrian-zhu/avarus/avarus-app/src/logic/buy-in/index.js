@@ -24,9 +24,12 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
         const res = await call(`${API_URL}/users/${userId}/buyin`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({id, companyId, stockId, operation, quantity})
+            body: JSON.stringify({companyId, stockId, operation, quantity})
         })
-        if (res.status === 200) return
+        if (res.status === 200) { 
+            let transaction = JSON.parse(res.body)
+            return transaction
+        }
 
         if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 

@@ -18,7 +18,7 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
     
     validate.number(quantity)
 
-    return (async () => {
+    return (async () => { debugger
 
         if (operation !== 'buy-in') throw new ConflictError(`it should be buy-in operation`)
 
@@ -30,15 +30,22 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
         if (!company) throw new NotFoundError(`company with id ${companyId} does not exists`)
 
-        const stock = await Stock.findById(stockId,  { '__v': 0 }).lean()
+        const stock = company.stocks.filter(stock => {
+             if(stock.id === stockId) return stock
+        })
+        
+        const stockSelected = stock[0]
+        // const stock = await Stock.findById(stockId,  { '__v': 0 }).lean()
 
-        if (!stock) throw new NotFoundError(`stock with id ${stockId} does not exists`)
+        if (!stockSelected) throw new NotFoundError(`stock with id ${stockId} does not exists`)
 
-        const {price} = stock
+        const {price} = stockSelected
 
         if (!price) throw new NotFoundError(`price is not defined in this stock`)
         
         const amount = quantity * price
+
+        if(quantity === "" || quantity === 0 || !quantity)  throw new NotFoundError(`quantity is not defined for this transaction`)
 
         let {budget}  = user
 

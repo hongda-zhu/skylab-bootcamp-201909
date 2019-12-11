@@ -12,10 +12,11 @@ import {retrieveCompanyDetail} from '../../logic'
 import { format } from 'path'
 const moment = require('moment')
 
-export default withRouter(function ({id, history}) { 
+export default withRouter(function ({userId, companyId, history}) { 
 
     const [slide, setSlide] = useState('buy')
     const [detail, setDetail] = useState()
+    const [stockId, setStockId] = useState()
     const [error, setError] = useState()
     const [lastPrice, setLastPrice] = useState()
     let refresher
@@ -27,16 +28,18 @@ export default withRouter(function ({id, history}) {
 
                 try{
 
-                    const companyDetail = await retrieveCompanyDetail(id)
+                    const companyDetail = await retrieveCompanyDetail(companyId)
                     
 
-                    setDetail(companyDetail)
-
-                    debugger
+                    setDetail(companyDetail) 
     
                     let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
 
                     setLastPrice(lastPrice)
+
+                    let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1].id
+
+                    setStockId(lastStockId)
                     
                 } catch(error){
 
@@ -49,13 +52,17 @@ export default withRouter(function ({id, history}) {
         (async()=>{
             try{
 
-                const companyDetail = await retrieveCompanyDetail(id)
+                const companyDetail = await retrieveCompanyDetail(companyId)
 
                 setDetail(companyDetail)
 
                 let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
 
                 setLastPrice(lastPrice)
+
+                let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1]._id
+
+                setStockId(lastStockId)
                 
             } catch(error){
                 setError(error.message)                
@@ -111,9 +118,9 @@ export default withRouter(function ({id, history}) {
 
             <Slide handleslideName={handleslideName} />
 
-            {/* {slide === 'buy' && <Buy />} */}
-            {slide === 'charts' && <Charts id={id} />}
-            {slide === 'stats' && <Stats id={id} />}
+            {slide === 'buy' && <Buy userId={userId} companyId={companyId} stockId={stockId}/>} 
+            {slide === 'charts' && <Charts id={companyId} />}
+            {slide === 'stats' && <Stats id={companyId} />}
             {slide === 'about' && <About Headquarters={detail.description}/>}
         </nav>
 

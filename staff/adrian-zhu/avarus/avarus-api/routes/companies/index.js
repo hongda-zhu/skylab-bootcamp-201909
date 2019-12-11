@@ -232,8 +232,6 @@ router.get('/:id/avgprice', (req, res) => {
     }
 })
 
-
-
 router.get('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {
 
     try {

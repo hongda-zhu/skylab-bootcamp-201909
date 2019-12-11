@@ -1,4 +1,5 @@
 module.exports = {
+    buyIn: require('./buy-in'),
     createPrice: require('./create-price'),
     producePrice: require('./produce-price'),
     retrievePrices: require('./retrieve-prices'),

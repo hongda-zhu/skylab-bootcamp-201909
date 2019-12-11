@@ -8,7 +8,7 @@ module.exports = function (id) {
 
     return (async () => {
         
-        const usercase = await User.findById(id).populate('transactions')
+        const usercase = await User.findById(id).populate({path:'transactions', populate: {path:'user company stock'}})
 
         if (!usercase) throw new NotFoundError(`usercase with id ${id} not found`)
 
