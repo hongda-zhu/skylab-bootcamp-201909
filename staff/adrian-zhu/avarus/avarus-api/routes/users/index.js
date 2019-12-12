@@ -141,7 +141,7 @@ router.delete('/transaction/:transactionId', tokenVerifier, (req, res) => {
 })
 
 router.post('/:id/buyin', jsonBodyParser, (req, res) => {
-    debugger
+    
     const { params: { id: userId } , body: {companyId, stockId, operation, quantity } } = req
 
     try {
@@ -161,8 +161,8 @@ router.post('/:id/buyin', jsonBodyParser, (req, res) => {
     }
 })
 
-router.post('/:id/sellout', jsonBodyParser, tokenVerifier, (req, res) => {
-    
+router.post('/:id/sellout', jsonBodyParser, (req, res) => {
+    debugger
     const { params: { id: userId } , body: {companyId, stockId, buyInTransactionId, operation, quantity } } = req
 
     try {
@@ -188,7 +188,7 @@ router.get('/buyin/:id', (req, res) => {
     try {
 
         retrieveBuyin(id)
-            .then(buyin => res.json({ buyin }))
+            .then(buyin => res.json(buyin ))
             .catch(error => {
                 const { message } = error
 
@@ -211,7 +211,7 @@ router.get('/sellout/:id', (req, res) => {
     try {
 
         retrieveSellout(id)
-            .then(sellouts => res.json({ sellouts }))
+            .then(sellouts => res.json(sellouts ))
             .catch(error => {
                 const { message } = error
 

@@ -6,18 +6,24 @@ import History from '../History'
 import {priceProducer} from '../../utils'
 import { Link } from 'react-router-dom';
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import {retrieveBuyin} from '../../logic'
-import { format } from 'path'
+import {retrieveBuyin, sellOut} from '../../logic'
+import { format, parse } from 'path'
 const moment = require('moment')
 
 export default withRouter(function ({history, transactionId, onClose}) { 
 
     const [slide, setSlide] = useState('register')
     const [transactionDetail, setTransactionDetail] = useState()
+    const [purchasedPrice, setPurchasedPrice] = useState()
+    const [costs, setCosts] = useState()
+    const [purchasedTime, setPurchasedTime] = useState()
     const [detail, setDetail] = useState()
-    const [stockId, setStockId] = useState()
+    const [lastStockTime, setLastStockTime] = useState()
     const [error, setError] = useState()
-    const [lastPrice, setLastPrice] = useState()
+    const [currentPrice, setCurrentPrice] = useState()
+    const [gain, setGain] = useState(0)
+    const [gainResult, setGainResult] = useState()
+    
     let refresher
     
         
@@ -31,16 +37,27 @@ export default withRouter(function ({history, transactionId, onClose}) {
                     const transactionDetail = await retrieveBuyin(transactionId)
                     setTransactionDetail(transactionDetail) 
 
-                    const {companyDetail} = transactionDetail
-                    setDetail(companyDetail) 
+                    const {company} = transactionDetail
+                    setDetail(company)             
 
-                    let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+                    let currentPrice = company.stocks[company.stocks.length - 1].price.toFixed(4)
+                    setCurrentPrice(currentPrice)
 
-                    setLastPrice(lastPrice)
+                    const {stockSelected} = transactionDetail
+                    const purchasedPrice = stockSelected.price.toFixed(4)
+                    setPurchasedPrice(purchasedPrice)
 
-                    let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1].id
+                    const {amount} = transactionDetail
+                    const costs = amount.toFixed(4)
+                    setCosts(costs)
 
-                    setStockId(lastStockId)
+                    const {time} = transactionDetail
+                    const purchasedTime = moment(time).format('DD/MM/YY hh:mm')
+                    setPurchasedTime(purchasedTime)
+
+                    let lastStockTime = moment(company.stocks[company.stocks.length - 1].time).format('DD/MM/YY hh:mm')
+
+                    setLastStockTime(lastStockTime)
                     
                 } catch(error){
 
@@ -48,7 +65,7 @@ export default withRouter(function ({history, transactionId, onClose}) {
                     
                 }
             })()
-        }, 1000);
+        }, 60000);
  
         (async()=>{
             try{
@@ -56,16 +73,29 @@ export default withRouter(function ({history, transactionId, onClose}) {
                 const transactionDetail = await retrieveBuyin(transactionId)
                 setTransactionDetail(transactionDetail) 
 
-                const {companyDetail} = transactionDetail
-                setDetail(companyDetail) 
+                const {company} = transactionDetail
+                setDetail(company) 
 
-                let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+                let currentPrice = company.stocks[company.stocks.length - 1].price.toFixed(4)
+                setCurrentPrice(currentPrice)
 
-                setLastPrice(lastPrice)
+                const {stockSelected} = transactionDetail
+                const purchasedPrice = stockSelected.price.toFixed(4)
+                setPurchasedPrice(purchasedPrice)
 
-                let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1].id
+                const {amount} = transactionDetail
+                const costs = amount.toFixed(4)
+                setCosts(costs)
 
-                setStockId(lastStockId)
+                const {time} = transactionDetail
+                const purchasedTime = moment(time).format('DD/MM/YY hh:mm')
+                setPurchasedTime(purchasedTime)
+
+
+                let lastStockTime = moment(company.stocks[company.stocks.length - 1].time).format('DD/MM/YY hh:mm')
+
+                setLastStockTime(lastStockTime)
+
                 
             } catch(error){
                 setError(error.message)                
@@ -73,7 +103,7 @@ export default withRouter(function ({history, transactionId, onClose}) {
         })() 
 
         return () => { clearInterval(refresher)}
-    },[error, transactionDetail, lastPrice])
+    },[error, transactionDetail, currentPrice, setGainResult, setGain, gain])
     
     async function handleslideName(slideName, transactionDetail){
         
@@ -90,15 +120,42 @@ export default withRouter(function ({history, transactionId, onClose}) {
         }
    }
 
+    async function handleOnSell(userId, companyId, stockId, buyInTransactionId, operation, quantity){
+        try {
+
+            quantity = parseInt(quantity)
+
+            const sellTransaction = await sellOut(userId, companyId, stockId, buyInTransactionId, operation,quantity)
+
+            console.log(sellTransaction)
+
+        }catch({message}) {
+
+            console.log(message)
+
+        }
+    }
+
     async function goBackMain(event){
-        event.stopPropagation()
-        event.preventDefault()
-        // history.push('/main')
-        history.goBack()
+
+        try {
+
+            event.stopPropagation()
+            event.preventDefault()
+            // history.push('/main')
+            history.goBack()
+     
+        }catch({message}) {
+
+            console.log(message)
+
+        }
 
     } 
 
-    return <> { transactionDetail && <section className="operations">
+    
+    return <> { transactionDetail && <section className="operations"> 
+
     <div className="operations-boxes boxes">
 
         <div className="boxes-buyin buyin">
@@ -111,28 +168,38 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
                 <div className="buyin-information information">
                     <div className="information-detail detail">
-                        <div className="detail-property">Titulo 1</div>
-                        <div className="detail-property">Titulo 2</div>
-                        <div className="detail-property">Titulo 3</div>
-                        <div className="detail-property">Titulo 4</div>
-                        <div className="detail-property">Titulo 5</div>
-                        <div className="detail-property">Titulo 6</div>
-                        <div className="detail-property">Titulo 7</div>
+                        <div className="detail-property">Current Price</div>
+                        <div className="detail-property">Purchased Price</div>
+                        <div className="detail-property">Current Quantity</div>
+                        <div className="detail-property">Costs</div>
+                        <div className="detail-property">Purchased Date</div>
+                        <div className="detail-property">Current Date</div>
+                        <div className="detail-property">Company</div>
                     </div>
 
                     <div className="information-detail detail">
-                        <div className="detail-property">Valor 1</div>
-                        <div className="detail-property">Valor 2</div>
-                        <div className="detail-property">Valor 3</div>
-                        <div className="detail-property">Valor 4</div>
-                        <div className="detail-property">Valor 5</div>
-                        <div className="detail-property">Valor 6</div>
-                        <div className="detail-property">Valor 7</div>
+                        <div className="detail-property">{currentPrice}</div>
+                        <div className="detail-property">{purchasedPrice}</div>
+                        <div className="detail-property">{transactionDetail.quantity}</div>
+                        <div className="detail-property">{costs}</div>
+                        <div className="detail-property">{purchasedTime}</div>
+                        <div className="detail-property">{lastStockTime}</div>
+                        <div className="detail-property">{transactionDetail.company.name}</div>
                     </div>
                 </div>
             </div>
 
-        <form className="container-sellout sellout" onSubmit>
+        <form className="container-sellout sellout" onSubmit={ function(event){
+            event.preventDefault()
+            const {quantity: {value: quantity}}= event.target
+            const operation = 'sell-out'
+            debugger
+            handleOnSell(transactionDetail.user._id, transactionDetail.company._id, transactionDetail.stockSelected._id, transactionDetail._id, operation, quantity)
+
+            
+        }
+
+        }>
 
 
             <div className="sellout-title">
@@ -143,23 +210,14 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
             <div className="sellout-information information">
                 <div className="information-detail detail">
-                    <div className="detail-property">Titulo 1</div>
-                    <div className="detail-property">Titulo 2</div>
-                    <div className="detail-property">Titulo 3</div>
-                    <div className="detail-property">Titulo 4</div>
-                    <div className="detail-property">Titulo 5</div>
-                    <div className="detail-property">Titulo 6</div>
-                    <div className="detail-property">Titulo 7</div>
+                    <div className="detail-property">Quantity Offered</div>
+                    <div className="detail-property">Gain</div>
                 </div>
 
                 <div className="information-detail detail">
-                    <div className="detail-property">Valor 1</div>
-                    <div className="detail-property">Valor 2</div>
-                    <div className="detail-property">Valor 3</div>
-                    <div className="detail-property">Valor 4</div>
-                    <div className="detail-property">Valor 5</div>
-                    <div className="detail-property">Valor 6</div>
-                    <div className="detail-property">Valor 7</div>
+                    <input className="detail-property" type="quantity" name="quantity" onChange={event => {setGain(event.target.value) 
+                    setGainResult(gain * currentPrice)} } value={gain}></input>
+                    <div className="detail-property">{gainResult}</div>
                 </div> 
             </div>
 
@@ -179,7 +237,7 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
                 <Slide handleslideName={handleslideName} detail={undefined}/>
                 
-                {/* {slide === 'goback' && <Buy userId={userId} companyId={companyId}stockId={stockId}/>}  */}
+                {/* {slide === 'goback' && <Buy userId={userId} companyId={companyId}lastStockTime={lastStockTime}/>}  */}
                 {slide === 'register' && <History />}
                 {slide === 'comments' && <Comments />}
             
@@ -212,9 +270,9 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
 //     const [slide, setSlide] = useState('buy')
 //     const [detail, setTransactionDetail] = useState()
-//     const [stockId, setStockId] = useState()
+//     const [lastStockTime, setLastStockTime] = useState()
 //     const [error, setError] = useState()
-//     const [lastPrice, setLastPrice] = useState()
+//     const [currentPrice, setCurrentPrice] = useState()
 //     let refresher
         
 //     useEffect(()=>{
@@ -229,13 +287,13 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
 //                     setTransactionDetail(companyDetail) 
     
-//                     let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+//                     let currentPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
 
-//                     setLastPrice(lastPrice)
+//                     setCurrentPrice(currentPrice)
 
-//                     let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1].id
+//                     let lastStockTime = companyDetail.stocks[companyDetail.stocks.length - 1].id
 
-//                     setStockId(lastStockId)
+//                     setLastStockTime(lastStockTime)
                     
 //                 } catch(error){
 
@@ -252,13 +310,13 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
 //                 setTransactionDetail(companyDetail)
 
-//                 let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+//                 let currentPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
 
-//                 setLastPrice(lastPrice)
+//                 setCurrentPrice(currentPrice)
 
-//                 let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1]._id
+//                 let lastStockTime = companyDetail.stocks[companyDetail.stocks.length - 1]._id
 
-//                 setStockId(lastStockId)
+//                 setLastStockTime(lastStockTime)
                 
 //             } catch(error){
 //                 setError(error.message)                
@@ -266,7 +324,7 @@ export default withRouter(function ({history, transactionId, onClose}) {
 //         })() 
 
 //         return () => { clearInterval(refresher)}
-//     },[error, detail, lastPrice])
+//     },[error, detail, currentPrice])
 
 
 //     async function handleslideName(slideName){
@@ -304,7 +362,7 @@ export default withRouter(function ({history, transactionId, onClose}) {
 //             <p className="description-title">{detail.name}</p>
 //             <button className ="description-button" onClick={goBackMain} >goBack</button>
 //             <img src="https://dummyimage.com/200x250/000/fff" className="description-image" />
-//             <p className="description-currentValue">${lastPrice}</p>
+//             <p className="description-currentValue">${currentPrice}</p>
 //             <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> 3.06 (5.59%)</p>
 //             <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> 3.06 (5.59%)</p> 
 //         </div>

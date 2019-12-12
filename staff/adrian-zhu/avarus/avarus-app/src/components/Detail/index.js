@@ -18,6 +18,7 @@ export default withRouter(function ({userId, companyId, history}) {
     const [detail, setDetail] = useState()
     const [stockId, setStockId] = useState()
     const [error, setError] = useState()
+    const [currentPrice, setCurrentPrice] = useState()
     const [lastPrice, setLastPrice] = useState()
     let refresher
         
@@ -33,7 +34,11 @@ export default withRouter(function ({userId, companyId, history}) {
 
                     setDetail(companyDetail) 
     
-                    let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+                    let currentPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+
+                    setCurrentPrice(currentPrice)
+
+                    let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 2].price.toFixed(6)
 
                     setLastPrice(lastPrice)
 
@@ -56,9 +61,9 @@ export default withRouter(function ({userId, companyId, history}) {
 
                 setDetail(companyDetail)
 
-                let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
+                let currentPrice = companyDetail.stocks[companyDetail.stocks.length - 1].price.toFixed(6)
 
-                setLastPrice(lastPrice)
+                setCurrentPrice(currentPrice)
 
                 let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1]._id
 
@@ -70,7 +75,7 @@ export default withRouter(function ({userId, companyId, history}) {
         })() 
 
         return () => { clearInterval(refresher)}
-    },[error, detail, lastPrice])
+    },[error, detail, currentPrice])
 
 
     async function handleslideName(slideName, detail){
@@ -107,7 +112,7 @@ export default withRouter(function ({userId, companyId, history}) {
             <p className="description-title">{detail.name}</p>
             <button className ="description-button" onClick={goBackMain} >goBack</button>
             <img src="https://dummyimage.com/200x250/000/fff" className="description-image" />
-            <p className="description-currentValue">${lastPrice}</p>
+            <p className="description-currentValue">${currentPrice}</p>
             <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> 3.06 (5.59%)</p>
             <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> 3.06 (5.59%)</p> 
         </div>

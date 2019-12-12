@@ -9,7 +9,7 @@ export default function ({userId, companyId, stockId}) {
 
     async function handleBuyIn(userId, companyId, stockId, operation, quantity){
 
-        try { debugger
+        try { 
 
             buyIn(userId, companyId, stockId, operation, quantity)
 

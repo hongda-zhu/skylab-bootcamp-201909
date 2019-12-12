@@ -16,8 +16,6 @@ module.exports = function (id) {
 
         // await Sellout.populate('buyInTransaction')
 
-        debugger
-
         const transaction = await Transaction.findById( id ).populate('user company relatedTo ')
         
         const {_id, company, stock, user, operation, quantity, amount, time} = transaction   

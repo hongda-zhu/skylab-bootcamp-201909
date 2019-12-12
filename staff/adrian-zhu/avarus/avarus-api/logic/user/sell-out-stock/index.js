@@ -1,5 +1,6 @@
 const { validate, errors: { ConflictError, NotFoundError } } = require('avarus-util')
 const {models: { Company, User, Stock, Transaction, Sellout } } = require('avarus-data')
+const moment = require('moment')
 
 module.exports = function (userId, companyId, stockId, buyInTransactionId, operation, quantity) { 
 
@@ -33,9 +34,14 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
 
         if (!company) throw new NotFoundError(`company with id ${companyId} does not exists`)
 
-        const stock = await Stock.findById(stockId,  { '__v': 0 }).lean()
+        const stock = company.stocks.filter(stock => {
+            if(stock.id === stockId) return stock
+       })
+       
+       const stockSelected = stock[0]
+       // const stock = await Stock.findById(stockId,  { '__v': 0 }).lean()
 
-        if (!stock) throw new NotFoundError(`stock with id ${stockId} does not exists`)
+       if (!stockSelected) throw new NotFoundError(`stock with id ${stockId} does not exists`)
 
         const buyInTransaction = await Transaction.findById(buyInTransactionId)
 
@@ -49,7 +55,7 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
 
         buyInTransaction.quantity = buyInQuantity
 
-        const {price} = stock
+        const {price} = stockSelected
 
         if (!price) throw new ConflictError(`price is not defined in this stock`)
         
@@ -57,15 +63,13 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
 
         let {budget}  = user
 
-        if(budget < amount) throw new ConflictError(`you have no enough resource to finish this transaction`)
-
         budget += amount 
 
         buyInTransaction.amount -= amount
         
         user.budget = budget
         
-        let time = new Date
+        let time = moment(new Date).format('DD/MM/YY hh:mm')
 
         const sellOutTransaction = await Sellout.create({company: companyId, stock: stockId, buyInTransaction: buyInTransactionId, operation, quantity, amount: amount, time: time})
 
@@ -77,6 +81,6 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
         user.transactions[0] = buyInTransaction
         user.save()
 
-        return sellOutTransaction
+        return {sellOutTransaction}
     })()
 }

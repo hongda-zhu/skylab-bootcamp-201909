@@ -1,5 +1,6 @@
 const { validate, errors: { ConflictError, NotFoundError } } = require('avarus-util')
 const {models: { Company, User, Stock, Transaction } } = require('avarus-data')
+const moment = require('moment')
 
 module.exports = function (userId, companyId, stockId, operation, quantity) { 
 
@@ -55,7 +56,7 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
         user.budget = budget
 
-        let time = new Date
+        let time = moment(new Date).format('DD/MM/YY hh:mm')
 
         const transaction = await Transaction.create({company: companyId, stock: stockId, user: userId, operation, quantity, amount: amount, time: time})
 
@@ -63,6 +64,6 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
         user.save()
 
-        return transaction
+        return {transaction}
     })()
 }

@@ -1,6 +1,7 @@
 module.exports = {
     buyIn: require('./create-buyin'),
     createPrice: require('./create-price'),
+    sellOut: require('./create-sellout'),
     producePrice: require('./produce-price'),
     retrievePrices: require('./retrieve-prices'),
     registerUser: require('./register-user'),
