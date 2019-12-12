@@ -17,21 +17,24 @@ Users is able to:
 
 ## Functional Description
 ### Use cases
-![Use Cases](./images/USER&#32;CASES&#32;.png)
-## Flow
-![Flow](flow.png)
+![Use Cases](./images/USER&#32;CASES.png))
+
 ## Technical Description
-### Components
-List of the components used in the project:
-    - Header
-    - Footer
-    - Landing
-    - Registration-page
-    - Main
-    - Requests
-    - Leagues
-    - League-registration
-    - Results
 ### Blocks
+![Blocks](./images/BLOCKS.jpeg)
+
+### Components
+![Components](./images/components.png)
+
 ### Data Model
-![Data Model](./images/DATA&#32;MODEL.png)
+![Data Model](./images/USER&#32;CASES.png)
+
+### Code Coverage
+![Coverage](./images/Coverage.png)
+
+### ToDo
+
+- Favorite
+- Personal Profile
+- Update picture
+- Tests
