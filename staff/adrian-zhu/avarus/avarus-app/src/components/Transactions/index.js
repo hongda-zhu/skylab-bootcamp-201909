@@ -9,7 +9,6 @@ import TransactionsItem from '../TransactionsItem'
 
 function Transactions ({userId, transactions, error, onClose }) { 
 
-
     return <section className="transactions">
 
     <span className="transactions-span">Aquí son transaciones</span>

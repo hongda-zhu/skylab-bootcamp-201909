@@ -1,10 +1,6 @@
 export default [
 
     {
-        name: 'goback',
-        contentText: 'goBack'
-    },
-    {
         name: 'history',
         contentText: 'History'
     },

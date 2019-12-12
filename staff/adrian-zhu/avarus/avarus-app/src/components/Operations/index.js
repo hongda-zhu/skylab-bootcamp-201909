@@ -23,6 +23,7 @@ export default withRouter(function ({history, transactionId, onClose}) {
     const [currentPrice, setCurrentPrice] = useState()
     const [gain, setGain] = useState(0)
     const [gainResult, setGainResult] = useState()
+    const [relatedTo, setRelatedTo] = useState([])
     
     let refresher
     
@@ -50,6 +51,10 @@ export default withRouter(function ({history, transactionId, onClose}) {
                     const {amount} = transactionDetail
                     const costs = amount.toFixed(4)
                     setCosts(costs)
+
+                    const {relatedTo} = transactionDetail
+                    setRelatedTo(relatedTo)
+    
 
                     const {time} = transactionDetail
                     const purchasedTime = moment(time).format('DD/MM/YY hh:mm')
@@ -91,6 +96,8 @@ export default withRouter(function ({history, transactionId, onClose}) {
                 const purchasedTime = moment(time).format('DD/MM/YY hh:mm')
                 setPurchasedTime(purchasedTime)
 
+                const {relatedTo} = transactionDetail
+                setRelatedTo(relatedTo)
 
                 let lastStockTime = moment(company.stocks[company.stocks.length - 1].time).format('DD/MM/YY hh:mm')
 
@@ -162,15 +169,15 @@ export default withRouter(function ({history, transactionId, onClose}) {
            
                 <div className="buyin-title">
                     
-                    Buy
+                    Purchase
                     
                 </div>
 
                 <div className="buyin-information information">
                     <div className="information-detail detail">
                         <div className="detail-property">Current Price</div>
-                        <div className="detail-property">Purchased Price</div>
-                        <div className="detail-property">Current Quantity</div>
+                        <div className="detail-property">Price</div>
+                        <div className="detail-property">Quantity</div>
                         <div className="detail-property">Costs</div>
                         <div className="detail-property">Purchased Date</div>
                         <div className="detail-property">Current Date</div>
@@ -190,13 +197,21 @@ export default withRouter(function ({history, transactionId, onClose}) {
             </div>
 
         <form className="container-sellout sellout" onSubmit={ function(event){
-            event.preventDefault()
-            const {quantity: {value: quantity}}= event.target
-            const operation = 'sell-out'
-            debugger
-            handleOnSell(transactionDetail.user._id, transactionDetail.company._id, transactionDetail.stockSelected._id, transactionDetail._id, operation, quantity)
 
-            
+            try {
+
+                event.preventDefault()
+                const {quantity: {value: quantity}}= event.target
+                const operation = 'sell-out'
+                debugger
+                handleOnSell(transactionDetail.user._id, transactionDetail.company._id, transactionDetail.stockSelected._id, transactionDetail._id, operation, quantity)
+
+            } catch ({message}) {
+
+                console.log(message)
+
+            }
+
         }
 
         }>
@@ -204,27 +219,31 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
             <div className="sellout-title">
                     
-                    Sell
+                    Sale
                     
             </div>
 
             <div className="sellout-information information">
                 <div className="information-detail detail">
-                    <div className="detail-property">Quantity Offered</div>
+                    <div className="detail-property">Quantity</div>
                     <div className="detail-property">Gain</div>
                 </div>
 
                 <div className="information-detail detail">
-                    <input className="detail-property" type="quantity" name="quantity" onChange={event => {setGain(event.target.value) 
-                    setGainResult(gain * currentPrice)} } value={gain}></input>
-                    <div className="detail-property">{gainResult}</div>
+
+                    {transactionDetail.quantity > 0 ? <input className="detail-boxes " type="quantity" name="quantity" onChange={event => {setGain(event.target.value) 
+                    setGainResult(gain * currentPrice)} } value={gain}></input>: <div  className="detail-block"> 0 </div>}
+
+
+                    { gainResult >=0 ? <div className="detail-property" placeholder >{gainResult}</div> :  <div className="detail-property" placeholder > 0 </div> }
+
                 </div> 
             </div>
 
             <div className="sellout-btn btn">
 
 
-                <input className= "btn-click" type="submit" value="confirm"></input>
+                {transactionDetail.quantity > 0 ? <input className= "btn-click" type="submit" value="confirm"></input> : <input className= "btn-click" type="submit" value="confirm" disabled></input>}
                     
             </div>
 
@@ -236,9 +255,9 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
 
                 <Slide handleslideName={handleslideName} detail={undefined}/>
-                
+                <button className ="description-button" onClick={goBackMain} >goBack</button>
                 {/* {slide === 'goback' && <Buy userId={userId} companyId={companyId}lastStockTime={lastStockTime}/>}  */}
-                {slide === 'register' && <History />}
+                {slide === 'register' && <History sellRegisters = {relatedTo} />}
                 {slide === 'comments' && <Comments />}
             
 

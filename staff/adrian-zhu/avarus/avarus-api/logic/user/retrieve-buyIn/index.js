@@ -18,7 +18,7 @@ module.exports = function (id) {
 
         const transaction = await Transaction.findById( id ).populate('user company relatedTo ')
         
-        const {_id, company, stock, user, operation, quantity, amount, time} = transaction   
+        const {_id, company, stock, user, operation, quantity, amount, time, relatedTo} = transaction   
 
         let stockId = stock.toString()
         
@@ -28,7 +28,7 @@ module.exports = function (id) {
        
        const stockSelected = stocked[0]
         
-        return {_id, company, stockSelected, user, operation, quantity, amount, time} 
+        return {_id, company, stockSelected, user, operation, quantity, amount, time, relatedTo} 
     })()
 
 }

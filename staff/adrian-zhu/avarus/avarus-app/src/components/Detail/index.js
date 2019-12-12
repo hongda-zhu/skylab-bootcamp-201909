@@ -8,7 +8,7 @@ import About from '../About'
 import {priceProducer} from '../../utils'
 import { Link } from 'react-router-dom';
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import {retrieveCompanyDetail} from '../../logic'
+import {retrieveCompanyDetail, producePrice} from '../../logic'
 import { format } from 'path'
 const moment = require('moment')
 
@@ -19,6 +19,7 @@ export default withRouter(function ({userId, companyId, history}) {
     const [stockId, setStockId] = useState()
     const [error, setError] = useState()
     const [currentPrice, setCurrentPrice] = useState()
+    const [comparison, setComparison] = useState()
     const [lastPrice, setLastPrice] = useState()
     let refresher
         
@@ -28,9 +29,8 @@ export default withRouter(function ({userId, companyId, history}) {
             (async()=>{  
 
                 try{
-
+                    await producePrice()
                     const companyDetail = await retrieveCompanyDetail(companyId)
-                    
 
                     setDetail(companyDetail) 
     
@@ -42,6 +42,10 @@ export default withRouter(function ({userId, companyId, history}) {
 
                     setLastPrice(lastPrice)
 
+                    let comparison = currentPrice - lastPrice
+
+                    setComparison(comparison.toFixed(4))
+
                     let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1].id
 
                     setStockId(lastStockId)
@@ -52,11 +56,11 @@ export default withRouter(function ({userId, companyId, history}) {
                     
                 }
             })()
-        }, 60000);
+        }, 1000);
  
         (async()=>{
             try{
-
+                await producePrice()
                 const companyDetail = await retrieveCompanyDetail(companyId)
 
                 setDetail(companyDetail)
@@ -65,9 +69,19 @@ export default withRouter(function ({userId, companyId, history}) {
 
                 setCurrentPrice(currentPrice)
 
+                let lastPrice = companyDetail.stocks[companyDetail.stocks.length - 2].price.toFixed(6)
+
+                setLastPrice(lastPrice)
+
+                let comparison = currentPrice - lastPrice
+                
+                setComparison(comparison.toFixed(4))
+
                 let lastStockId = companyDetail.stocks[companyDetail.stocks.length - 1]._id
 
                 setStockId(lastStockId)
+
+                debugger
                 
             } catch(error){
                 setError(error.message)                
@@ -104,6 +118,8 @@ export default withRouter(function ({userId, companyId, history}) {
 
     } 
 
+    console.log(comparison)
+    console.log(currentPrice)
 
     return <>{  detail && <section className="detail hidden">
     <div className="detail-container container">
@@ -113,8 +129,8 @@ export default withRouter(function ({userId, companyId, history}) {
             <button className ="description-button" onClick={goBackMain} >goBack</button>
             <img src="https://dummyimage.com/200x250/000/fff" className="description-image" />
             <p className="description-currentValue">${currentPrice}</p>
-            <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> 3.06 (5.59%)</p>
-            <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> 3.06 (5.59%)</p> 
+            {comparison < 0 ? <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> {comparison}</p> :
+            <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> {comparison}</p> }
         </div>
 
         <nav className="container-navegator navegator">

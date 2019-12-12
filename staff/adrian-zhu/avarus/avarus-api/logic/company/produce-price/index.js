@@ -2,7 +2,7 @@ const { validate, errors: { ContentError, NotFoundError } } = require('avarus-ut
 const { ObjectId, models: { Company, Stock } } = require('avarus-data')
 const moment = require('moment')
 
-const STOCKS_INTERVAL = 60000 //* 60 * 60 // ms
+const STOCKS_INTERVAL = 1000 //* 60 * 60 // ms
 
 module.exports = function () {
     return (async () => {
