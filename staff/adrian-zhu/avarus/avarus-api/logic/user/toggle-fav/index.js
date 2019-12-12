@@ -11,7 +11,7 @@ const { ObjectId, models: { User } } = require('avarus-data')
 
 module.exports = function (userId, companyId) {
 
-    debugger
+    
 
     validate.string(userId)
     validate.string.notVoid('userId', userId)

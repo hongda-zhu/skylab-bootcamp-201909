@@ -33,7 +33,7 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
     
     validate.number(quantity)
 
-    return (async () => { debugger
+    return (async () => { 
 
         const res = await call(`${API_URL}/users/${userId}/buyin`, {
             method: 'POST',

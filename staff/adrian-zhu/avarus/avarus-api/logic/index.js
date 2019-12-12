@@ -6,7 +6,6 @@ module.exports = {
     retrieveBuyin: require('./user/retrieve-buyIn'),
     retrieveSellout: require('./user/retrieve-sellout'),
     editUser: require('../logic/user/edit-user'),
-    deleteUser: require('./user/delete-user'),
     buyIn: require('./user/buy-in-stock'),
     sellOut: require('./user/sell-out-stock'),
     toggleFav : require('./user/toggle-fav'),

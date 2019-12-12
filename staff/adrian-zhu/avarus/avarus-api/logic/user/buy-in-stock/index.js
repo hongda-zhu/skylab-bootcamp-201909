@@ -33,7 +33,7 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
     
     validate.number(quantity)
 
-    return (async () => { debugger
+    return (async () => { 
 
         if (operation !== 'buy-in') throw new ConflictError(`it should be buy-in operation`)
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ({Headquarters}) { debugger
+export default function ({Headquarters}) { 
     return <div className="container-about about">
 
         <div className="about-information information">

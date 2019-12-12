@@ -25,7 +25,7 @@ export default function ({userId, companyId}) {
                 
                 setUser(updatedUser)
 
-                debugger
+                
 
             }
          } catch ({message}) {
@@ -39,7 +39,7 @@ export default function ({userId, companyId}) {
             await toggleFav(userId,companyId)    
             await refreshUserFav()
 
-            debugger
+            
             
            }
         } catch ({message}) {

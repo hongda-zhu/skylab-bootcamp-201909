@@ -82,7 +82,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
 
                 setStockId(lastStockId)
 
-                debugger
+                
                 
             } catch(error){
                 setError(error.message)                

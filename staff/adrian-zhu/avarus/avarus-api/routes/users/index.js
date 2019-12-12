@@ -150,7 +150,7 @@ router.post('/:id/buyin', jsonBodyParser, (req, res) => {
         buyIn(userId, companyId, stockId, operation, quantity)
         // .then(() => res.status(201).end())
         .then(transaction => res.json({ transaction }))
-            .catch(error => { debugger
+            .catch(error => { 
                 const { message } = error
                 
                 if (error instanceof CredentialsError)
@@ -164,7 +164,7 @@ router.post('/:id/buyin', jsonBodyParser, (req, res) => {
 })
 
 router.post('/:id/sellout', jsonBodyParser, (req, res) => {
-    debugger
+    
     const { params: { id: userId } , body: {companyId, stockId, buyInTransactionId, operation, quantity } } = req
 
     try {
@@ -277,7 +277,7 @@ router.delete('/sellout/:id', (req, res) => {
 
 router.patch('/favs/:userId', jsonBodyParser, (req, res) => {
 
-    debugger
+    
     
     try {
         const { params : {userId}, companyId } = req

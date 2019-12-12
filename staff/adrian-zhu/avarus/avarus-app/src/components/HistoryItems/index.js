@@ -4,8 +4,7 @@ import { withRouter } from 'react-router-dom'
 const moment = require('moment')
 
 
-export default withRouter(function ({ sellRegister }) {
-    debugger  
+export default withRouter(function ({ sellRegister }) {  
 
     const {amount, quantity, time} = sellRegister
 

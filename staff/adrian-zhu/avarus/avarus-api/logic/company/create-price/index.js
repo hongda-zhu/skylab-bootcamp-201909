@@ -20,7 +20,7 @@ module.exports = function (companyId, price) {
     validate.number(price)
 
 
-    return (async () => {  debugger
+    return (async () => {  
   
         const company = await Company.findById(companyId)
 

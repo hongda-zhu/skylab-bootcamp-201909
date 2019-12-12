@@ -36,7 +36,7 @@ export default function ({id}) {
             try{
 
                 const {averagePrice, higherPrice, lowerPrice} = await retrievePrices(id)
-                debugger
+                
                 const {stocks} = await retrieveCompanyDetail(id)
 
                 const openPrice = stocks[0].price
@@ -46,7 +46,7 @@ export default function ({id}) {
                 setHigherPrice(higherPrice)
                 setLowerPrice(lowerPrice)
 
-                debugger
+                
                 
             } catch(error){
                 setError(error.message)                

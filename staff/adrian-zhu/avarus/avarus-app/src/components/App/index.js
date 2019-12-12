@@ -122,7 +122,7 @@ export default withRouter(function ({ history }) {
     try {
         
         await editUser(name, surname, email) 
-        debugger
+        
 
         history.push('/main')
     } catch (error) {

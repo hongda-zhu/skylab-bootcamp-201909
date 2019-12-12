@@ -56,7 +56,7 @@ describe('logic - retrieve Sellout', () => {
 
         it('should fail on wrong user id', async () => {
 
-            debugger
+            
             let id = '5de408747f38731d659c75e9'
 
             try {

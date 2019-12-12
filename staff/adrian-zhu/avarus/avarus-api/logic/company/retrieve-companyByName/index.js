@@ -18,7 +18,7 @@ module.exports = function (query) {
 
     return (async () => {    
 
-        debugger
+        
         const companies = await Company.find()
 
         let companyByName

@@ -35,7 +35,7 @@ describe('logic - authenticate company', () => {
 
     it('should succeed on correct credentials', async () => {
 
-        debugger
+        
         const companyId = await authenticateCompany(name, risk, category)
 
         expect(companyId).to.exist

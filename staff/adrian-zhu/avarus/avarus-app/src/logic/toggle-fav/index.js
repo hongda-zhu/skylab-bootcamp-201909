@@ -17,7 +17,7 @@ module.exports = function (id, companyId) {
     validate.string.notVoid('id', id)
     validate.string(companyId)
     validate.string.notVoid('companyId', companyId)
-    debugger
+    
 
     return (async () => {
         const res = await call(`${API_URL}/users/favs/${id}`, {

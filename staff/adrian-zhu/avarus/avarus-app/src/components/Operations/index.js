@@ -203,7 +203,7 @@ export default withRouter(function ({history, transactionId, onSell}) {
                 event.preventDefault()
                 const {quantity: {value: quantity}}= event.target
                 const operation = 'sell-out'
-                debugger
+                
                 handleOnSell(transactionDetail.user._id, transactionDetail.company._id, transactionDetail.stockSelected._id, transactionDetail._id, operation, quantity)
 
             } catch ({message}) {

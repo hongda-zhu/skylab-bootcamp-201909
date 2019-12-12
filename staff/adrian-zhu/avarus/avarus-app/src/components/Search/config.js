@@ -29,7 +29,7 @@ export default [
 
 // export default withRouter (function ({handleCategoryQuery, companies, error, onClose}) {
 
-//     function handleGoToCategory (event){ debugger
+//     function handleGoToCategory (event){ 
 
 //         event.preventDefault()
                     

@@ -18,7 +18,7 @@ module.exports = function (id, price) {
 
     validate.number(price)
 
-    return (async () => { debugger
+    return (async () => { 
 
         const res = await call(`${API_URL}/companies/${id}/price`, {
             method: 'POST',

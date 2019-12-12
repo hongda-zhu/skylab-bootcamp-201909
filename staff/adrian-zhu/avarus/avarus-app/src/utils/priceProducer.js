@@ -23,7 +23,7 @@
 // // Market
 
 // function bullMarket(object){
-//     debugger
+//     
 
 //     const lastPrice = object.stocks[object.stocks.length - 1]
 

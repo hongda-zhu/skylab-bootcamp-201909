@@ -167,7 +167,7 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-router.post('/:id/price', jsonBodyParser, (req, res) => {debugger
+router.post('/:id/price', jsonBodyParser, (req, res) => {
 
     try { 
 
