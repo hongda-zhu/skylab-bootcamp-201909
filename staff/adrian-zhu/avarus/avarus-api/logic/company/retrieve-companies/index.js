@@ -1,22 +1,29 @@
-const { validate, errors: { NotFoundError } } = require('avarus-util')
+const { errors: { NotFoundError } } = require('avarus-util')
 const { models: { Company } } = require('avarus-data')
 
-module.exports = function (id) {
+/**
+ *
+ * retrieve companies
+ * 
+ * @returns {Array} 
+ * 
+ */
 
-    validate.string(id)
-    validate.string.notVoid('id', id)
+module.exports = function () {
 
-    return (async () => {
+    return (async () => { 
 
-        const authenticateCompany = await Company.findById(id)
+        // const authenticateUser = await User.findById(id)
 
-        if(!authenticateCompany) throw new NotFoundError(`we can't found this company with id ${id}`)
+        // if(!authenticateUser) throw new NotFoundError(`we can't found any user with id ${id}`)
 
-        if (!Company) throw new NotFoundError(`Module with name ${Company} does not exist`)
+        // if (!Company) throw new NotFoundError(`Module with name ${Company} does not exist`)
 
-        const company = await Company.find().lean()
+        const companies = await Company.find().lean()
 
-        company.forEach(company => {
+        if (!companies) throw new NotFoundError(`${companies} does not exist`)
+
+        companies.forEach(company => {
 
             company.id = company._id.toString()
             delete company._id
@@ -24,7 +31,7 @@ module.exports = function (id) {
             
         })
 
-        return company
+        return companies
     })()
 
 }

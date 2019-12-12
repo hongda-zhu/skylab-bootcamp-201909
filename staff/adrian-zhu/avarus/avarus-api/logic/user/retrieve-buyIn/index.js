@@ -1,6 +1,16 @@
 const { validate, errors: { NotFoundError } } = require('avarus-util')
 const { models: { Transaction, Sellout } } = require('avarus-data')
 
+/**
+ *
+ * retrieve buy-in transaction
+ * 
+ * @param {id} ObjectId
+ * 
+ * @returns {Object} 
+ * 
+ */
+
 module.exports = function (id) {
 
     validate.string(id)
@@ -16,19 +26,19 @@ module.exports = function (id) {
 
         // await Sellout.populate('buyInTransaction')
 
-        debugger
+        const transaction = await Transaction.findById( id ).populate('user company relatedTo ')
+        
+        const {_id, company, stock, user, operation, quantity, amount, time, relatedTo} = transaction   
 
-        const transaction = await Transaction.find({ operation: "buy-in" }).populate('relatedTo')
-        /* {path: 'Sellout'} */
-        transaction.forEach(transaction => {
-
-            transaction.id = transaction._id.toString()
-            delete transaction._id
-            delete transaction.__v
-            
-        })
-
-        return transaction
+        let stockId = stock.toString()
+        
+        const stocked = company.stocks.filter(stocke => {
+            if(stocke.id === stockId) return stock
+       })
+       
+       const stockSelected = stocked[0]
+        
+        return {_id, company, stockSelected, user, operation, quantity, amount, time, relatedTo} 
     })()
 
 }

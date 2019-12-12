@@ -4,49 +4,63 @@ const { expect } = require('chai')
 const { random, floor } = Math
 const retrieveCompanies = require('.')
 const {errors: { NotFoundError, ContentError } } = require('avarus-util')
-const {database, models: { Company } } = require('avarus-data')
+const {database, models: { User, Company } } = require('avarus-data')
 
-describe('logic - retrieve companies', () => {
+describe.only('logic - retrieve companies', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let risks = ['adversion', 'neutral', 'seeking']
     let markets = ['bear','bull', 'neutral']
     let categories = ['tech', 'food', 'finance', 'sports', 'gaming', 'fashion']
 
-    let name, description, risk, market, category, dependency, image, stocks
+    let accountname, surname, username, email, password, budget 
 
-    beforeEach(async() => {  
-        name = `name-${random()}`
-        description = `description-${random()}`
-        risk = risks[floor(random() * risks.length)]
-        market = markets[floor(random() * markets.length)]
-        category = categories[floor(random() * categories.length)]
-        
-        dependency = [`dependency ${random()}`]
-        image = `image ${random()}`
-        stocks = []
+    
+        beforeEach(async () => {
 
-        await Company.deleteMany()
+          await Promise.all([User.deleteMany(), Company.deleteMany()])
 
-        const company = await Company.create({ name, description, risk, market, category, dependency, image, stocks})
+          accountname = `name-${random()}`
+          surname = `surname-${random()}`
+          username = `username-${random()}`
+          email = `email-${random()}@mail.com`
+          password = `password-${random()}`
+          budget = 5000
+          transactions = []
+    
+          const user = await User.create({ name: accountname, surname, username, email, password, budget, transactions})
+          
+          await user.save()
 
-        await company.save()
+          userId = user.id
+          companyname = `name-${random()}`
+          description = `description-${random()}`
+          risk = risks[floor(random() * risks.length)]
+          market = markets[floor(random() * markets.length)]
+          category = categories[floor(random() * categories.length)]
+          
+          dependency = [`dependency ${random()}`]
+          image = `image ${random()}`
+          stocks = []
 
-        id = company.id
+          const company = await Company.create({name: companyname, description, risk, market, category, dependency, image, stocks})
+
+          companyId = company.id
+
+          await company.save()
+          
 
     })
 
     it('should succeed on correct user id', async () => {
 
-        const companies = await retrieveCompanies(id)
+        const companies = await retrieveCompanies(userId)
 
         expect(companies).to.exist
         expect(companies.length).to.be.greaterThan(0)
 
 
         companies.forEach(company => {
-
-            debugger
 
             expect(company.id).to.be.a("string")
             expect(company.name).to.be.a('string')
@@ -63,7 +77,7 @@ describe('logic - retrieve companies', () => {
 
         it('should fail on wrong user id', async () => {
 
-            debugger
+            
             let id = '5de408747f38731d659c75e9'
 
             try {
@@ -74,7 +88,7 @@ describe('logic - retrieve companies', () => {
             } catch (error) {
                 expect(error).to.exist
                 expect(error).to.be.an.instanceOf(NotFoundError)
-                expect(error.message).to.equal(`we can't found this company with id ${id}`)
+                expect(error.message).to.equal(`we can't found any user with id ${id}`)
             }
         })
 

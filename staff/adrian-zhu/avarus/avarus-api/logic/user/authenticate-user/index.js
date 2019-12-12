@@ -2,6 +2,18 @@ const { validate, errors: { CredentialsError } } = require('avarus-util')
 const { models: { User } } = require('avarus-data')
 const bcrypt = require('bcryptjs')
 
+/**
+ *
+ * authenticate-user
+ * 
+ * @param {username} string
+ * @param {password} string
+ * 
+ * @returns {ObjectId} 
+ * 
+ */
+
+
 module.exports = function (username, password) {
     validate.string(username)
     validate.string.notVoid('username', username)
