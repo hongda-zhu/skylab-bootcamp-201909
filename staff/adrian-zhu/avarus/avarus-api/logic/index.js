@@ -9,6 +9,7 @@ module.exports = {
     deleteUser: require('./user/delete-user'),
     buyIn: require('./user/buy-in-stock'),
     sellOut: require('./user/sell-out-stock'),
+    toggleFav : require('./user/toggle-fav'),
 
     // Company
     createCompany: require('./company/create-company'),

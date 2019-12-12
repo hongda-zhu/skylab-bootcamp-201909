@@ -2,7 +2,7 @@ const { validate, errors: { ContentError, NotFoundError } } = require('avarus-ut
 const { ObjectId, models: { Company, Stock } } = require('avarus-data')
 const moment = require('moment')
 
-const STOCKS_INTERVAL = 1000 //* 60 * 60 // ms
+const STOCKS_INTERVAL = 60000 
 
 module.exports = function () {
     return (async () => {
@@ -12,7 +12,7 @@ module.exports = function () {
             if (!company) throw new NotFoundError(`company with companyId ${companyId} not found`)
 
             if (!company.stocks.length) {
-                const stock = new Stock({ price: 150, time: new Date('2019-12-11 00:00:00') })
+                const stock = new Stock({ price: 150, time: new Date('2019-12-12 00:00:00') })
 
                 company.stocks.push(stock)
             }
@@ -46,12 +46,39 @@ module.exports = function () {
 }
 
 function calculatePrice(market, previousPrice) {
-    // TODO switch (market)
+    
 
-    if(Math.floor(Math.random()*10) > 6.4) {
-        return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.0009 - 0.0004)) + 0.0004))
-    } else {
-        return previousPrice - (previousPrice * (Math.floor(Math.random() * (0.0009 - 0.0004)) + 0.0004))
+    switch(market){
+        case 'bear':
+            return bearMarket(previousPrice)
+        case 'bull':
+            return bullMarket(previousPrice)
+        case 'neutral':
+            return neutralMarket(previousPrice)
     }
+}
 
-} 
+function bearMarket(previousPrice){
+    if(Math.floor(Math.random()*10) > 6.4) {
+        return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.00125 - 0.0006)) + 0.0006))
+    } else {
+        return previousPrice - (previousPrice * (Math.floor(Math.random() * (0.0065 - 0.0002)) + 0.0002))
+    }
+}
+
+function bullMarket(previousPrice){
+    if(Math.floor(Math.random()*10) > 6.4) {
+        return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.00125 - 0.0006)) - 0.0006))
+    } else {
+        return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.0075 - 0.0002)) + 0.0002))
+    }
+}
+
+
+function neutralMarket(previousPrice){
+    if(Math.floor(Math.random()*10) > 6.4) {
+        return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.00125 - 0.0006)) - 0.0006))
+    } else {
+        return previousPrice + (previousPrice * (Math.floor(Math.random() * (0.001 - 0.0005)) + 0.0005))
+    }
+}

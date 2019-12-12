@@ -6,7 +6,7 @@ import Search from '../Search'
 import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory, producePrice} from '../../logic'
 
 
-function Main ({error, onClose }) { 
+function Main ({error, onClose, userId }) { 
 
     const [companies, setCompanies] = useState([])
 
@@ -89,7 +89,7 @@ function Main ({error, onClose }) {
 
     <span className="main-span">Choose the stocks you'd like to give</span>
     
-    <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose}/>
+    <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose} userId={userId}/>
 
     {error && < Feedback message={error} onClose={onClose}/>}
 

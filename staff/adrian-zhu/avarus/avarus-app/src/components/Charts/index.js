@@ -1575,9 +1575,6 @@ export default class Charts extends Component {
         </div>
         
         
-        <div className="charts-btn btn">
-            <button className="btn-goBack">BUY IT</button>
-        </div>
     </div> 
     
   }

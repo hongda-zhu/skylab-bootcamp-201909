@@ -5,6 +5,7 @@ import Buy from '../Buy'
 import Charts from '../Charts'
 import Stats from '../Stats'
 import About from '../About'
+import ButtonFavorite from '../ButtonFavorite'
 import {priceProducer} from '../../utils'
 import { Link } from 'react-router-dom';
 import { Route, withRouter, Redirect } from 'react-router-dom'
@@ -12,7 +13,7 @@ import {retrieveCompanyDetail, producePrice} from '../../logic'
 import { format } from 'path'
 const moment = require('moment')
 
-export default withRouter(function ({userId, companyId, history}) { 
+export default withRouter(function ({userId, companyId, history, onBuy}) { 
 
     const [slide, setSlide] = useState('buy')
     const [detail, setDetail] = useState()
@@ -56,7 +57,7 @@ export default withRouter(function ({userId, companyId, history}) {
                     
                 }
             })()
-        }, 1000);
+        }, 10000);
  
         (async()=>{
             try{
@@ -118,19 +119,17 @@ export default withRouter(function ({userId, companyId, history}) {
 
     } 
 
-    console.log(comparison)
-    console.log(currentPrice)
-
     return <>{  detail && <section className="detail hidden">
     <div className="detail-container container">
 
         <div className="container-description description">
             <p className="description-title">{detail.name}</p>
             <button className ="description-button" onClick={goBackMain} >goBack</button>
-            <img src="https://dummyimage.com/200x250/000/fff" className="description-image" />
+            <img src="https://www.skylabcoders.com/images/408/facebook.png" className="description-image" />
             <p className="description-currentValue">${currentPrice}</p>
             {comparison < 0 ? <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> {comparison}</p> :
             <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> {comparison}</p> }
+            {/* <ButtonFavorite userId={userId} companyId={companyId }  /> */}
         </div>
 
         <nav className="container-navegator navegator">
@@ -138,10 +137,11 @@ export default withRouter(function ({userId, companyId, history}) {
 
             <Slide handleslideName={handleslideName} detail={detail}/>
 
-            {slide === 'buy' && <Buy userId={userId} companyId={companyId} stockId={stockId}/>} 
+            {slide === 'buy' && <Buy userId={userId} companyId={companyId} stockId={stockId} onBuy={onBuy}/>} 
             {slide === 'charts' && <Charts id={companyId} />}
             {slide === 'stats' && <Stats id={companyId} />}
             {slide === 'about' && <About Headquarters={detail.description}/>}
+            
         </nav>
 
     </div>

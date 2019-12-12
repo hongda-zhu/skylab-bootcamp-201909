@@ -1,11 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './index.sass'
 import config from './config';
 import Feedback from '../Feedback'
 import CompanyList from '../CompanyList'
 import { withRouter } from 'react-router-dom'
 
-export default withRouter (function ({handleNameQuery, handleCategoryQuery, companies, error, onClose}) {
+export default withRouter (function ({handleNameQuery, handleCategoryQuery, companies, userId}) {
+
+
+    const [error, setError] = useState()
+
+    function handleCloseError () {
+        setError(undefined)
+      }
+
 
     function handleGoToCategory (event){ 
 
@@ -16,11 +24,13 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
             
             handleCategoryQuery(categoryType)
 
-        } catch ({message}) {
+        } catch(error){
 
-            console.log(message)
-
-        }
+            const { message } = error
+          
+            setError((message))
+    
+          }
 
 
     }
@@ -35,11 +45,13 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
             handleNameQuery(query)
 
-        } catch({message}) {
+        } catch(error){
 
-            console.log(message)
-            
-        }
+            const { message } = error
+          
+            setError((message))
+    
+          }
 
     }
 
@@ -50,7 +62,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
                 <input className="main-search__text" name="query" placeholder="search" />
                 <button className="main-search__btn" type="submit"><i className="fas fa-search"></i></button> 
-                {error && < Feedback message={error} onClose={onClose}/>}
+                {error && < Feedback message={error} onClose={handleCloseError}/>}
 
             </div>
         </form>
@@ -66,10 +78,12 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     <div className="main-print">
 
-        {companies && < CompanyList companies={companies}/>}
+        {companies && < CompanyList companies={companies} userId={userId}/>}
 
     </div>
 
+
+    {error && < Feedback message={error} onClose={handleCloseError}/>}
     </section>
     
     

@@ -10,7 +10,7 @@ import {retrieveBuyin, sellOut} from '../../logic'
 import { format, parse } from 'path'
 const moment = require('moment')
 
-export default withRouter(function ({history, transactionId, onClose}) { 
+export default withRouter(function ({history, transactionId, onSell}) { 
 
     const [slide, setSlide] = useState('register')
     const [transactionDetail, setTransactionDetail] = useState()
@@ -132,9 +132,9 @@ export default withRouter(function ({history, transactionId, onClose}) {
 
             quantity = parseInt(quantity)
 
-            const sellTransaction = await sellOut(userId, companyId, stockId, buyInTransactionId, operation,quantity)
+            await sellOut(userId, companyId, stockId, buyInTransactionId, operation,quantity)
 
-            console.log(sellTransaction)
+            onSell()
 
         }catch({message}) {
 
@@ -252,13 +252,15 @@ export default withRouter(function ({history, transactionId, onClose}) {
         <div className="container-buttons buttons">
 
             <nav className="container-navegator navegator">
-
+            <div className="navegator-btn">
+                <button className ="navegator-btn__form" onClick={goBackMain} >goBack</button>
+            </div>
 
                 <Slide handleslideName={handleslideName} detail={undefined}/>
-                <button className ="description-button" onClick={goBackMain} >goBack</button>
-                {/* {slide === 'goback' && <Buy userId={userId} companyId={companyId}lastStockTime={lastStockTime}/>}  */}
+
+
                 {slide === 'register' && <History sellRegisters = {relatedTo} />}
-                {slide === 'comments' && <Comments />}
+                {/* {slide === 'comments' && <Comments />} */}
             
 
             </nav>

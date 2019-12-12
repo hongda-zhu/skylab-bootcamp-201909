@@ -17,7 +17,6 @@ function Transactions ({userId, transactions, error, onClose }) {
         {transactions.map(transaction => <li className="lists-transaction" key={transaction.id}><TransactionsItem transaction={transaction} /></li>)}
     </ul>}
 
-    {error && < Feedback message={error} onClose={onClose}/>}
 
 </section> 
 } 

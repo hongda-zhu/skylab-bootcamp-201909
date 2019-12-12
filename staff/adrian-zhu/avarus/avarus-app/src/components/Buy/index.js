@@ -1,17 +1,21 @@
 import React, {useState, useEffect}  from 'react'
 import { buyIn} from '../../logic'
 import { parse } from 'path'
+import { set } from 'mongoose'
+import Feedback from '../Feedback'
 
 
-export default function ({userId, companyId, stockId}) {
+export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
 
-    // const [, ] = useState()
+    const [num, setNum] = useState(0)
 
     async function handleBuyIn(userId, companyId, stockId, operation, quantity){
 
         try { 
 
-            buyIn(userId, companyId, stockId, operation, quantity)
+            await buyIn(userId, companyId, stockId, operation, quantity)
+            
+            onBuy()
 
         } catch({message}) {
 
@@ -25,23 +29,23 @@ export default function ({userId, companyId, stockId}) {
     <div className="buy-prices prices">
         <ul className="prices-list list">
             <li className="list-price price">
-                <button className="price-btn">
-                    $25
+                <button className="price-btn" onClick={event => setNum(event.target.value)}>
+                    25
+                </button>
+            </li>
+            <li className="list-price price" >
+                <button className="price-btn" onClick={event => setNum(event.target.value)}>
+                    50
                 </button>
             </li>
             <li className="list-price price">
-                <button className="price-btn">
-                    $50
+                <button className="price-btn" onClick={event => setNum(event.target.value)}>
+                    100
                 </button>
             </li>
             <li className="list-price price">
-                <button className="price-btn">
-                    $100
-                </button>
-            </li>
-            <li className="list-price price">
-                <button className="price-btn">
-                    $200
+                <button className="price-btn" onClick={event => setNum(event.target.value)}>
+                    200
                 </button>
             </li>
         </ul>
@@ -49,22 +53,31 @@ export default function ({userId, companyId, stockId}) {
     
     <div type="submit" className="buy-search search">
         <form className="search-formula formula" onSubmit={
-            function(event){ debugger
+            function(event){ 
 
-                event.preventDefault()
-                const {quantity: {value:quantity}} = event.target
-                const operation = 'buy-in'
-                const numberQuantity = parseInt(quantity)
-                handleBuyIn (userId, companyId, stockId, operation, numberQuantity)
-                
+                try {
+                    
+                    event.preventDefault()
+                    const {quantity: {value:quantity}} = event.target
+                    const operation = 'buy-in'
+                    const numberQuantity = parseInt(quantity)
+                    handleBuyIn (userId, companyId, stockId, operation, numberQuantity)
+                    
+                } catch({message}) {
+                    console.log(message)
+                }
+
             }
-        }>
-            <input className="formula-container" type="number"  name="quantity"  placeholder="How many" min="1"/>
+        }>  
+            <input className="formula-container" type="number"  name="quantity"  placeholder="How many" />
 
             <button className="formula-btn">Pick stock</button>
+            
         </form>
 
-        <p className="search-warning">Enter value between $1 - $200</p>
         </div>
+        
+        {error && < Feedback message={error} onClose={onClose}/>}
+
     </div> 
-}
+    }

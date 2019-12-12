@@ -1,8 +1,9 @@
 import React from 'react'
 import './index.sass'
 import { withRouter } from 'react-router-dom'
+import ButtonFavorite from '../ButtonFavorite'
 
-export default withRouter(function ({ history, company, goToDetail }) { 
+export default withRouter(function ({ history, company, goToDetail, userId }) { 
 
     const {id, name, image, description} = company
 
@@ -17,8 +18,9 @@ export default withRouter(function ({ history, company, goToDetail }) {
         event.preventDefault()
         goToDetail()
     }}>
-        <img src={image} className="profile-img"></img>
+
         <h3 className="profile-title">{name}</h3>
         <p className="profile-description">{description}</p>
+        {/* <ButtonFavorite userId={userId} companyId={company.id }  /> */}
     </a>
 })

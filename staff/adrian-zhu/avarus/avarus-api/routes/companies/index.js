@@ -188,7 +188,7 @@ router.post('/:id/price', jsonBodyParser, (req, res) => {debugger
     }
 })
 
-router.post('/price', (req, res) => {debugger
+router.post('/price', (req, res) => {
 
     try { 
 
