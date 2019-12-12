@@ -1,3 +1,4 @@
+ 
 require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
@@ -58,7 +59,7 @@ describe('logic - retrieve transaction', () => {
 
         it('should fail on wrong user id', async () => {
 
-            debugger
+            
             let id = '5de408747f38731d659c75e9'
 
             try {

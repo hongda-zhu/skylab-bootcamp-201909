@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, retrieveBuyin, retrieveSellout, deleteUser, deleteStock, deleteBuyin, deleteSellout, modifyUser, buyIn, sellOut } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, retrieveBuyin, retrieveSellout, deleteUser, deleteStock, deleteBuyin, deleteSellout, editUser, buyIn, sellOut, toggleFav } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -30,14 +30,12 @@ router.post('/', jsonBodyParser, (req, res) => {
 })
 
 router.post('/auth', jsonBodyParser, (req, res) => {
-    
     const { body: { username, password } } = req
 
     try {
         authenticateUser(username, password)
             .then(id => {
                 const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
-
                 res.json({ token })
             })
             .catch(error => {
@@ -75,11 +73,13 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
-router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+
+
+router.patch('/:id', jsonBodyParser, (req, res) => {
     try {
         const { params: { id }, body: { name, surname, username, password} } = req
 
-        modifyUser(id, name, surname, username, password)
+        editUser(id, name, surname, username, password)
             .then(() => res.status(201).end())
             .catch(error => {
                 const { message } = error
@@ -142,16 +142,17 @@ router.delete('/transaction/:transactionId', tokenVerifier, (req, res) => {
     }
 })
 
-router.post('/:id/buyin', jsonBodyParser, tokenVerifier, (req, res) => {
+router.post('/:id/buyin', jsonBodyParser, (req, res) => {
     
     const { params: { id: userId } , body: {companyId, stockId, operation, quantity } } = req
 
     try {
         buyIn(userId, companyId, stockId, operation, quantity)
-        .then(() => res.status(201).end())
-            .catch(error => {
+        // .then(() => res.status(201).end())
+        .then(transaction => res.json({ transaction }))
+            .catch(error => { 
                 const { message } = error
-
+                
                 if (error instanceof CredentialsError)
                     return res.status(401).json({ message })
 
@@ -162,7 +163,7 @@ router.post('/:id/buyin', jsonBodyParser, tokenVerifier, (req, res) => {
     }
 })
 
-router.post('/:id/sellout', jsonBodyParser, tokenVerifier, (req, res) => {
+router.post('/:id/sellout', jsonBodyParser, (req, res) => {
     
     const { params: { id: userId } , body: {companyId, stockId, buyInTransactionId, operation, quantity } } = req
 
@@ -189,7 +190,7 @@ router.get('/buyin/:id', (req, res) => {
     try {
 
         retrieveBuyin(id)
-            .then(buyins => res.json({ buyins }))
+            .then(buyin => res.json(buyin ))
             .catch(error => {
                 const { message } = error
 
@@ -212,7 +213,7 @@ router.get('/sellout/:id', (req, res) => {
     try {
 
         retrieveSellout(id)
-            .then(sellouts => res.json({ sellouts }))
+            .then(sellouts => res.json(sellouts ))
             .catch(error => {
                 const { message } = error
 
@@ -270,6 +271,29 @@ router.delete('/sellout/:id', (req, res) => {
     } catch (error) {
         const { message } = error
 
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/favs/:userId', jsonBodyParser, (req, res) => {
+
+    
+    
+    try {
+        const { params : {userId}, companyId } = req
+        toggleFav(userId, companyId)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
         res.status(400).json({ message })
     }
 })

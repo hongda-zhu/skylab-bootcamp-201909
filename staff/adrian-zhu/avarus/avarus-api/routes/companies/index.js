@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, editCompany, createPrice, retrievePrice} = require('../../logic')
+const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, producePrice,retriveAvgPrice, retrievePrice} = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -11,7 +11,7 @@ const jsonBodyParser = bodyParser.json()
 const router = Router()
 
 router.post('/', jsonBodyParser, (req, res) => { 
-    debugger
+    
     const { body: { name, description, risk, market, category, dependency, image, stocks } } = req
 
     try {
@@ -33,8 +33,7 @@ router.post('/', jsonBodyParser, (req, res) => {
 router.post('/auth', jsonBodyParser, (req, res) => {
     
     const { body: { name, risk, category } } = req
-    debugger
-
+    
     try {
         authenticateCompany(name, risk, category )
             .then(id => {
@@ -56,11 +55,15 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 })
 
 router.get('/', (req, res) => {
-    
-    try {
 
-        retrieveCompanies( )
-            .then(companies => res.json({ companies }))
+    // '/:id'
+    // const {params: { id } } = req
+    // id
+    
+    try { 
+
+        retrieveCompanies()
+            .then(companies => res.json( companies ))
             .catch(error => {
                 const { message } = error
 
@@ -76,13 +79,13 @@ router.get('/', (req, res) => {
     }
 })
 
-router.get('/:id', tokenVerifier, (req, res) => {
+router.get('/company/:id', (req, res) => {
     
     try {
-        const { id } = req
+        const { params: {id} } = req
 
         retrieveCompany(id)
-            .then(company => res.json({ company }))
+            .then(company => res.json(company))
             .catch(error => {
                 const { message } = error
 
@@ -97,6 +100,53 @@ router.get('/:id', tokenVerifier, (req, res) => {
         res.status(400).json({ message })
     }
 })
+
+
+router.get('/category/:category',jsonBodyParser, (req, res) => {
+
+
+    try { 
+        const { params: { category } } = req
+
+        retrieveCompanyCategory(category)
+            .then(company => res.json( company ))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/name/:query',jsonBodyParser, (req, res) => {
+
+    try { 
+        const { params: { query } } = req
+
+        retrieveCompanyName(query)
+            .then(company => res.json(company))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
 
 router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
@@ -117,9 +167,10 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-router.post('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {
+router.post('/:id/price', jsonBodyParser, (req, res) => {
 
-    try {
+    try { 
+
         const { params: { id }, body: { price }} = req
 
         createPrice(id, price)
@@ -137,6 +188,49 @@ router.post('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
+router.post('/price', (req, res) => {
+
+    try { 
+
+        producePrice()
+            // .then(arr => res.json(arr))
+            .then(() => res.status(200).end())
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+
+router.get('/:id/avgprice', (req, res) => {
+
+    const { params: { id }} = req
+    try { 
+
+        retriveAvgPrice(id)
+            
+            .then(arrPrices => res.json(arrPrices))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+
+        res.status(400).json({ message })
+
+    }
+})
 
 router.get('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {
 

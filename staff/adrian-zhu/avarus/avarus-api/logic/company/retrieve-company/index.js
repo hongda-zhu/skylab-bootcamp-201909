@@ -1,6 +1,14 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { ObjectId, models: { Company } } = require('avarus-data')
 
+/**
+ *
+ * retrieve company
+ * 
+ * @returns {Object} 
+ * 
+ */
+
 module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)
@@ -13,7 +21,7 @@ module.exports = function (id) {
 
         await company.save()
 
-        const { name, description, risk, market, category, dependency, image, stocks } = company.toObject()
+        const { name, description, risk, market, category, dependency, image, stocks } = company
 
         return { id, name, description, risk, market, category, dependency, image, stocks }
     })()

@@ -30,7 +30,7 @@ describe('logic - create company', () => {
         return Company.deleteMany()
     })
 
-    it('should create a new company on correct set of datas', async () => { debugger
+    it('should create a new company on correct set of datas', async () => { 
         const result = await createCompany(name, description, risk, market, category, dependency, image, stocks)
 
         expect(result).not.to.exist
@@ -68,7 +68,7 @@ describe('logic - create company', () => {
 
         it('should fail on incorrect name, description, risk, market, category, dependency, image, stocks, or expression type and content', () => {
 
-            debugger
+            
 
             expect(() => createCompany(1)).to.throw(TypeError, '1 is not a string')
             expect(() => createCompany(true)).to.throw(TypeError, 'true is not a string')

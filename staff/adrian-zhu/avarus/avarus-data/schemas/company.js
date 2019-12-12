@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema} = mongoose
-const stock = require('./stock')
+const Stock = require('./stock')
 
 module.exports = new Schema ({
     name: {
@@ -18,7 +18,7 @@ module.exports = new Schema ({
     },
     risk:{
         type: String,
-        enum: ['adversion', 'neutral', 'seeking'],
+        enum: ['adverse', 'neutral', 'seek'],
         required: true
     },
     market:{
@@ -28,12 +28,12 @@ module.exports = new Schema ({
     },
     category: {
         type: String,
-        enum: ['tech', 'food', 'finance', 'sports', 'gaming', 'fashion'],
+        enum: ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion'],
         required: true
     },
     dependency: {
         type: Array
     },
-    stocks: [stock],
+    stocks: [Stock],
     versionKey: false 
 })

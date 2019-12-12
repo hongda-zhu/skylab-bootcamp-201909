@@ -1,6 +1,17 @@
 const { validate, errors: { CredentialsError } } = require('avarus-util')
 const { models: { Company } } = require('avarus-data')
 
+/**
+ *
+ * authenticate-company
+ * 
+ * @param {name} string
+ * @param {risk} string enum
+ * @param {category} string enum
+ * 
+ * @returns {company.id} ObjectId
+ */
+
 module.exports = function (name, risk, category) {
 
     validate.string(name)

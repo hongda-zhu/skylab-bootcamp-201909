@@ -1,6 +1,16 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { ObjectId, models: { User } } = require('avarus-data')
 
+/**
+ *
+ * retrieve-user
+ * 
+ * @param {id} ObjectId
+ * 
+ * @returns {Object} 
+ * 
+ */
+
 module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)
@@ -8,7 +18,7 @@ module.exports = function (id) {
 
     return (async () => {
         
-        const usercase = await User.findById(id).populate('transactions')
+        const usercase = await User.findById(id).populate({path:'transactions', populate: {path:'user company stock'}})
 
         if (!usercase) throw new NotFoundError(`usercase with id ${id} not found`)
 

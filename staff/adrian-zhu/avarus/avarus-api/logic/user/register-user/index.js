@@ -2,6 +2,22 @@ const { validate, errors: { ConflictError } } = require('avarus-util')
 const { models: { User } } = require('avarus-data')
 const bcrypt = require('bcryptjs')
 
+/**
+ *
+ * create-buyIn-transaction
+ * 
+ * @param {name} string
+ * @param {surname} string
+ * @param {email} string
+ * @param {username} string 
+ * @param {password} string
+ * @param {budget} number
+ * 
+ * @returns {Object} 
+ * 
+ */
+
+
 
 module.exports = function (name, surname, email, username, password, budget) {
     validate.string(name)
@@ -25,5 +41,6 @@ module.exports = function (name, surname, email, username, password, budget) {
         const hash = await bcrypt.hash(password, 10)
 
         await User.create({ name, surname, email, username, password: hash, budget })
+
     })()
 }
