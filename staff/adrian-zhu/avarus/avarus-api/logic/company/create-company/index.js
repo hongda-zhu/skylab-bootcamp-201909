@@ -1,6 +1,23 @@
 const { validate, errors: { ConflictError } } = require('avarus-util')
 const {models: { Company } } = require('avarus-data')
 
+/**
+ *
+ * create-company
+ * 
+ * @param {name} string
+ * @param {description} string
+ * @param {risk} string enum
+ * @param {market} string enum 
+ * @param {category} string enum 
+ * @param {dependency} string array
+ * @param {image} string
+ * @param {stocks} array emb
+ * 
+ * @returns {company} Object
+ */
+
+
 module.exports = function (name, description, risk, market, category, dependency, image, stocks) { 
    
     validate.string(name)

@@ -2,6 +2,16 @@ const call = require('../../utils/call')
 const { validate, errors: { CredentialsError, NotFoundError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ *
+ * retrieve sell-out transaction
+ * 
+ * @param {id} ObjectId
+ * 
+ * @returns {Object} 
+ * 
+ */
+
 module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)

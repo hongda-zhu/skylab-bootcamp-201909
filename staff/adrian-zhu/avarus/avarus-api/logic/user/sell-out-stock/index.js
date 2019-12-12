@@ -2,6 +2,21 @@ const { validate, errors: { ConflictError, NotFoundError } } = require('avarus-u
 const {models: { Company, User, Stock, Transaction, Sellout } } = require('avarus-data')
 const moment = require('moment')
 
+/**
+ *
+ * create sell-out transaction
+ * 
+ * @param {userId} ObjectId
+ * @param {companyId} ObjectId
+ * @param {stockId} ObjectId
+ * @param {buyInTransactionId} ObjectId
+ * @param {operation} string enum
+ * @param {quantity} number
+ * 
+ * @returns {Object} 
+ * 
+ */
+
 module.exports = function (userId, companyId, stockId, buyInTransactionId, operation, quantity) { 
 
     validate.string(userId)

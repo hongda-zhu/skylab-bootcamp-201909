@@ -1,6 +1,20 @@
 const { validate, errors: {NotFoundError } } = require('avarus-util')
 const { ObjectId, models: { User } } = require('avarus-data')
 
+/**
+ *
+ * edit-user
+ * 
+ * @param {id} ObjectId
+ * @param {name} string
+ * @param {surname} string
+ * @param {username} string
+ * 
+ * @returns {ObjectId} 
+ * 
+ */
+
+
 module.exports = function(id, name, surname, username) {
   validate.string(id)
   validate.string.notVoid('id', id)

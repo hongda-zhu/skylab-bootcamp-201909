@@ -1,6 +1,16 @@
 const { validate, errors: { NotFoundError } } = require('avarus-util')
 const { models: { Transaction, Sellout } } = require('avarus-data')
 
+/**
+ *
+ * retrieve sell-out transaction
+ * 
+ * @param {id} ObjectId
+ * 
+ * @returns {Object} 
+ * 
+ */
+
 module.exports = function (id) {
 
     validate.string(id)

@@ -2,6 +2,18 @@ const call = require('../../utils/call')
 const { validate, errors: { CredentialsError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ *
+ * retrieve-user
+ * 
+ * @param {username} string
+ * @param {password} string
+ * 
+ * @returns {Object} 
+ * 
+ */
+
+
 
 module.exports = function (username, password) {
     validate.string(username)

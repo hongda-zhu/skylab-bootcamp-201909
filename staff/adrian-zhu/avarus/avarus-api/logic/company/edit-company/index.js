@@ -1,6 +1,21 @@
 const { validate, errors: {NotFoundError } } = require('avarus-util')
 const { ObjectId, models: { Company } } = require('avarus-data')
 
+/**
+ *
+ * edit-price
+ * 
+ * @param {id} ObjectId
+ * @param {price} number
+ * @param {description} string
+ * @param {risk} string enum
+ * @param {market} string enum
+ * @param {dependency} array enum
+ * @param {image} string
+ * @param {stocks} array emb
+ * 
+ */
+
 module.exports = function(id, name, description, risk, market, category, dependency, image, stocks) {
 
   validate.string(id)

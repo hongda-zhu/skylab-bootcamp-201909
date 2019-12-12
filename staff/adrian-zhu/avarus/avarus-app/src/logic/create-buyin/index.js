@@ -4,6 +4,20 @@ const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (userId, companyId, stockId, operation, quantity) {
 
+    /**
+     *
+     * create-buyIn-transaction
+     * 
+     * @param {userId} ObjectId
+     * @param {companyId} ObjectId
+     * @param {stockId} ObjectId
+     * @param {operation} string enum
+     * @param {quantity} number
+     * 
+     * @returns {Object} 
+     * 
+     */
+
     validate.string(userId)
     validate.string.notVoid('userId', userId)
 

@@ -1,11 +1,15 @@
-const { validate, errors: { NotFoundError } } = require('avarus-util')
-const { models: { User, Company } } = require('avarus-data')
+const { errors: { NotFoundError } } = require('avarus-util')
+const { models: { Company } } = require('avarus-data')
+
+/**
+ *
+ * retrieve companies
+ * 
+ * @returns {Array} 
+ * 
+ */
 
 module.exports = function () {
-
-    // id
-    // validate.string(id)
-    // validate.string.notVoid('id', id)
 
     return (async () => { 
 
@@ -16,6 +20,8 @@ module.exports = function () {
         // if (!Company) throw new NotFoundError(`Module with name ${Company} does not exist`)
 
         const companies = await Company.find().lean()
+
+        if (!companies) throw new NotFoundError(`${companies} does not exist`)
 
         companies.forEach(company => {
 

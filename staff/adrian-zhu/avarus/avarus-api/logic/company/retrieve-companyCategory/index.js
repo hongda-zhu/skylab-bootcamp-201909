@@ -1,6 +1,17 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { models: { Company } } = require('avarus-data')
 
+/**
+ *
+ * retrieve company by category
+ * 
+ * @param {category} string enum
+ * 
+ * @returns {Array} 
+ * 
+ */
+
+
 module.exports = function (category) {
     
     validate.string(category) 

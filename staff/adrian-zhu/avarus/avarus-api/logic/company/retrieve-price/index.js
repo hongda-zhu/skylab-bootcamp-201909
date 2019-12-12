@@ -1,6 +1,17 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { ObjectId, models: { Company } } = require('avarus-data')
 
+/**
+ *
+ * retrieve price
+ * 
+ * @param {id} ObjectId
+ * 
+ * @returns {Array} 
+ * 
+ */
+
+
 module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)

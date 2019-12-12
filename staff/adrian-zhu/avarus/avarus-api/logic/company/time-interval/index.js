@@ -1,5 +1,13 @@
 const STOCKS_INTERVAL = 60000 //* 60 * 60 // ms
-const m
+
+/**
+ *
+ * retrieve time-interval
+ * 
+ * @returns {Array} 
+ * 
+ */
+
 
 module.exports = function () {
     return (async () => {

@@ -4,7 +4,14 @@ const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (id, price) {
 
-    
+    /**
+     *
+     * create-price
+     * 
+     * @param {id} ObjectId
+     * @param {price} number
+     *  
+     */
 
     validate.string(id)
     validate.string.notVoid('id', id)

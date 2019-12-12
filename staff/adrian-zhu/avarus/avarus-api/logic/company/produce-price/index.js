@@ -4,6 +4,16 @@ const moment = require('moment')
 
 const STOCKS_INTERVAL = 60000 
 
+/**
+ *
+ * retrieve the produce-price
+ * 
+ * @returns {Number} 
+ * 
+ */
+
+
+
 module.exports = function () {
     return (async () => {
         const companies = await Company.find()

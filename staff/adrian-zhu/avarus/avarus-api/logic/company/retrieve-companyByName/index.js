@@ -1,6 +1,16 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { models: { Company } } = require('avarus-data')
 
+/**
+ *
+ * retrieve company by name
+ * 
+ * @param {query} string
+ * 
+ * @returns {Array} 
+ * 
+ */
+
 module.exports = function (query) {
     
     validate.string(query)

@@ -2,6 +2,20 @@ const call = require('../../utils/call')
 const { validate, errors: { ConflictError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ *
+ * create-buyIn-transaction
+ * 
+ * @param {name} string
+ * @param {surname} string
+ * @param {email} string
+ * @param {username} string 
+ * @param {password} string
+ * @param {budget} number
+ * 
+ */
+
+
 module.exports = function (name, surname, email, username, password, budget) {
     validate.string(name)
     validate.string.notVoid('name', name)
