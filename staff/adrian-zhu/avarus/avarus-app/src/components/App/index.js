@@ -31,6 +31,8 @@ export default withRouter(function ({ history }) {
 
     const [password, setPassword] = useState()
 
+    const [counter, setCounter] = useState()
+
     const [error, setError] = useState()
 
     const [id, setId] = useState()
@@ -42,12 +44,11 @@ export default withRouter(function ({ history }) {
 
       refreshAll()
 
-    }, [sessionStorage.token, Transactions])
+    }, [sessionStorage.token, Transactions, counter])
 
 
     async function refreshAll(){
       
-
       const { token } = sessionStorage;
         
           if (token) { 
@@ -85,18 +86,17 @@ export default withRouter(function ({ history }) {
       }
 
 
-      async function handleListCompanies (){
+    async function handleListCompanies (){
 
-        try {
-    
-          const token = sessionStorage.token
-    
-    
-        } catch(error){
-    
-          const {message} = error
-    
-        }
+      try {
+  
+        const token = sessionStorage.token
+
+      } catch(error){
+  
+        const {message} = error
+  
+      }
     }
 
     async function handleLogin(username, password){
@@ -146,8 +146,6 @@ export default withRouter(function ({ history }) {
     setError(undefined)
   }
 
-
-
   const { token } = sessionStorage
 
 
@@ -160,7 +158,7 @@ export default withRouter(function ({ history }) {
 
       <Route path = '/login' render = {() => !token ? <Login onLogin={handleLogin} error={error} onClose={handleCloseError}/> : <Redirect to="/" /> } />  
 
-      <Route path = '/main' render = {() =>  <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} userId={id}  /> } />
+      <Route path = '/main' render = {() =>  <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} userId={id} /> } />
 
       <Route path = '/detail/:id' render={({ match: { params: { id:companyId } } })  => token && id ? <> <Detail userId={id} companyId={companyId} onBuy={refreshAll}/> </>: <Redirect to="/" />  } />
 

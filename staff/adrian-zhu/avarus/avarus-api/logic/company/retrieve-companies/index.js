@@ -1,5 +1,5 @@
-const { errors: { NotFoundError } } = require('avarus-util')
-const { models: { Company } } = require('avarus-data')
+const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
+const { ObjectId, models: { User, Company } } = require('avarus-data')
 
 /**
  *
@@ -9,19 +9,21 @@ const { models: { Company } } = require('avarus-data')
  * 
  */
 
-module.exports = function () {
+module.exports = function (userId) { 
+
+    let id = userId
+
+    validate.string(id)
+    validate.string.notVoid('id', id)
+    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     return (async () => { 
 
-        // const authenticateUser = await User.findById(id)
+        const user = await User.findById(id)
 
-        // if(!authenticateUser) throw new NotFoundError(`we can't found any user with id ${id}`)
-
-        // if (!Company) throw new NotFoundError(`Module with name ${Company} does not exist`)
+        if(!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
         const companies = await Company.find().lean()
-
-        if (!companies) throw new NotFoundError(`${companies} does not exist`)
 
         companies.forEach(company => {
 

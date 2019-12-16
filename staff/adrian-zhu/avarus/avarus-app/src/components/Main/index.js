@@ -3,7 +3,7 @@ import './index.sass'
 import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
-import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory, producePrice} from '../../logic'
+import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory, retrieveUser} from '../../logic'
 
 
 function Main ({error, onClose, userId }) { 
@@ -12,18 +12,16 @@ function Main ({error, onClose, userId }) {
 
     const {token} = sessionStorage
 
-    // const {error, setError} = useState()
-
     useEffect(()=>{
 
         (async()=>{
 
             try{
 
-                console.log(companies)
+                const {id:userId} = await retrieveUser(token)
 
-                handleSearchAll()
-                // producePrice()
+                handleSearchAll(userId, token)
+                
 
             }catch(message){
 
@@ -37,11 +35,11 @@ function Main ({error, onClose, userId }) {
 
 
 
-    async function handleSearchAll(){
+    async function handleSearchAll(userId, token){
 
-        try {
+        try { debugger
             
-            const companies = await retrieveCompanies(token)
+            const companies = await retrieveCompanies(userId, token)
                     
             setCompanies(companies)
 
