@@ -4,6 +4,8 @@ const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (userId, companyId, stockId, operation, quantity) {
 
+    debugger
+
     /**
      *
      * create-buyIn-transaction

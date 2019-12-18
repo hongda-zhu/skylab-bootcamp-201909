@@ -56,6 +56,8 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 
 router.get('/:id', tokenVerifier, (req, res) => {
 
+    debugger
+
     const {params: { id: userId } } = req
 
     try { 
