@@ -9,9 +9,9 @@ const { database, models: { User, Company, Stock, Transaction } } = require('ava
 describe('logic - buy-in', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let risks = ['adversion', 'neutral', 'seeking']
+    let risks = ['adverse', 'neutral', 'seek']
     let markets = ['bear','bull', 'neutral']
-    let categories = ['tech', 'food', 'finance', 'sports', 'gaming', 'fashion']
+    let categories = ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion']
 
     let userId, companyId, stockId, operation, quantity
 
@@ -54,40 +54,41 @@ describe('logic - buy-in', () => {
 
           companyId = company.id
 
-          await company.save()
-
           price = floor(random() *10)
           stockTime = new Date
 
           const stock = await Stock.create({price: price, time:stockTime})
           
+          company.stocks.push(stock) 
 
-          company.stocks.push(stock)
+          await company.save()
+
           stockId = stock.id
 
           operation = 'buy-in'
           quantity = floor(random()*10)
 
         })
-      
+        
 
-      it('should process correctly the buy-in transaction when all the inputs are in correct form', async () => {
-
+      it('should process correctly the buy-in transaction when all the inputs are in correct form', async () => { 
 
         const buyInTransaction = await buyInStock(userId, companyId, stockId, operation, quantity)
 
+        debugger
+
         expect(buyInTransaction).to.exist
-        expect(buyInTransaction.id).to.be.a('string')
-        expect(buyInTransaction.company).to.be.a('object')
-        expect(buyInTransaction.stock).to.be.a('object')
-        expect(buyInTransaction.user).to.be.a('object')
-        expect(buyInTransaction.operation).to.be.a('string')
-        expect(buyInTransaction.quantity).to.be.a('number')
-        expect(buyInTransaction.amount).to.be.a('number')
+        expect(buyInTransaction.transaction.id).to.be.a('string')
+        expect(buyInTransaction.transaction.company).to.be.a('object')
+        expect(buyInTransaction.transaction.stock).to.be.a('object')
+        expect(buyInTransaction.transaction.user).to.be.a('object')
+        expect(buyInTransaction.transaction.operation).to.be.a('string')
+        expect(buyInTransaction.transaction.quantity).to.be.a('number')
+        expect(buyInTransaction.transaction.amount).to.be.a('number')
 
       })
 
-      it('should not create a new game if operation is not buy-in', async () => {
+      it('should not create a new transaction if operation is not buy-in', async () => {
 
         let wrongOperation = 'sell-out'
 
@@ -105,7 +106,7 @@ describe('logic - buy-in', () => {
 
       })
 
-      it('should not create a new game if userID is wrong', async () => {
+      it('should not create a new transaction if userID is wrong', async () => {
 
         let userID = "5de407687f38731d659c98e5"
 
@@ -124,7 +125,7 @@ describe('logic - buy-in', () => {
       })
 
 
-      it('should not create a new game if CompanyID is wrong', async () => {
+      it('should not create a new transaction if CompanyID is wrong', async () => {
 
         let CompanyID = "5de407687f38731d659c98e5"
 
@@ -142,7 +143,7 @@ describe('logic - buy-in', () => {
 
       })
 
-      it('should not create a new game if stockID is wrong', async () => {
+      it('should not create a new transaction if stockID is wrong', async () => {
 
         let StockID = "5de407687f38731d659c98e5"
 
@@ -160,7 +161,7 @@ describe('logic - buy-in', () => {
 
       })
 
-      it('should not create a new game if quantity is exceeded', async () => {
+      it('should not create a new transaction if quantity is exceeded', async () => {
 
         let Quantity = 10000
 

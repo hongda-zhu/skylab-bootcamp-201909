@@ -1,9 +1,9 @@
 import React from 'react'
 import './index.sass'
 import { withRouter } from 'react-router-dom'
-import ButtonFavorite from '../ButtonFavorite'
+// import ButtonFavorite from '../ButtonFavorite'
 
-export default withRouter(function ({ history, company, goToDetail, userId }) { 
+export default withRouter(function ({ history, company, userId }) { 
 
     const {id, name, image, description} = company
 

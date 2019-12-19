@@ -1,19 +1,39 @@
-module.exports = {
-    buyIn: require('./create-buyin'),
-    editUser: require('./edit-user'),
-    createPrice: require('./create-price'),
-    sellOut: require('./create-sellout'),
-    producePrice: require('./produce-price'),
-    retrievePrices: require('./retrieve-prices'),
-    registerUser: require('./register-user'),
-    authenticateUser: require('./authenticate-user'),
-    toggleFav : require('./toggle-fav'),
+// module.exports = {
+    import buyIn from './create-buyin'
+    import editUser from './edit-user'
+    import createPrice from './create-price'
+    import sellOut from './create-sellout'
+    import producePrice from './produce-price'
+    import retrievePrices from './retrieve-prices'
+    import registerUser from './register-user'
+    import authenticateUser from './authenticate-user'
+    import toggleFav  from './toggle-fav'
 
-    retrieveUser: require('./retrieve-user'),
-    retrieveBuyin: require('./retrieve-buyin'),
-    retrieveCompanies: require('./retrieve-companies'),
-    retrieveCompanyDetail: require('./retrieve-companyDetail'),
-    retrieveCompanyByName: require('./retrieve-companyByName'),
-    retrieveCompanyById: require('./retrieve-companyById'),
-    retrieveCompanyByCategory: require('./retrieve-companyByCategory')
+    import retrieveUser from './retrieve-user'
+    import retrieveBuyin from './retrieve-buyin'
+    import retrieveCompanies from './retrieve-companies'
+    import retrieveCompanyDetail from './retrieve-companyDetail'
+    import retrieveCompanyByName from './retrieve-companyByName'
+    import retrieveCompanyById from './retrieve-companyById'
+    import retrieveCompanyByCategory from './retrieve-companyByCategory'
+// }
+
+export {
+    buyIn,
+    editUser,
+    createPrice,
+    sellOut,
+    producePrice,
+    retrievePrices,
+    registerUser,
+    authenticateUser,
+    toggleFav,
+
+    retrieveUser, 
+    retrieveBuyin,
+    retrieveCompanies,
+    retrieveCompanyDetail,
+    retrieveCompanyByName,
+    retrieveCompanyById,
+    retrieveCompanyByCategory
 }

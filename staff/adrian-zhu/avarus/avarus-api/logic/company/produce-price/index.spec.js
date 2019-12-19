@@ -13,7 +13,7 @@ describe('logic - produce price', () => {
     let markets = ['bear','bull', 'neutral']
     let categories = ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion']
 
-    let companyId, price
+    let companyId
 
     let companyname, description, risk, market, category, dependency, stocks, image     
     
@@ -47,7 +47,7 @@ describe('logic - produce price', () => {
 
         const company = await Company.findById(companyId)
 
-        expect(company.stocks).to.have.lengthOf(1)
+        expect(company.stocks).to.have.length.greaterThan(0)
 
         const [ stock ] = company.stocks
 

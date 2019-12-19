@@ -18,8 +18,6 @@ const moment = require('moment')
 
 module.exports = function (userId, companyId, stockId, operation, quantity) { 
 
-    debugger
-
     validate.string(userId)
     validate.string.notVoid('userId', userId)
 

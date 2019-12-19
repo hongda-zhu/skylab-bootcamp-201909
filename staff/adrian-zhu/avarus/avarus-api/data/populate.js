@@ -13,9 +13,9 @@ const fetch = require('node-fetch');
         const campo = new Company({
             name: 'navarro-navarro',
             description: 'The navarro-navarro company',
-            risk: 'adverse',
-            category: 'tech',
-            market: 'bear',
+            risk: 'neutral',
+            category: 'sports',
+            market: 'neutral',
         })
 
         await campo.save()

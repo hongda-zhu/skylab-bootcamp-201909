@@ -6,7 +6,7 @@ const retrieveCompanies = require('.')
 const {errors: { NotFoundError, ContentError } } = require('avarus-util')
 const {database, models: { User, Company } } = require('avarus-data')
 
-describe.only('logic - retrieve companies', () => { 
+describe('logic - retrieve companies', () => { 
     before(() => database.connect(TEST_DB_URL))
 
     let userId

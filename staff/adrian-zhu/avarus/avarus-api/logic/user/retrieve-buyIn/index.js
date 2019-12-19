@@ -36,9 +36,10 @@ module.exports = function (id) {
             if(stocke.id === stockId) return stock
        })
        
-       const stockSelected = stocked[0]
+        const stockSelected = stocked[0]
         
         return {_id, company, stockSelected, user, operation, quantity, amount, time, relatedTo} 
+        
     })()
 
 }

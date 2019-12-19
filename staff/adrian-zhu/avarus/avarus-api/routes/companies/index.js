@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany, authenticateCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, producePrice,retriveAvgPrice, retrievePrice} = require('../../logic')
+const { createCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, producePrice,retrievePrices, retrievePrice} = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -30,29 +30,6 @@ router.post('/', jsonBodyParser, (req, res) => {
     }
 })
 
-router.post('/auth', jsonBodyParser, (req, res) => {
-    
-    const { body: { name, risk, category } } = req
-    
-    try {
-        authenticateCompany(name, risk, category )
-            .then(id => {
-                const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
-
-                res.json({ token })
-            })
-            .catch(error => {
-                const { message } = error
-
-                if (error instanceof CredentialsError)
-                    return res.status(401).json({ message })
-
-                res.status(500).json({ message })
-            })
-    } catch ({ message }) {
-        res.status(400).json({ message })
-    }
-})
 
 router.get('/:id', tokenVerifier, (req, res) => {
 
@@ -214,7 +191,7 @@ router.get('/:id/avgprice', (req, res) => {
     const { params: { id }} = req
     try { 
 
-        retriveAvgPrice(id)
+        retrievePrices(id)
             
             .then(arrPrices => res.json(arrPrices))
             .catch(error => {

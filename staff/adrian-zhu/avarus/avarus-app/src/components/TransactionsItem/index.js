@@ -4,7 +4,9 @@ import { withRouter } from 'react-router-dom'
 const moment = require('moment')
 
 
-export default withRouter(function ({ history, transaction, goToDetail }) {  
+export default withRouter(function ({ history, transaction }) {  
+
+    debugger
 
     const {amount, company, time} = transaction
 

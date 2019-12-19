@@ -9,9 +9,9 @@ const { database, models: { User, Company, Stock, Transaction, Sellout } } = req
 describe('logic - create-price', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let risks = ['adversion', 'neutral', 'seeking']
+    let risks = ['adverse', 'neutral', 'seek']
     let markets = ['bear','bull', 'neutral']
-    let categories = ['tech', 'food', 'finance', 'sports', 'gaming', 'fashion']
+    let categories = ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion']
 
     let companyId, price
 
