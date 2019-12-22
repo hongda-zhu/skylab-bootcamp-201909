@@ -13,6 +13,8 @@ export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
 
         try { 
 
+            debugger
+
             await buyIn(userId, companyId, stockId, operation, quantity)
             
             onBuy()

@@ -19,6 +19,8 @@ const API_URL = process.env.REACT_APP_API_URL
 
 export default function (userId, companyId, stockId, operation, quantity) {
 
+    debugger
+
     validate.string(userId)
     validate.string.notVoid('userId', userId)
 
