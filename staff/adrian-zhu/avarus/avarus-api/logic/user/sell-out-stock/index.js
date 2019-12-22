@@ -98,6 +98,6 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
         user.transactions[0] = buyInTransaction
         user.save()
 
-        return {sellOutTransaction}
+        return sellOutTransaction
     })()
 }

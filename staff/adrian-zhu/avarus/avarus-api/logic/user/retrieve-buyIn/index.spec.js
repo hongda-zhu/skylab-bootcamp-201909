@@ -7,7 +7,7 @@ const retrieveBuyin = require('.')
 const { errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { ObjectId, database, models: { User, Company, Stock, Transaction } } = require('avarus-data')
 
-describe.only('logic - retrieve transaction of buy-in', () => {
+describe('logic - retrieve transaction of buy-in', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let userId, companyId, stockId, operation, quantity
@@ -21,8 +21,6 @@ describe.only('logic - retrieve transaction of buy-in', () => {
     let risks = ['adverse', 'neutral', 'seek']
     let markets = ['bear','bull', 'neutral']
     let categories = ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion']
-
-
     
         beforeEach(async () => {
             await Promise.all([User.deleteMany(), Company.deleteMany(), Stock.deleteMany(), Transaction.deleteMany()])
@@ -61,7 +59,6 @@ describe.only('logic - retrieve transaction of buy-in', () => {
             const stock = await Stock.create({price: price, time:stockTime})
             
             company.stocks.push(stock) 
-  
             await company.save()
   
             stockId = stock.id

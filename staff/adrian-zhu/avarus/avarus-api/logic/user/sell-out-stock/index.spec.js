@@ -9,17 +9,17 @@ const { database, models: { User, Company, Stock, Transaction, Sellout } } = req
 describe('logic - sell-out', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let risks = ['adversion', 'neutral', 'seeking']
-    let markets = ['bear','bull', 'neutral']
-    let categories = ['tech', 'food', 'finance', 'sports', 'gaming', 'fashion']
-
-    let userId, companyId, stockId, operation, quantity, buyInTransactionId
+    let userId, companyId, stockId, operation, quantity
 
     let accountname, surname, username, email, password, budget 
 
     let companyname, description, risk, market, category, dependency, stocks, image 
 
     let price, stockTime
+
+    let risks = ['adverse', 'neutral', 'seek']
+    let markets = ['bear','bull', 'neutral']
+    let categories = ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion']
     
     
         beforeEach(async () => {
@@ -54,15 +54,14 @@ describe('logic - sell-out', () => {
 
           companyId = company.id
 
-          await company.save()
-
           price = floor(random() *10)
           stockTime = new Date
 
           const stock = await Stock.create({price: price, time:stockTime})
           
-          company.stocks.push(stock)
           stockId = stock.id
+          company.stocks.push(stock)
+          await company.save()
 
           operation = 'buy-in'
           quantity = floor(random()*10) + 6
@@ -83,6 +82,8 @@ describe('logic - sell-out', () => {
       it('should process correctly the sell-out transaction when all the inputs are in correct position', async () => {
 
         const sellOutTransaction = await sellOutStock(userId, companyId, stockId, buyInTransactionId, operation2, quantity2)
+
+        debugger
 
         expect(sellOutTransaction).to.exist
         expect(sellOutTransaction.id).to.be.a('string')
@@ -182,6 +183,24 @@ describe('logic - sell-out', () => {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(ConflictError)
             expect(error.message).to.equal(`Transaction incompleted: remaining quantity is lower than your request of selling ${Quantity}`)
+        }
+
+      })
+
+      it('should not create a new game if quantity is exceeded', async () => {
+
+        let buyInTransactionID = "5de407687f38731d659c98e5"
+
+        try {
+
+          await sellOutStock(userId, companyId, stockId, buyInTransactionID, operation2, quantity)
+
+          throw Error('should not reach this point')
+
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`buyInTransaction with id null does not exists`)
         }
 
       })
