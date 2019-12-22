@@ -11,11 +11,11 @@ const fetch = require('node-fetch');
         await Company.deleteMany()
 
         const campo = new Company({
-            name: 'navarro-navarro',
-            description: 'The navarro-navarro company',
-            risk: 'adverse',
-            category: 'tech',
-            market: 'bear',
+            name: 'bontempi-bontempi',
+            description: 'The bontempi-bontempi company',
+            risk: 'neutral',
+            category: 'sports',
+            market: 'neutral',
         })
 
         await campo.save()
