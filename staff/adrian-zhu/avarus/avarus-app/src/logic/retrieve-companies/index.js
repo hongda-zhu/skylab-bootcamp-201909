@@ -1,4 +1,4 @@
-const call = require('../../utils/call')
+import call from '../../utils/call'
 const { validate, errors: { CredentialsError, NotFoundError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -12,8 +12,7 @@ const API_URL = process.env.REACT_APP_API_URL
  * 
  */
 
-
-module.exports = function (userId, token) { 
+export default  function (userId, token) { 
     validate.string(token)
     validate.string.notVoid('token', token)
 

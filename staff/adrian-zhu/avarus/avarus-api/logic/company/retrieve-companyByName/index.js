@@ -23,7 +23,7 @@ module.exports = function (query) {
 
         let companyByName
 
-        if (companies.length === 0) throw new NotFoundError(`company with query ${query} not found`)
+        if (companies.length === 0) throw new NotFoundError(`there has no company`)
 
         companies.forEach(company => {
 
@@ -31,7 +31,11 @@ module.exports = function (query) {
 
             delete company._id
 
-            if(company.name.toUpperCase() === query.toUpperCase()) companyByName = company
+            if(company.name.toUpperCase() === query.toUpperCase()){
+                companyByName = company
+            } else {
+                throw new NotFoundError(`company with query ${query} not found`)
+            }
             
         })
 

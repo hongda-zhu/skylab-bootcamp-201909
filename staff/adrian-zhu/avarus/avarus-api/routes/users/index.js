@@ -143,6 +143,8 @@ router.delete('/transaction/:transactionId', tokenVerifier, (req, res) => {
 })
 
 router.post('/:id/buyin', jsonBodyParser, (req, res) => {
+
+    debugger
     
     const { params: { id: userId } , body: {companyId, stockId, operation, quantity } } = req
 

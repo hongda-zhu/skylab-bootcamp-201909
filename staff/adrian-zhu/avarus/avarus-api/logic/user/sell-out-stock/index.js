@@ -84,7 +84,9 @@ module.exports = function (userId, companyId, stockId, buyInTransactionId, opera
         
         user.budget = budget
         
-        let time = moment(new Date).format('DD/MM/YY hh:mm')
+        // let time = moment(new Date).format('DD/MM/YY hh:mm')
+
+        let time = new Date
 
         const sellOutTransaction = await Sellout.create({company: companyId, stock: stockId, buyInTransaction: buyInTransactionId, operation, quantity, amount: amount, time: time})
 

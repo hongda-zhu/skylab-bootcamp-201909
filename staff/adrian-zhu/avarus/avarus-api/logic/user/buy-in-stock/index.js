@@ -70,7 +70,9 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
         user.budget = budget
 
-        let time = moment(new Date).format('DD/MM/YY hh:mm')
+        // let time = moment(new Date).format('DD/MM/YY hh:mm')
+
+        let time = new Date
 
         const transaction = await Transaction.create({company: companyId, stock: stockId, user: userId, operation, quantity, amount: amount, time: time})
 

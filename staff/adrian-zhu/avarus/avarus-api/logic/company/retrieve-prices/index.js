@@ -32,11 +32,11 @@ module.exports = function (id) {
             return a.price - b.price;
         })
 
-        let lowerPrice = (stocksSliced[0].price).toFixed(3)
+        let lowerPrice = parseFloat((stocksSliced[0].price).toFixed(3))
 
-        let higherPrice = (stocksSliced[stocksSliced.length - 1].price).toFixed(3)
+        let higherPrice = parseFloat((stocksSliced[stocksSliced.length - 1].price).toFixed(3))
 
-        let averagePrice = (stocksSliced.reduce((total, next) => total + next.price, 0) / stocksSliced.length).toFixed(3)
+        let averagePrice = parseFloat((stocksSliced.reduce((total, next) => total + next.price, 0) / stocksSliced.length).toFixed(3))
 
         return { lowerPrice, higherPrice, averagePrice }
         

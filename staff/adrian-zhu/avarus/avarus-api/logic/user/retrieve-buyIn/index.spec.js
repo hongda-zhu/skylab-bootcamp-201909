@@ -5,27 +5,77 @@ const { expect } = require('chai')
 const { random, floor } = Math
 const retrieveBuyin = require('.')
 const { errors: { NotFoundError, ContentError } } = require('avarus-util')
-const { ObjectId, database, models: { Transaction } } = require('avarus-data')
+const { ObjectId, database, models: { User, Company, Stock, Transaction } } = require('avarus-data')
 
-describe('logic - retrieve transaction', () => {
+describe.only('logic - retrieve transaction of buy-in', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let company, stock, user, operation, quantity, amount, time, relatedTo
+    let userId, companyId, stockId, operation, quantity
+
+    let accountname, surname, username, email, password, budget 
+
+    let companyname, description, risk, market, category, dependency, stocks, image 
+
+    let price, stockTime
+
+    let risks = ['adverse', 'neutral', 'seek']
+    let markets = ['bear','bull', 'neutral']
+    let categories = ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion']
+
 
     
         beforeEach(async () => {
-            await Transaction.deleteMany()
+            await Promise.all([User.deleteMany(), Company.deleteMany(), Stock.deleteMany(), Transaction.deleteMany()])
 
-            company = `5de4078f7f38731d659c98e6`
-            stock = `5de4080f7f38731d659c98e7`
-            user = `5de408747f38731d659c98e9`
+            accountname = `name-${random()}`
+            surname = `surname-${random()}`
+            username = `username-${random()}`
+            email = `email-${random()}@mail.com`
+            password = `password-${random()}`
+            budget = 5000
+            transactions = []
+      
+            const user = await User.create({ name: accountname, surname, username, email, password, budget, transactions})
+            
+            await user.save()
+  
+            userId = user.id
+  
+            companyname = `name-${random()}`
+            description = `description-${random()}`
+            risk = risks[floor(random() * risks.length)]
+            market = markets[floor(random() * markets.length)]
+            category = categories[floor(random() * categories.length)]
+            
+            dependency = [`dependency ${random()}`]
+            image = `image ${random()}`
+            stocks = []
+  
+            const company = await Company.create({name: companyname, description, risk, market, category, dependency, image, stocks})
+  
+            companyId = company.id
+  
+            price = floor(random() *10)
+            stockTime = new Date
+  
+            const stock = await Stock.create({price: price, time:stockTime})
+            
+            company.stocks.push(stock) 
+  
+            await company.save()
+  
+            stockId = stock.id
+  
+            operation = 'buy-in'
+            quantity = floor(random()*10)
+  
             operation = `buy-in`
             quantity = 10
             amount = 140
             time = new Date
             relatedTo = []
 
-            const buyin = await Transaction.create({  company, stock, user, operation, quantity, amount, time, relatedTo })
+            const buyin = await Transaction.create({  user:userId, company:companyId, stock:stockId, operation, quantity, amount, time, relatedTo })
 
             id = buyin.id
             
@@ -33,13 +83,12 @@ describe('logic - retrieve transaction', () => {
 
         })
 
-        it('should succeed on correct user id', async () => {
+        it('should succeed on correct user id', async () => { 
 
             const buyins = await retrieveBuyin(id)
 
+            debugger
             expect(buyins).to.exist
-            expect(buyins.length).to.be.greaterThan(0)
-
 
             buyins.forEach(buyin => {
 
@@ -57,38 +106,39 @@ describe('logic - retrieve transaction', () => {
         })
 
 
-        it('should fail on wrong user id', async () => {
+        // it('should fail on wrong user id', async () => {
 
             
-            let id = '5de408747f38731d659c75e9'
+        //     let id = '5de408747f38731d659c75e9'
 
-            try {
-                await retrieveBuyin(id)
+        //     try {
+        //         await retrieveBuyin(id)
 
-                throw Error('should not reach this point')
+        //         throw Error('should not reach this point')
 
-            } catch (error) {
-                expect(error).to.exist
-                expect(error).to.be.an.instanceOf(NotFoundError)
-                expect(error.message).to.equal(`we can't found this buy-in with id ${id}`)
-            }
-        })
+        //     } catch (error) {
+        //         expect(error).to.exist
+        //         expect(error).to.be.an.instanceOf(NotFoundError)
+        //         expect(error.message).to.equal(`we can't found this buy-in with id ${id}`)
+        //     }
+        // })
 
 
-        it('should fail on incorrect type and content', () => {
-            expect(() => retrieveBuyin(1)).to.throw(TypeError, '1 is not a string')
-            expect(() => retrieveBuyin(true)).to.throw(TypeError, 'true is not a string')
-            expect(() => retrieveBuyin([])).to.throw(TypeError, ' is not a string')
-            expect(() => retrieveBuyin({})).to.throw(TypeError, '[object Object] is not a string')
-            expect(() => retrieveBuyin(undefined)).to.throw(TypeError, 'undefined is not a string')
-            expect(() => retrieveBuyin(null)).to.throw(TypeError, 'null is not a string')
+        // it('should fail on incorrect type and content', () => {
+        //     expect(() => retrieveBuyin(1)).to.throw(TypeError, '1 is not a string')
+        //     expect(() => retrieveBuyin(true)).to.throw(TypeError, 'true is not a string')
+        //     expect(() => retrieveBuyin([])).to.throw(TypeError, ' is not a string')
+        //     expect(() => retrieveBuyin({})).to.throw(TypeError, '[object Object] is not a string')
+        //     expect(() => retrieveBuyin(undefined)).to.throw(TypeError, 'undefined is not a string')
+        //     expect(() => retrieveBuyin(null)).to.throw(TypeError, 'null is not a string')
 
-            expect(() => retrieveBuyin('')).to.throw(ContentError, 'id is empty or blank')
-            expect(() => retrieveBuyin(' \t\r')).to.throw(ContentError, 'id is empty or blank')
-        })
+        //     expect(() => retrieveBuyin('')).to.throw(ContentError, 'id is empty or blank')
+        //     expect(() => retrieveBuyin(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        // })
 
     
 
 
-    after(() => Transaction.deleteMany().then(database.disconnect))
+        after(() => Promise.all([User.deleteMany(), Company.deleteMany(), Stock.deleteMany(), Transaction.deleteMany()])
+    .then(database.disconnect))
 })

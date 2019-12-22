@@ -37,4 +37,8 @@ Users is able to:
 - Favorite
 - Personal Profile
 - Update picture
+- Improvement of price algorithm
+- Comment 
+- Connections
+- form Equip
 - Tests

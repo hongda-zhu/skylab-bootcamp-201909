@@ -2,7 +2,7 @@ import React from 'react'
 import './index.sass'
 import { withRouter } from 'react-router-dom'
 
-export default withRouter (function ({ history, handleGoToLogin, handleGoToRegister }) {
+export default withRouter (function ({ history }) {
 
     function handleGoToRegister (){ history.push('/register') }
     function handleGoToLogin (){ history.push('/login') }
