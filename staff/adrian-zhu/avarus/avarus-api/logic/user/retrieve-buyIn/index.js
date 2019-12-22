@@ -22,8 +22,6 @@ module.exports = function (id) {
 
         if(!buyin) throw new NotFoundError(`we can't found this buy-in with id ${id}`)
 
-        if (!Transaction) throw new NotFoundError(`Module with name ${Transaction} does not exist`)
-
         // await Sellout.populate('buyInTransaction')
 
         const transaction = await Transaction.findById( id ).populate('user company relatedTo ')

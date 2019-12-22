@@ -5,7 +5,7 @@ const { expect } = require('chai')
 const { random, floor } = Math
 const retrieveBuyin = require('.')
 const { errors: { NotFoundError, ContentError } } = require('avarus-util')
-const { ObjectId, database, models: { User, Company, Stock, Transaction } } = require('avarus-data')
+const { database, models: { User, Company, Stock, Transaction } } = require('avarus-data')
 
 describe('logic - retrieve transaction of buy-in', () => {
     before(() => database.connect(TEST_DB_URL))

@@ -18,11 +18,15 @@ module.exports = function (id) {
 
     return (async () => { 
 
-        const sale = await Sellout.findById( id ).populate('user company ')
-        
-        const {_id, company, stock, user, operation, quantity, amount, time} = sale   
+        const sale = await Sellout.findById( id ).populate('user company ')  
 
-        if(!sale) throw new NotFoundError(`we can't found this transactions with id ${id}`)
+        if(!sale) throw new NotFoundError(`we can't found this sellout with id ${id}`)
+
+        const {_id, company, stock, buyInTransaction, operation, quantity, amount, time} = sale 
+
+        let selloutId = _id.toString()
+
+        delete _id
 
         let stockId = stock.toString()
         
@@ -32,7 +36,7 @@ module.exports = function (id) {
        
        const stockSelected = stocked[0]
         
-        return {_id, company, stockSelected, user, operation, quantity, amount, time} 
+        return {selloutId, company, stockSelected, buyInTransaction, operation, quantity, amount, time} 
     })()
 
 }

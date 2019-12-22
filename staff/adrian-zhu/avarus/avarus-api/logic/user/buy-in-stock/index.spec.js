@@ -73,9 +73,7 @@ describe('logic - buy-in', () => {
 
       it('should process correctly the buy-in transaction when all the inputs are in correct form', async () => { 
 
-        const buyInTransaction = await buyInStock(userId, companyId, stockId, operation, quantity)
-
-        debugger
+        const buyInTransaction = await buyInStock(userId, companyId, stockId, operation, quantity) 
 
         expect(buyInTransaction).to.exist
         expect(buyInTransaction.transaction.id).to.be.a('string')

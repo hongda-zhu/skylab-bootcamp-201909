@@ -38,7 +38,7 @@ describe('logic - retrieve company by category', () => {
 
     })
 
-    it('should succeed on correct company category', async () => {  debugger
+    it('should succeed on correct company category', async () => {  
         const company = await retrieveCompanyByCategory(category)
 
         expect(company).to.exist

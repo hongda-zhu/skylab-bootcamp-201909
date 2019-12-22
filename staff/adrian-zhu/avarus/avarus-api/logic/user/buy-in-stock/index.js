@@ -80,8 +80,6 @@ module.exports = function (userId, companyId, stockId, operation, quantity) {
 
         user.save()
 
-        debugger
-
         return {transaction}
 
     })()
