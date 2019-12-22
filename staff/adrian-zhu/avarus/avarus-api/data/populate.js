@@ -10,15 +10,25 @@ const fetch = require('node-fetch');
 
         await Company.deleteMany()
 
-        const campo = new Company({
-            name: 'bontempi-bontempi',
-            description: 'The bontempi-bontempi company',
-            risk: 'neutral',
-            category: 'sports',
-            market: 'neutral',
+        const company1 = new Company({
+            name: 'blanco-blanco',
+            description: 'The blanco-blanco company',
+            risk: 'seek',
+            category: 'food',
+            market: 'bull',
         })
 
-        await campo.save()
+        const company2 = new Company({
+            name: 'bontempi-bontempi',
+            description: 'The bontempi-bontempi company',
+            risk: 'adverse',
+            category: 'sports',
+            market: 'bear',
+        })
+
+        await company2.save()
+
+        await company1.save()
 
         // moment example
 
@@ -32,11 +42,11 @@ const fetch = require('node-fetch');
 
         //     const stock = new Stock({ price, time })
 
-        //     campo.stocks.push(stock)
+        //     company1.stocks.push(stock)
 
         // }
 
-        await campo.save()
+        await company1.save()
     } catch (error) {
         console.error(error)
     }
@@ -60,7 +70,7 @@ const fetch = require('node-fetch');
 //         time: before.toDate()
 //     })
 
-//     campo.stocks.push(stock)
+//     company1.stocks.push(stock)
 
 //     console.log(stock.toJSON())
 // }
