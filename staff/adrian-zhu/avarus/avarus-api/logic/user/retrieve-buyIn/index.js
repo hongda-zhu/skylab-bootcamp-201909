@@ -30,6 +30,10 @@ module.exports = function (id) {
         
         const {_id, company, stock, user, operation, quantity, amount, time, relatedTo} = transaction   
 
+        let  transactionId = _id.toString()
+
+        delete _id
+
         let stockId = stock.toString()
         
         const stocked = company.stocks.filter(stocke => {
@@ -38,7 +42,7 @@ module.exports = function (id) {
        
         const stockSelected = stocked[0]
         
-        return {_id, company, stockSelected, user, operation, quantity, amount, time, relatedTo} 
+        return {transactionId, company, stockSelected, user, operation, quantity, amount, time, relatedTo} 
         
     })()
 
