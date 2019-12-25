@@ -10,7 +10,7 @@ const fetch = require('node-fetch');
 
         await Company.deleteMany()
 
-<<<<<<< HEAD
+
         const company1 = new Company({
             name: 'blanco-blanco',
             description: 'The blanco-blanco company',
@@ -25,19 +25,22 @@ const fetch = require('node-fetch');
             risk: 'adverse',
             category: 'sports',
             market: 'bear',
-=======
-        const campo = new Company({
+        })
+        const company3 = new Company({
             name: 'navarro-navarro',
             description: 'The navarro-navarro company',
             risk: 'neutral',
             category: 'sports',
             market: 'neutral',
->>>>>>> 17f8d9a4ec91133fa4ffbfe0e1329bd41a325241
+
         })
+        
+        await company1.save()
 
         await company2.save()
 
-        await company1.save()
+        await company3.save()
+
 
         // moment example
 
