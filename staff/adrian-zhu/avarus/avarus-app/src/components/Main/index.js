@@ -37,7 +37,7 @@ function Main ({error, onClose, userId }) {
 
     async function handleSearchAll(userId, token){
 
-        try { debugger
+        try { 
             
             const companies = await retrieveCompanies(userId, token)
                     

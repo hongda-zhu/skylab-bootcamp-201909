@@ -6,8 +6,6 @@ const moment = require('moment')
 
 export default withRouter(function ({ history, transaction }) {  
 
-    debugger
-
     const {amount, company, time} = transaction
 
     let exactTime = moment(time).format("DD/MM/YY hh:mm")
