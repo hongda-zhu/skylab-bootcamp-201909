@@ -53,8 +53,8 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 
 router.get('/', tokenVerifier, (req, res) => {
 
+    const { id } = req
     try {
-        const { id } = req
 
         retrieveUser(id)
             .then(user => res.json({ user }))
@@ -76,9 +76,9 @@ router.get('/', tokenVerifier, (req, res) => {
 
 
 router.patch('/:id', jsonBodyParser, (req, res) => {
+    const { params: { id }, body: { name, surname, username, password} } = req
+    
     try {
-        const { params: { id }, body: { name, surname, username, password} } = req
-
         editUser(id, name, surname, username, password)
             .then(() => res.status(201).end())
             .catch(error => {
@@ -96,9 +96,8 @@ router.patch('/:id', jsonBodyParser, (req, res) => {
 
 router.delete('/:id', tokenVerifier, (req, res) => {
 
+    const { params: { id } } = req
     try {
-        const { params: { id } } = req
-
         deleteUser(id)
             .then(() =>
                 res.end()
@@ -120,9 +119,9 @@ router.delete('/:id', tokenVerifier, (req, res) => {
 
 router.delete('/transaction/:transactionId', tokenVerifier, (req, res) => {
 
-    try {
-        const { id, params: { transactionId } } = req
+    const { id, params: { transactionId } } = req
 
+    try {
         deleteStock(id, transactionId)
             .then(() =>
                 res.end()
@@ -143,8 +142,6 @@ router.delete('/transaction/:transactionId', tokenVerifier, (req, res) => {
 })
 
 router.post('/:id/buyin', jsonBodyParser, (req, res) => {
-
-    debugger
     
     const { params: { id: userId } , body: {companyId, stockId, operation, quantity } } = req
 
@@ -232,10 +229,10 @@ router.get('/sellout/:id', (req, res) => {
 })
 
 router.delete('/buyin/:id', (req, res) => {
-
+    
+            const { params: { id } } = req
+    
     try {
-
-        const { params: { id } } = req
 
         deleteBuyin(id)
             .then(res.end())
@@ -256,10 +253,9 @@ router.delete('/buyin/:id', (req, res) => {
 
 router.delete('/sellout/:id', (req, res) => {
 
+    const { params: { id } } = req
+
     try {
-
-        const { params: { id } } = req
-
         deleteSellout(id)
             .then(res.end())
             .catch(error => {
@@ -280,9 +276,9 @@ router.delete('/sellout/:id', (req, res) => {
 router.patch('/favs/:userId', jsonBodyParser, (req, res) => {
 
     
+    const { params : {userId}, companyId } = req
     
     try {
-        const { params : {userId}, companyId } = req
         toggleFav(userId, companyId)
             .then(() =>
                 res.end()
