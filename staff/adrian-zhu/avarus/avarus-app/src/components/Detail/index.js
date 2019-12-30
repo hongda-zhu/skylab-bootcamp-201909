@@ -9,7 +9,7 @@ import ButtonFavorite from '../ButtonFavorite'
 import {priceProducer} from '../../utils'
 import { Link } from 'react-router-dom';
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import {retrieveCompanyDetail, producePrice} from '../../logic'
+import {retrieveCompanyById, producePrice} from '../../logic'
 import { format } from 'path'
 const moment = require('moment')
 
@@ -31,7 +31,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
 
                 try{
                     await producePrice()
-                    const companyDetail = await retrieveCompanyDetail(companyId)
+                    const companyDetail = await retrieveCompanyById(companyId)
 
                     setDetail(companyDetail) 
     
@@ -62,7 +62,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
         (async()=>{
             try{
                 await producePrice()
-                const companyDetail = await retrieveCompanyDetail(companyId)
+                const companyDetail = await retrieveCompanyById(companyId)
 
                 setDetail(companyDetail)
 

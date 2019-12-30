@@ -57,7 +57,7 @@ describe('logic - retrieve companies', () => {
     })
 
     it('should succeed when there has companies', async () => { 
- 
+
         const companies = await retrieveCompanies(userId)
 
         expect(companies).to.exist

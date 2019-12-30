@@ -51,10 +51,11 @@ export default function ({userId, companyId}) {
 
 
     return  <>
-               
-                    <button className="btn-fav" onClick={onFav}><i className="fas fa-heart"></i></button> 
-                    {/* :
-                     <button className="btn-fav" onClick={onFav}><i className="far fa-heart"></i></button>) */}
+{/*                
+               { user && spot && (spot.isFav ? 
+                    <button className="btn-fav" onClick={onFav}><i className="fas fa-heart"></i></button> :
+                    <button className="btn-fav" onClick={onFav}><i className="far fa-heart"></i></button>)
+                } */}
                 
             </>
            

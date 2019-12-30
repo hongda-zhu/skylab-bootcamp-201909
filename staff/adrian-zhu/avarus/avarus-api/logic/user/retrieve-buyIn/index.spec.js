@@ -129,5 +129,6 @@ describe('logic - retrieve transaction of buy-in', () => {
         })
 
         after(() => Promise.all([User.deleteMany(), Company.deleteMany(), Stock.deleteMany(), Transaction.deleteMany()])
+        
     .then(database.disconnect))
 })

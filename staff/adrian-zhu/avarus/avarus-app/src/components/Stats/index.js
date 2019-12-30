@@ -1,6 +1,6 @@
 import React, {useEffect, useState}  from 'react'
 import Feedback from '../Feedback'
-import {retrievePrices, retrieveCompanyDetail} from '../../logic'
+import {retrievePrices, retrieveCompanyById} from '../../logic'
 
 export default function ({id}) {
 
@@ -17,7 +17,7 @@ export default function ({id}) {
             (async()=>{ 
                 try{
                     const {averagePrice, higherPrice, lowerPrice} = await retrievePrices(id)
-                    const {stocks} = await retrieveCompanyDetail(id)
+                    const {stocks} = await retrieveCompanyById(id)
 
                     const openPrice = stocks[0].price
 
@@ -37,7 +37,7 @@ export default function ({id}) {
 
                 const {averagePrice, higherPrice, lowerPrice} = await retrievePrices(id)
                 
-                const {stocks} = await retrieveCompanyDetail(id)
+                const {stocks} = await retrieveCompanyById(id)
 
                 const openPrice = stocks[0].price
 

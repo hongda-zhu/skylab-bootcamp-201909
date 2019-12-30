@@ -1,10 +1,8 @@
-const STOCKS_INTERVAL = 60000 //* 60 * 60 // ms
-
 /**
  *
  * retrieve time-interval
  * 
- * @returns {Array} 
+ * @returns {Array} an array with prices of stock 
  * 
  */
 
@@ -37,29 +35,6 @@ module.exports = function () {
 
             return arr
         }
-
-        // (async () => {
-
-        //     try {
-        //         await producePrice()
-        //         const film = await retrieveCompanyDetail(_this.props.id)
-        //         let stocksArr = film.stocks
-        //         let arr 
-                
-        //         Promise.all(stocksArr.map(stock => {
-        //             arr.push(stock.price)
-        //         }))
-                
-        //         console.log(arr)
-                
-
-        //     } catch {
-
-        //     }
-
-        // })()
-
         
-
     })()
 }

@@ -11,13 +11,19 @@ const API_URL = process.env.REACT_APP_API_URL
  * @returns {Array} 
  * 
  */
-export default function (companyId) {
+export default function (companyId, userId) {
     validate.string(companyId)
     validate.string.notVoid('companyId', companyId)
+    if (!ObjectId.isValid(companyId)) throw new ContentError(`${companyId} is not a valid company id`)
+
+    validate.string(userId)
+    validate.string.notVoid('userId', userId)
+    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid user id`)
 
     return (async () => { 
         const res = await call(`${API_URL}/companies/${companyId}`, {
-            method: 'GET'
+            method: 'GET',
+            body: JSON.stringify({userId})
         })
 
         if (res.status === 200) {

@@ -5,8 +5,11 @@ const { ObjectId, models: { User, Company } } = require('avarus-data')
  *
  * retrieve companies
  * 
- * @returns {Array} 
+ * @param {ObjectId} userId => userId 
  * 
+ * @return {Promise}
+ * @return {Array} the complete information of each company
+ *  
  */
 
 module.exports = function (userId) { 
@@ -25,15 +28,20 @@ module.exports = function (userId) {
 
         const companies = await Company.find().lean()
 
+        const results = []
+
         companies.forEach(company => {
 
             company.id = company._id.toString()
             delete company._id
             delete company.__v
             
+            company.isFav = user.favorites.includes(company.id)
+
+            results.push(company)
         })
 
-        return companies
+        return results
     })()
 
 }

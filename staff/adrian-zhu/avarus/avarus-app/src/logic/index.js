@@ -12,7 +12,6 @@
     import retrieveUser from './retrieve-user'
     import retrieveBuyin from './retrieve-buyin'
     import retrieveCompanies from './retrieve-companies'
-    import retrieveCompanyDetail from './retrieve-companyDetail'
     import retrieveCompanyByName from './retrieve-companyByName'
     import retrieveCompanyById from './retrieve-companyById'
     import retrieveCompanyByCategory from './retrieve-companyByCategory'
@@ -32,7 +31,6 @@ export {
     retrieveUser, 
     retrieveBuyin,
     retrieveCompanies,
-    retrieveCompanyDetail,
     retrieveCompanyByName,
     retrieveCompanyById,
     retrieveCompanyByCategory

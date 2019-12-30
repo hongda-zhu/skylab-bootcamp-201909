@@ -3,8 +3,8 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random, floor } = Math
 const retrieveCompany = require('.')
-const { errors: { NotFoundError } } = require('avarus-util')
-const { database, models: { Company } } = require('avarus-data')
+const { errors: { NotFoundError, ContentError } } = require('avarus-util')
+const { database, models: { User, Company } } = require('avarus-data')
 
 describe('logic - retrieve company', () => {
 
@@ -16,7 +16,26 @@ describe('logic - retrieve company', () => {
 
     let name, description, risk, market, category, dependency, image, stocks
 
-    beforeEach(async() => {  
+    let accountname, surname, username, email, password, budget 
+
+    beforeEach(async() => {
+
+        await Promise.all([User.deleteMany(), Company.deleteMany()])
+        
+        accountname = `name-${random()}`
+        surname = `surname-${random()}`
+        username = `username-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
+        budget = 5000
+        transactions = []
+
+        const user = await User.create({ name: accountname, surname, username, email, password, budget, transactions})
+
+        await user.save()
+        userId = user.id
+
+        
         name = `name-${random()}`
         description = `description-${random()}`
         risk = risks[floor(random() * risks.length)]
@@ -33,15 +52,16 @@ describe('logic - retrieve company', () => {
 
         await company.save()
 
-        id = company.id
+        companyId = company.id
 
     })
 
     it('should succeed on correct company id', async () => {
-        const company = await retrieveCompany(id)
-
+        
+        const company = await retrieveCompany(companyId, userId)
+        
         expect(company).to.exist
-        expect(company.id).to.equal(id)
+        expect(company.companyId).to.equal(companyId)
         expect(company.name).to.equal(name)
         expect(company.description).to.equal(description)
         expect(company.risk).to.equal(risk)
@@ -53,18 +73,34 @@ describe('logic - retrieve company', () => {
     })
 
     it('should fail on wrong company id', async () => {
-        const id = '123123123123'
+        const companyId = '123123123123'
 
         try {
-            await retrieveCompany(id)
+            await retrieveCompany(companyId, userId)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`company with id ${id} not found`)
+            expect(error.message).to.equal(`company with companyId ${companyId} not found`)
         }
     })
 
-    after(() => Company.deleteMany().then(database.disconnect))
+    it('should fail on wrong user id', async () => {
+        const userId = '123123123123'
+
+        try {
+            await retrieveCompany(companyId, userId)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user with userId ${userId} not found`)
+        }
+    })
+
+    after(() => Promise.all([User.deleteMany(), Company.deleteMany()])
+        
+    .then(database.disconnect))
 })

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
-import {retrieveCompanyDetail, producePrice} from '../../logic'
+import {retrieveCompanyById, producePrice} from '../../logic'
 
 // una logica para sacar el x 
 
@@ -1490,7 +1490,7 @@ export default class Charts extends Component {
             (async () => {
                 try {
                     // await producePrice()
-                    const film = await retrieveCompanyDetail(_this.props.id)
+                    const film = await retrieveCompanyById(_this.props.id)
                     const stocksArr = film.stocks
                     // console.log(stocksArr)
 

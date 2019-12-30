@@ -1,28 +1,46 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
-const { ObjectId, models: { Company } } = require('avarus-data')
+const { ObjectId, models: { User, Company } } = require('avarus-data')
 
 /**
  *
  * retrieve company
  * 
- * @returns {Object} 
+ * @param {ObjectId} companyId = company id
+ * @param {ObjectId} userId = user id 
+ * 
+ * @return {Promise} 
+ * @return {Object} return the complete information of company 
  * 
  */
 
-module.exports = function (id) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+module.exports = function (companyId, userId) {
+    validate.string(companyId)
+    validate.string.notVoid('companyId', companyId)
+    if (!ObjectId.isValid(companyId)) throw new ContentError(`${companyId} is not a valid company id`)
 
-    return (async () => {
-        const company = await Company.findById(id)
+    if (userId) {
+        validate.string(userId)
+        validate.string.notVoid('userId', userId)
+        if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid user id`)
+    }
 
-        if (!company) throw new NotFoundError(`company with id ${id} not found`)
+    return (async () => { 
+        const company = await Company.findById(companyId)
+
+        if (!company) throw new NotFoundError(`company with companyId ${companyId} not found`)
 
         await company.save()
 
         const { name, description, risk, market, category, dependency, image, stocks } = company
 
-        return { id, name, description, risk, market, category, dependency, image, stocks }
+        let isFav = undefined
+
+        if(userId){
+            const user = await User.findById(userId)
+            if(!user) throw new NotFoundError(`user with userId ${userId} not found`)
+            isFav = user.favorites.includes(companyId)
+        }
+
+        return { companyId, name, description, risk, market, category, dependency, image, stocks, isFav }
     })()
 }

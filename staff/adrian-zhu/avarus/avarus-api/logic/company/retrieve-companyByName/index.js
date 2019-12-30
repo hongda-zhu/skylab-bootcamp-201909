@@ -36,6 +36,8 @@ module.exports = function (query) {
             } else {
                 throw new NotFoundError(`company with query ${query} not found`)
             }
+
+            
             
         })
 
