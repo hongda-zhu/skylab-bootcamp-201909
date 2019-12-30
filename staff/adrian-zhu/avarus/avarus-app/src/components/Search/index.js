@@ -70,7 +70,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
     <div className="main-select select">
         <select name="categoryType" className="select-box" onChange={handleGoToCategory} >
         <option value ="" defaultValue disabled hidden>Choose here</option>
-        {config.map(category => {return <option key={category._id} value= {category.name}>{category.contentText}</option>})}
+        {config.map(category => {return <option key={category.name} value= {category.name}>{category.contentText}</option>})}
         </select>
             
     </div>

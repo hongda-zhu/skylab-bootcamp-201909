@@ -150,7 +150,7 @@ export default withRouter(function ({ history }) {
 
 
   return <> 
-       {token && <> <Header name={name} budget={budget} onLogout={handleLogout} /></>} 
+      {token && <> <Header name={name} budget={budget} onLogout={handleLogout} /></>} 
       
       <Route exact path='/' render={() => !token ? <Landing />: <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} /> }/>
 

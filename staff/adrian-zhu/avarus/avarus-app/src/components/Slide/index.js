@@ -4,6 +4,7 @@ import config from './config'
 import configTransactions from './configTransactions'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
+
 export default withRouter(function ({handleslideName, detail}) {
 
     // const {id, name, image, description} = company
@@ -11,7 +12,7 @@ export default withRouter(function ({handleslideName, detail}) {
 
     return <ul className="navegator-list list">
 
-            {detail ? config.map( slide => { return  <li key={slide._id}  className="list-item item">
+            {detail ? config.map( slide => { return  <li key={slide.name}  className="list-item item"> 
 
                     <button className="item-button button" onClick={event => {
 
@@ -25,7 +26,7 @@ export default withRouter(function ({handleslideName, detail}) {
 
             </button>
                 </li>
-            }): configTransactions.map( slide => { return  <li key={slide._id}  className="list-item item">
+            }): configTransactions.map( slide => { return  <li key={slide.name}  className="list-item item">
 
             <button className="item-button button" onClick={event => {
 

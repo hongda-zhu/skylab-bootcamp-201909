@@ -96,7 +96,7 @@ export default class Charts extends Component {
       }
     
       componentWillUnmount() {
-        // And finally this
+        
       }
       
 

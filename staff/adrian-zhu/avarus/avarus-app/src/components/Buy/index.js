@@ -13,8 +13,6 @@ export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
 
         try { 
 
-            debugger
-
             await buyIn(userId, companyId, stockId, operation, quantity)
             
             onBuy()
@@ -31,23 +29,24 @@ export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
     <div className="buy-prices prices">
         <ul className="prices-list list">
             <li className="list-price price">
-                <button className="price-btn" onClick={event => setNum(event.target.value)}>
-                    25
+                <button className="price-btn" value="2" onClick={event => 
+                    setNum(event.target.value)}>
+                    2
                 </button>
             </li>
             <li className="list-price price" >
-                <button className="price-btn" onClick={event => setNum(event.target.value)}>
-                    50
+                <button className="price-btn" value="5" onClick={event => setNum(event.target.value)}>
+                    5
                 </button>
             </li>
             <li className="list-price price">
-                <button className="price-btn" onClick={event => setNum(event.target.value)}>
-                    100
+                <button className="price-btn" value="10" onClick={event => setNum(event.target.value)}>
+                    10
                 </button>
             </li>
             <li className="list-price price">
-                <button className="price-btn" onClick={event => setNum(event.target.value)}>
-                    200
+                <button className="price-btn" value="25" onClick={event => setNum(event.target.value)}>
+                    25
                 </button>
             </li>
         </ul>
@@ -71,7 +70,7 @@ export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
 
             }
         }>  
-            <input className="formula-container" type="number"  name="quantity"  placeholder="How many" />
+            <input className="formula-container" type="number"  name="quantity"  placeholder="How many"  />
 
             <button className="formula-btn">Pick stock</button>
             

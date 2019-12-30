@@ -4,7 +4,7 @@ import {toggleFav, registerUser} from '../../logic'
 
 
 export default function ({userId, companyId}) {
-    const [spot, setUser] = useState(undefined)
+    const [user, setUser] = useState(undefined)
    
     useEffect(() => {
         (async () => {
