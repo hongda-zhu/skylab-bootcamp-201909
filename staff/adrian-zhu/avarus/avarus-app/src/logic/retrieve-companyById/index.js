@@ -1,5 +1,5 @@
 import call from '../../utils/call'
-const { validate, errors: { CredentialsError, NotFoundError } } = require('avarus-util')
+const { validate, errors: { CredentialsError, NotFoundError,ContentError } } = require('avarus-util')
 const API_URL = process.env.REACT_APP_API_URL
 
 /**
@@ -14,16 +14,20 @@ const API_URL = process.env.REACT_APP_API_URL
 export default function (companyId, userId) {
     validate.string(companyId)
     validate.string.notVoid('companyId', companyId)
-    if (!ObjectId.isValid(companyId)) throw new ContentError(`${companyId} is not a valid company id`)
 
-    validate.string(userId)
-    validate.string.notVoid('userId', userId)
-    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid user id`)
+    if(userId){
+
+        validate.string(userId)
+        validate.string.notVoid('userId', userId)
+        
+    }
+
 
     return (async () => { 
-        const res = await call(`${API_URL}/companies/${companyId}`, {
+        const res = await call(`${API_URL}/companies/company/${companyId}/${userId}`, 
+        {
             method: 'GET',
-            body: JSON.stringify({userId})
+
         })
 
         if (res.status === 200) {

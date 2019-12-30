@@ -56,11 +56,12 @@ router.get('/:id', tokenVerifier,  (req, res) => {
     }
 })
 
-router.get('/company/:id', jsonBodyParser, (req, res) => {
+router.get('/company/:companyId/:userId', jsonBodyParser, (req, res) => {
+
+    
+    const { params: {companyId, userId} } = req
     
     try {
-        const { params: {companyId}, body:{userId} } = req
-
         retrieveCompany(companyId, userId)
             .then(company => res.json(company))
             .catch(error => {

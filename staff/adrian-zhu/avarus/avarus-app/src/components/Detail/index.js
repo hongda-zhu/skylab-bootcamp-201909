@@ -31,7 +31,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
 
                 try{
                     await producePrice()
-                    const companyDetail = await retrieveCompanyById(companyId)
+                    const companyDetail = await retrieveCompanyById(companyId, userId)
 
                     setDetail(companyDetail) 
     
@@ -62,7 +62,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
         (async()=>{
             try{
                 await producePrice()
-                const companyDetail = await retrieveCompanyById(companyId)
+                const companyDetail = await retrieveCompanyById(companyId, userId)
 
                 setDetail(companyDetail)
 
@@ -138,8 +138,8 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
             <Slide handleslideName={handleslideName} detail={detail}/>
 
             {slide === 'buy' && <Buy userId={userId} companyId={companyId} stockId={stockId} onBuy={onBuy}/>} 
-            {slide === 'charts' && <Charts id={companyId} />}
-            {slide === 'stats' && <Stats id={companyId} />}
+            {slide === 'charts' && <Charts companyId={companyId} userId={userId} />}
+            {slide === 'stats' && <Stats companyId={companyId} userId={userId} />}
             {slide === 'about' && <About Headquarters={detail.description}/>}
             
         </nav>

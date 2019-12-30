@@ -29,7 +29,7 @@ export default withRouter(function ({ history, transaction, onClose }) {
         <p className="items__amount">{ajustedAmount}</p>
         <div className="items__close" onClick={ event => {
             event.preventDefault()
-            onClose()
+           /*  onClose() */
         }}>✖︎</div>
     </a>
 })
