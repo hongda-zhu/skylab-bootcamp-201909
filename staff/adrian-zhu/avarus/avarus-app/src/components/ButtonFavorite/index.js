@@ -1,6 +1,6 @@
  
 import React, { useState, useEffect }  from 'react'
-import {toggleFav, registerUser} from '../../logic'
+import {toggleFav, retrieveCompanyById} from '../../logic'
 
 
 export default function ({userId, companyId}) {
@@ -21,7 +21,7 @@ export default function ({userId, companyId}) {
         try {
             if(userId && companyId){
                 
-                const updatedUser = await registerUser(userId)
+                const updatedUser = await retrieveCompanyById(companyId, userId)
                 
                 setUser(updatedUser)
 
@@ -36,7 +36,7 @@ export default function ({userId, companyId}) {
     async function onFav(){
         try {
            if(userId && companyId){
-            await toggleFav(userId,companyId)    
+            await toggleFav(userId, companyId)    
             await refreshUserFav()
 
             
@@ -51,11 +51,11 @@ export default function ({userId, companyId}) {
 
 
     return  <>
-{/*                
-               { user && spot && (spot.isFav ? 
+               
+               { user && company && (company.isFav ? 
                     <button className="btn-fav" onClick={onFav}><i className="fas fa-heart"></i></button> :
                     <button className="btn-fav" onClick={onFav}><i className="far fa-heart"></i></button>)
-                } */}
+                }
                 
             </>
            
