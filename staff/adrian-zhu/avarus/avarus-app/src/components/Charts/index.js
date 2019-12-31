@@ -105,7 +105,7 @@ export default class Charts extends Component {
   render() {
     return<div className="container-charts charts">
 
-        <ul className="charts-list list">
+        {/* <ul className="charts-list list">
             <li className="list-item item">
                 <button className="item-btn">
                     DAY
@@ -127,7 +127,7 @@ export default class Charts extends Component {
                 </button>
             </li>
         </ul>
-        
+         */}
         
         <div>
             

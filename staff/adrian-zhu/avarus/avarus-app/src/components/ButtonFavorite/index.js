@@ -4,7 +4,7 @@ import {toggleFav, retrieveCompanyById} from '../../logic'
 
 
 export default function ({userId, companyId}) {
-    const [user, setUser] = useState(undefined)
+    const [company, setCompany] = useState({})
    
     useEffect(() => {
         (async () => {
@@ -19,15 +19,13 @@ export default function ({userId, companyId}) {
     async function refreshUserFav(){
         
         try {
-            if(userId && companyId){
+           
                 
                 const updatedUser = await retrieveCompanyById(companyId, userId)
                 
-                setUser(updatedUser)
+                setCompany(updatedUser)
 
-                
-
-            }
+            
          } catch ({message}) {
              console.log(message)
          }
@@ -35,13 +33,12 @@ export default function ({userId, companyId}) {
 
     async function onFav(){
         try {
-           if(userId && companyId){
+
+            debugger
+           
             await toggleFav(userId, companyId)    
             await refreshUserFav()
-
-            
-            
-           }
+           
         } catch ({message}) {
             console.log(message)
 
@@ -52,7 +49,7 @@ export default function ({userId, companyId}) {
 
     return  <>
                
-               { user && company && (company.isFav ? 
+               { company && (company.isFav ? 
                     <button className="btn-fav" onClick={onFav}><i className="fas fa-heart"></i></button> :
                     <button className="btn-fav" onClick={onFav}><i className="far fa-heart"></i></button>)
                 }

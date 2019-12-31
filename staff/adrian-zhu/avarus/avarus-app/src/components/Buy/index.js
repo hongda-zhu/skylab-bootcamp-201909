@@ -26,7 +26,7 @@ export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
 
     return <div className="boxes-buy buy">
     <span className="buy-text">How many would you like to buy ?</span>
-    <div className="buy-prices prices">
+    {/* <div className="buy-prices prices">
         <ul className="prices-list list">
             <li className="list-price price">
                 <button className="price-btn" value="2" onClick={event => 
@@ -50,7 +50,7 @@ export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
                 </button>
             </li>
         </ul>
-    </div>
+    </div> */}
     
     <div type="submit" className="buy-search search">
         <form className="search-formula formula" onSubmit={
