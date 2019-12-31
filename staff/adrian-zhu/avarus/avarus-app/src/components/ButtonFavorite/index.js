@@ -1,58 +1,54 @@
- 
 import React, { useState, useEffect }  from 'react'
 import {toggleFav, retrieveCompanyById} from '../../logic'
 
 
 export default function ({userId, companyId}) {
-    const [user, setUser] = useState(undefined)
+    const [company, setCompany] = useState({})
+
+    debugger
    
-    useEffect(() => {
+    useEffect(()=>{
         (async () => {
             try {
+                
                 await refreshUserFav()
             } catch ({message}) {
                 console.log(message)
             }
         })()
-    }, [])
+    })
+
 
     async function refreshUserFav(){
         
         try {
-            if(userId && companyId){
-                
-                const updatedUser = await retrieveCompanyById(companyId, userId)
-                
-                setUser(updatedUser)
 
-                
-
-            }
+            const updateCompany = await retrieveCompanyById(companyId, userId)
+            
+            await setCompany(updateCompany)
+            
          } catch ({message}) {
-             console.log(message)
+            console.log(message)
          }
     }
 
     async function onFav(){
         try {
-           if(userId && companyId){
+           
             await toggleFav(userId, companyId)    
             await refreshUserFav()
-
             
-            
-           }
+           
         } catch ({message}) {
             console.log(message)
 
-            
         }
     }
 
 
     return  <>
                
-               { user && company && (company.isFav ? 
+               {    (company.isFav ? 
                     <button className="btn-fav" onClick={onFav}><i className="fas fa-heart"></i></button> :
                     <button className="btn-fav" onClick={onFav}><i className="far fa-heart"></i></button>)
                 }

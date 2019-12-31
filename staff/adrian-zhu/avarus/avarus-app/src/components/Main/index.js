@@ -10,6 +10,8 @@ function Main ({error, onClose, userId }) {
 
     const [companies, setCompanies] = useState([])
 
+    const [user, setUser] = useState()
+
     const {token} = sessionStorage
 
     useEffect(()=>{
@@ -38,7 +40,7 @@ function Main ({error, onClose, userId }) {
     async function handleSearchAll(userId, token){
 
         try { 
-            
+ 
             const companies = await retrieveCompanies(userId, token)
                     
             setCompanies(companies)

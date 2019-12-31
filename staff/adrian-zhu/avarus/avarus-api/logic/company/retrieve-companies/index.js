@@ -20,6 +20,8 @@ module.exports = function (userId) {
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
+    debugger
+
     return (async () => { 
 
         const user = await User.findById(id)
