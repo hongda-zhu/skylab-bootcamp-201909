@@ -4,11 +4,14 @@ import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
 import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory, retrieveUser} from '../../logic'
+import { set } from 'mongoose'
 
 
 function Main ({error, onClose, userId }) { 
 
     const [companies, setCompanies] = useState([])
+    
+    const [user, setUser] = useState()
 
     const {token} = sessionStorage
 
@@ -18,9 +21,15 @@ function Main ({error, onClose, userId }) {
 
             try{
 
-                const {id:userId} = await retrieveUser(token)
+                // const {id:userId} = await retrieveUser(token)
 
-                handleSearchAll(userId, token)
+                // handleSearchAll(userId, token)
+
+                const userInformation = await retrieveUser(token)
+
+                setUser(userInformation)
+
+                handleSearchAll(userInformation.id, token)
                 
 
             }catch(message){
@@ -87,7 +96,7 @@ function Main ({error, onClose, userId }) {
 
     <span className="main-span">Choose the stocks you'd like to give</span>
     
-    <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose} userId={userId}/>
+    <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose} user={user}/>
 
     {error && < Feedback message={error} onClose={onClose}/>}
 

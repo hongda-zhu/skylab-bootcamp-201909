@@ -5,6 +5,7 @@ import {toggleFav, retrieveCompanyById} from '../../logic'
 
 export default function ({userId, companyId}) {
     const [company, setCompany] = useState({})
+    const {token} = sessionStorage
    
     useEffect(() => {
         (async () => {
@@ -31,13 +32,16 @@ export default function ({userId, companyId}) {
          }
     }
 
-    async function onFav(){
+    async function onFav(event){
         try {
 
-            debugger
-           
-            await toggleFav(userId, companyId)    
+            event.preventDefault()
+
+            await toggleFav(token, companyId) 
+            debugger   
             await refreshUserFav()
+
+            
            
         } catch ({message}) {
             console.log(message)

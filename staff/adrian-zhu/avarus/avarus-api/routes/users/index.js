@@ -273,10 +273,10 @@ router.delete('/sellout/:id', (req, res) => {
     }
 })
 
-router.patch('/favs/:userId', jsonBodyParser, (req, res) => {
+router.patch('/favs/:companyId', jsonBodyParser, tokenVerifier, (req, res) => {
+    const {id:userId,  params:{companyId} } = req
 
-    
-    const { params : {userId}, companyId } = req
+    debugger
     
     try {
         toggleFav(userId, companyId)

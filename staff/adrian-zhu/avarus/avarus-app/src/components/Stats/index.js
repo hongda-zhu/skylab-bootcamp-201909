@@ -58,22 +58,24 @@ export default function ({companyId, userId}) {
 
     return <div className="container-stats stats">
     <table className="stats-tabla tabla">
-        <tr>
-            <th>Open:</th>
-            <td>{openPrice}</td>
-        </tr>
-        <tr>
-            <th>Higher:</th>
-            <td>{higherPrice}</td>
-        </tr>
-        <tr>
-            <th>Lower:</th>
-            <td>{lowerPrice}</td>
-        </tr>
-        <tr>
-            <th>Average:</th>
-            <td>{averagePrice}</td>
-        </tr>
+        <tbody>
+            <tr>
+                <th>Open:</th>
+                <td>{openPrice}</td>
+            </tr>
+            <tr>
+                <th>Higher:</th>
+                <td>{higherPrice}</td>
+            </tr>
+            <tr>
+                <th>Lower:</th>
+                <td>{lowerPrice}</td>
+            </tr>
+            <tr>
+                <th>Average:</th>
+                <td>{averagePrice}</td>
+            </tr>
+        </tbody>
     </table>
 
     {error && <Feedback text={error} />}

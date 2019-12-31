@@ -5,7 +5,7 @@ import Feedback from '../Feedback'
 import CompanyList from '../CompanyList'
 import { withRouter } from 'react-router-dom'
 
-export default withRouter (function ({handleNameQuery, handleCategoryQuery, companies, userId}) {
+export default withRouter (function ({handleNameQuery, handleCategoryQuery, companies, user}) {
 
 
     const [error, setError] = useState()
@@ -77,7 +77,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     <div className="main-print">
 
-        {companies && < CompanyList companies={companies} userId={userId}/>}
+        {companies && < CompanyList companies={companies} user={user}/>}
 
     </div>
 

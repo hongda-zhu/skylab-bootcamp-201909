@@ -129,7 +129,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
             <p className="description-currentValue">${currentPrice}</p>
             {comparison < 0 ? <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> {comparison}</p> :
             <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> {comparison}</p> }
-            {/* <ButtonFavorite userId={userId} companyId={companyId }  /> */}
+            <ButtonFavorite userId={userId} companyId={companyId }  />
         </div>
 
         <nav className="container-navegator navegator">

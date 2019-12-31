@@ -12,17 +12,19 @@ const API_URL = process.env.REACT_APP_API_URL
 * @return {status}  status 201
 */
 
-export default function (id, companyId) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
+export default function (token, companyId) {
+    validate.string(token)
+    validate.string.notVoid('token', token)
     validate.string(companyId)
     validate.string.notVoid('companyId', companyId)
     
 
     return (async () => {
-        const res = await call(`${API_URL}/users/favs/${id}`, {
+
+        debugger
+        const res = await call(`${API_URL}/users/favs/${companyId}`, {
             method: 'PATCH',
-            body: JSON.stringify({companyId})
+            headers: { 'Authorization': `Bearer ${token}` }
         })
 
         if (res.status === 200) return 
