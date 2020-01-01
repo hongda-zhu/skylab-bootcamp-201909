@@ -13,13 +13,20 @@ const API_URL = process.env.REACT_APP_API_URL
  */
 
 
-export default function (category) {
+export default function (category, token) {
+
+    validate.string(token)
+    validate.string.notVoid('token', token)
+
     validate.string(category)
     validate.string.notVoid('category', category)
 
     return (async () => { 
         const res = await call(`${API_URL}/companies/category/${category}`, {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
 
         if (res.status === 200) {

@@ -31,8 +31,6 @@ export default withRouter(function ({ history }) {
 
     const [password, setPassword] = useState()
 
-    const [counter, setCounter] = useState()
-
     const [error, setError] = useState()
 
     const [id, setId] = useState()
@@ -44,7 +42,7 @@ export default withRouter(function ({ history }) {
 
       refreshAll()
 
-    }, [sessionStorage.token, Transactions, counter])
+    }, [sessionStorage.token, Transactions])
 
 
     async function refreshAll(){
@@ -84,20 +82,6 @@ export default withRouter(function ({ history }) {
 
         }
       }
-
-
-    async function handleListCompanies (){
-
-      try {
-  
-        const token = sessionStorage.token
-
-      } catch(error){
-  
-        const {message} = error
-  
-      }
-    }
 
     async function handleLogin(username, password){
       
@@ -152,13 +136,13 @@ export default withRouter(function ({ history }) {
   return <> 
       {token && <> <Header name={name} budget={budget} onLogout={handleLogout} /></>} 
       
-      <Route exact path='/' render={() => !token ? <Landing />: <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} /> }/>
+      <Route exact path='/' render={() => !token ? <Landing />: <Main error={error} onClose={handleCloseError} token={token}/> }/>
 
       <Route path = '/register' render ={() => !token ? <Register onRegister={handleRegister} error={error} onClose={handleCloseError}/> : <Redirect to="/main" /> }  />
 
       <Route path = '/login' render = {() => !token ? <Login onLogin={handleLogin} error={error} onClose={handleCloseError}/> : <Redirect to="/" /> } />  
 
-      <Route path = '/main' render = {() =>  <Main listCompanies={handleListCompanies} error={error} onClose={handleCloseError} userId={id} /> } />
+      <Route path = '/main' render = {() =>  <Main error={error} onClose={handleCloseError} token={token} /> } />
 
       <Route path = '/detail/:id' render={({ match: { params: { id:companyId } } })  => token && id ? <> <Detail userId={id} companyId={companyId} onBuy={refreshAll}/> </>: <Redirect to="/" />  } />
 

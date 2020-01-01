@@ -5,7 +5,7 @@ import Feedback from '../Feedback'
 import CompanyList from '../CompanyList'
 import { withRouter } from 'react-router-dom'
 
-export default withRouter (function ({handleNameQuery, handleCategoryQuery, companies, user}) {
+export default withRouter (function ({handleNameQuery, handleCategoryQuery, companies, token}) {
 
 
     const [error, setError] = useState()
@@ -22,7 +22,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
                     
             const categoryType = event.target.value
             
-            handleCategoryQuery(categoryType)
+            handleCategoryQuery(categoryType, token)
 
         } catch(error){
 
@@ -36,13 +36,13 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     function handleSubmitSearch (event) { 
 
-        try {
+        try { debugger
 
             event.preventDefault()
             
             const {query: {value: query}} = event.target
 
-            handleNameQuery(query)
+            handleNameQuery(query, token)
 
         } catch(error){
 
@@ -77,7 +77,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     <div className="main-print">
 
-        {companies && < CompanyList companies={companies} user={user}/>}
+        {companies && < CompanyList companies={companies} token={token}/>}
 
     </div>
 

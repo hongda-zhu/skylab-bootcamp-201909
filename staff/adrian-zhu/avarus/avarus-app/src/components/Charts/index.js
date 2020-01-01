@@ -51,7 +51,7 @@ export default class Charts extends Component {
             (async () => {
                 try {
                     // await producePrice()
-                    const film = await retrieveCompanyById(_this.props.companyId, _this.props.userId)
+                    const film = await retrieveCompanyById(_this.props.companyId, _this.props.token)
                     const stocksArr = film.stocks
                     // console.log(stocksArr)
 

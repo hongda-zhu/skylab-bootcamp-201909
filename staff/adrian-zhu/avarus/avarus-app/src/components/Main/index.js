@@ -3,17 +3,15 @@ import './index.sass'
 import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
-import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory, retrieveUser} from '../../logic'
+import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
 import { set } from 'mongoose'
 
 
-function Main ({error, onClose, userId }) { 
+function Main ({error, onClose, token }) { 
 
     const [companies, setCompanies] = useState([])
     
-    const [user, setUser] = useState()
-
-    const {token} = sessionStorage
+    // const [user, setUser] = useState()
 
     useEffect(()=>{
 
@@ -21,15 +19,7 @@ function Main ({error, onClose, userId }) {
 
             try{
 
-                // const {id:userId} = await retrieveUser(token)
-
-                // handleSearchAll(userId, token)
-
-                const userInformation = await retrieveUser(token)
-
-                setUser(userInformation)
-
-                handleSearchAll(userInformation.id, token)
+                handleSearchAll(token)
                 
 
             }catch(message){
@@ -44,11 +34,13 @@ function Main ({error, onClose, userId }) {
 
 
 
-    async function handleSearchAll(userId, token){
+    async function handleSearchAll(token){
 
         try { 
+
+            debugger
             
-            const companies = await retrieveCompanies(userId, token)
+            const companies = await retrieveCompanies(token)
                     
             setCompanies(companies)
 
@@ -60,11 +52,11 @@ function Main ({error, onClose, userId }) {
 
     }
 
-    async function handleSearchName(query) {
+    async function handleSearchName(query, token) {
 
-        try {
+        try { debugger
 
-            const companies = await retrieveCompanyByName(query)
+            const companies = await retrieveCompanyByName(query, token)
     
             setCompanies(companies)
 
@@ -76,11 +68,11 @@ function Main ({error, onClose, userId }) {
 
     }
 
-    async function handleCategoryQuery(categoryType) {
+    async function handleCategoryQuery(categoryType, token) {
 
         try {
 
-            const companies = await retrieveCompanyByCategory(categoryType)
+            const companies = await retrieveCompanyByCategory(categoryType, token)
     
             setCompanies(companies)
 
@@ -96,7 +88,7 @@ function Main ({error, onClose, userId }) {
 
     <span className="main-span">Choose the stocks you'd like to give</span>
     
-    <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose} user={user}/>
+    <Search handleNameQuery={handleSearchName} handleCategoryQuery={handleCategoryQuery} companies={companies}  message={error} onClose={onClose} token={token}/>
 
     {error && < Feedback message={error} onClose={onClose}/>}
 

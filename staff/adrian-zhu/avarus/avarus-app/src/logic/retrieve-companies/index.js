@@ -4,7 +4,7 @@ const API_URL = process.env.REACT_APP_API_URL
 
 /**
  *
- * create-buyIn-transaction
+ * retrieve-companies
  * 
  * @param {token} string
  * 
@@ -12,13 +12,13 @@ const API_URL = process.env.REACT_APP_API_URL
  * 
  */
 
-export default  function (userId, token) { 
+export default  function (token) { 
     validate.string(token)
     validate.string.notVoid('token', token)
 
     return (async () => {  
 
-        const res = await call(`${API_URL}/companies/${userId}`, {
+        const res = await call(`${API_URL}/companies`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

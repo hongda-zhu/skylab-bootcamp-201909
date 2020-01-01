@@ -7,7 +7,7 @@ import Feedback from '../Feedback'
 
 export default function ({userId, companyId, stockId, error, onClose, onBuy}) {
 
-    const [num, setNum] = useState(0)
+    // const [num, setNum] = useState(0)
 
     async function handleBuyIn(userId, companyId, stockId, operation, quantity){
 

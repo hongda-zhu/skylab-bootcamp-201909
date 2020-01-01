@@ -2,7 +2,7 @@ import React, {useEffect, useState}  from 'react'
 import Feedback from '../Feedback'
 import {retrievePrices, retrieveCompanyById} from '../../logic'
 
-export default function ({companyId, userId}) {
+export default function ({companyId, token}) {
 
     // const { token } = sessionStorage
     const [openPrice, setOpenPrice] = useState()
@@ -17,7 +17,7 @@ export default function ({companyId, userId}) {
             (async()=>{ 
                 try{
                     const {averagePrice, higherPrice, lowerPrice} = await retrievePrices(companyId)
-                    const {stocks} = await retrieveCompanyById(companyId, userId)
+                    const {stocks} = await retrieveCompanyById(companyId, token)
 
                     const openPrice = stocks[0].price
 
@@ -37,7 +37,7 @@ export default function ({companyId, userId}) {
 
                 const {averagePrice, higherPrice, lowerPrice} = await retrievePrices(companyId)
                 
-                const {stocks} = await retrieveCompanyById(companyId, userId)
+                const {stocks} = await retrieveCompanyById(companyId, token)
 
                 const openPrice = stocks[0].price
 

@@ -13,13 +13,20 @@ const API_URL = process.env.REACT_APP_API_URL
  */
 
 
-export default function (query) {
+export default function (query, token) {
+
+    validate.string(token)
+    validate.string.notVoid('token', token)
+
     validate.string(query)
     validate.string.notVoid('query', query)
 
     return (async () => { 
-        const res = await call(`${API_URL}/companies//name/${query}`, {
-            method: 'GET'
+        const res = await call(`${API_URL}/companies//query/${query}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
 
         if (res.status === 200) {

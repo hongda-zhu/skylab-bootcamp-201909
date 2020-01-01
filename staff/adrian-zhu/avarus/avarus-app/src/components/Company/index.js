@@ -3,7 +3,7 @@ import './index.sass'
 import { withRouter } from 'react-router-dom'
 import ButtonFavorite from '../ButtonFavorite'
 
-export default withRouter(function ({ history, company, user }) { 
+export default withRouter(function ({ history, company, token }) { 
 
     const {id, name, image, description} = company
 
@@ -21,6 +21,6 @@ export default withRouter(function ({ history, company, user }) {
 
         <h3 className="profile-title">{name}</h3>
         <p className="profile-description">{description}</p>
-        <ButtonFavorite userId={user.id} companyId={company.id}  />
+        <ButtonFavorite token={token} companyId={company.id}  />
     </a>
 })

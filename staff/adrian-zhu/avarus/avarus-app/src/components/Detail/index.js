@@ -23,6 +23,8 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
     const [comparison, setComparison] = useState()
     const [lastPrice, setLastPrice] = useState()
     let refresher
+
+    const {token} = sessionStorage
         
     useEffect(()=>{
         if (typeof refresher !== 'number' ) refresher = setInterval(()=>{
@@ -31,7 +33,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
 
                 try{
                     await producePrice()
-                    const companyDetail = await retrieveCompanyById(companyId, userId)
+                    const companyDetail = await retrieveCompanyById(companyId, token)
 
                     setDetail(companyDetail) 
     
@@ -62,7 +64,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
         (async()=>{
             try{
                 await producePrice()
-                const companyDetail = await retrieveCompanyById(companyId, userId)
+                const companyDetail = await retrieveCompanyById(companyId, token)
 
                 setDetail(companyDetail)
 
@@ -129,7 +131,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
             <p className="description-currentValue">${currentPrice}</p>
             {comparison < 0 ? <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> {comparison}</p> :
             <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> {comparison}</p> }
-            <ButtonFavorite userId={userId} companyId={companyId }  />
+            <ButtonFavorite token={token} companyId={companyId }  />
         </div>
 
         <nav className="container-navegator navegator">
@@ -138,8 +140,8 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
             <Slide handleslideName={handleslideName} detail={detail}/>
 
             {slide === 'buy' && <Buy userId={userId} companyId={companyId} stockId={stockId} onBuy={onBuy}/>} 
-            {slide === 'charts' && <Charts companyId={companyId} userId={userId} />}
-            {slide === 'stats' && <Stats companyId={companyId} userId={userId} />}
+            {slide === 'charts' && <Charts companyId={companyId} token={token} />}
+            {slide === 'stats' && <Stats companyId={companyId} token={token} />}
             {slide === 'about' && <About Headquarters={detail.description}/>}
             
         </nav>

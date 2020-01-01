@@ -3,9 +3,8 @@ import {toggleFav, retrieveCompanyById} from '../../logic'
 import './index.sass'
 
 
-export default function ({userId, companyId}) {
+export default function ({token, companyId}) {
     const [company, setCompany] = useState({})
-    const {token} = sessionStorage
    
     useEffect(() => {
         (async () => {
@@ -22,7 +21,7 @@ export default function ({userId, companyId}) {
         try {
            
                 
-                const updateCompany = await retrieveCompanyById(companyId, userId)
+                const updateCompany = await retrieveCompanyById(companyId, token)
 
                 debugger
                 

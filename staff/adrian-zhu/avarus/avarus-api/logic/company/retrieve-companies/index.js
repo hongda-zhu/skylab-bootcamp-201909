@@ -14,17 +14,15 @@ const { ObjectId, models: { User, Company } } = require('avarus-data')
 
 module.exports = function (userId) { 
 
-    let id = userId
-
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+    validate.string(userId)
+    validate.string.notVoid('userId', userId)
+    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
 
     return (async () => { 
 
-        const user = await User.findById(id)
+        const user = await User.findById(userId)
 
-        if(!user) throw new NotFoundError(`user with id ${id} does not exist`)
+        if(!user) throw new NotFoundError(`user with id ${userId} does not exist`)
 
         const companies = await Company.find().lean()
 

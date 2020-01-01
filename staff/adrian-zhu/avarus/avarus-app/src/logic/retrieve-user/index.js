@@ -19,7 +19,9 @@ export default function (token) {
     return (async () => {
         const res = await call(`${API_URL}/users`, {
             method: 'GET',
-            headers: { Authorization: `Bearer ${token}` }
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
 
         if (res.status === 200) { 

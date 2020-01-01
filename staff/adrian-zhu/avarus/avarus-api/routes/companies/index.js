@@ -10,7 +10,7 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.post('/', jsonBodyParser, (req, res) => { 
+router.post('/create', jsonBodyParser, (req, res) => { 
     
     const { body: { name, description, risk, market, category, dependency, image, stocks } } = req
 
@@ -31,9 +31,9 @@ router.post('/', jsonBodyParser, (req, res) => {
 })
 
 
-router.get('/:id', tokenVerifier,  (req, res) => {
+router.get('/', tokenVerifier,  (req, res) => {
 
-    const {params: { id: userId } } = req
+    const {id:userId } = req
 
     try { 
 
@@ -54,10 +54,10 @@ router.get('/:id', tokenVerifier,  (req, res) => {
     }
 })
 
-router.get('/company/:companyId/:userId', jsonBodyParser, (req, res) => {
+router.get('/company/:companyId', jsonBodyParser, tokenVerifier, (req, res) => {
 
     
-    const { params: {companyId, userId} } = req
+    const { id:userId, params: {companyId} } = req
     
     try {
         retrieveCompany(companyId, userId)
@@ -78,13 +78,13 @@ router.get('/company/:companyId/:userId', jsonBodyParser, (req, res) => {
 })
 
 
-router.get('/category/:category',jsonBodyParser, (req, res) => {
+router.get('/category/:category',jsonBodyParser, tokenVerifier, (req, res) => {
+    debugger
 
-    const { params: { category } } = req
+    const { id:userId, params: { category } } = req
 
     try { 
-        debugger
-        retrieveCompanyCategory(category)
+        retrieveCompanyCategory(category, userId)
             .then( company => res.json( company ))
             .catch(error => {
                 const { message } = error
@@ -101,13 +101,15 @@ router.get('/category/:category',jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/name/:query',jsonBodyParser, (req, res) => {
+router.get('/query/:query',jsonBodyParser, tokenVerifier, (req, res) => {
 
-    const { params: { query } } = req
+    debugger
+
+    const { id:userId, params: { query } } = req
 
     try { 
-        debugger
-        retrieveCompanyName(query)
+
+        retrieveCompanyName(query, userId)
             .then(company => res.json(company))
             .catch(error => {
                 const { message } = error
