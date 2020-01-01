@@ -103,8 +103,8 @@ describe('logic - retrieve companies', () => {
         expect(() => retrieveCompanies(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveCompanies(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => retrieveCompanies('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveCompanies(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveCompanies('')).to.throw(ContentError, 'userId is empty or blank')
+        expect(() => retrieveCompanies(' \t\r')).to.throw(ContentError, 'userId is empty or blank')
     })
 
     after(() => Promise.all([User.deleteMany(), Company.deleteMany()]).then(database.disconnect))

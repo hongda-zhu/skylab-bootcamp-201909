@@ -53,7 +53,7 @@ module.exports = function (category, userId) {
 
         })
 
-        if (companyByCategory.length < 0) throw new NotFoundError(`company with category ${category} not found`)
+        if (companyByCategory.length === 0) throw new NotFoundError(`company with category ${category} not found`)
 
         return companyByCategory
 

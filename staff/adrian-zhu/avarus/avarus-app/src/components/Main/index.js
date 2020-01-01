@@ -37,8 +37,6 @@ function Main ({error, onClose, token }) {
     async function handleSearchAll(token){
 
         try { 
-
-            debugger
             
             const companies = await retrieveCompanies(token)
                     
@@ -54,7 +52,7 @@ function Main ({error, onClose, token }) {
 
     async function handleSearchName(query, token) {
 
-        try { debugger
+        try { 
 
             const companies = await retrieveCompanyByName(query, token)
     

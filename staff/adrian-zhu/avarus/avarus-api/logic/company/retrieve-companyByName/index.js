@@ -34,8 +34,6 @@ module.exports = function (query, userId) {
 
         let companyByName = []
 
-        if (companies.length === 0) throw new NotFoundError(`there has no company`)
-
         debugger
 
         companies.forEach(company => { 
@@ -53,7 +51,7 @@ module.exports = function (query, userId) {
         
         })
 
-        if (companyByName.length < 0 ) throw new NotFoundError(`company with query ${query} not found`)
+        if (companyByName.length === 0 ) throw new NotFoundError(`company with query ${query} not found`)
 
         return companyByName
             
