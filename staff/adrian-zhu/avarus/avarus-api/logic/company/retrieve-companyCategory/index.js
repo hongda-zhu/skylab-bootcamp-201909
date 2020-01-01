@@ -36,8 +36,6 @@ module.exports = function (category, userId) {
 
         if (companies.length === 0) throw new NotFoundError(`there has no company`)
 
-        debugger
-
         companies.forEach(company => {
 
             company.id = company._id.toString();

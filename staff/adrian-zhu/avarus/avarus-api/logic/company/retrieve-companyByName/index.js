@@ -34,8 +34,6 @@ module.exports = function (query, userId) {
 
         let companyByName = []
 
-        debugger
-
         companies.forEach(company => { 
 
             company.id = company._id.toString();

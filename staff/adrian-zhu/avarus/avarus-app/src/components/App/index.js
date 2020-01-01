@@ -10,6 +10,7 @@ import Transactions from '../Transactions'
 import Operations from '../Operations'
 import Footer from '../Footer'
 import Feedback from '../Feedback'
+import Favorites from '../Favorites'
 import UserPage from '../PersonalProfile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { registerUser, authenticateUser, retrieveUser, editUser} from '../../logic'
@@ -37,12 +38,14 @@ export default withRouter(function ({ history }) {
 
     const [transactions, setTransactions] = useState([])
 
+    const [favorites, setFavorites] = useState([])
+
 
     useEffect(() => { 
 
       refreshAll()
 
-    }, [sessionStorage.token, Transactions])
+    }, [sessionStorage.token, transactions, favorites])
 
 
     async function refreshAll(){
@@ -51,7 +54,7 @@ export default withRouter(function ({ history }) {
         
           if (token) { 
               
-              const {id, name, surname, email, username, password, budget, transactions} = await retrieveUser(token)
+              const {id, name, surname, email, username, password, budget, transactions, favorites} = await retrieveUser(token)
 
               setName(name)
               setBudget(budget.toFixed(4))
@@ -61,6 +64,7 @@ export default withRouter(function ({ history }) {
               setEmail(email)
               setPassword(password)
               setTransactions(transactions)
+              setFavorites(favorites)
 
           }
     }
@@ -149,6 +153,8 @@ export default withRouter(function ({ history }) {
       <Route path="/userpage" render={() => token ? <UserPage name={name} surname={surname} email={email} username={username} password={password} onModifyUser={handleModifyUser} onBack={handleGoBack} error={error} onClose={handleCloseError}  /> : <Redirect to="/" />} />
 
       <Route path = '/transactions' render={() => transactions && token && id && <Transactions  userId={id} transactions={transactions} error={error} onClose={handleCloseError} />  } />
+
+      <Route path = '/favorites' render={() => transactions && token && id && <Favorites favorites={favorites} />  } />
       
       <Route path = '/detailTransactions/:id/' render={({ match: { params: { id:transactionId } } })  => token && id ? <> <Operations transactionId={transactionId} error={error} onClose={handleCloseError} onSell={refreshAll}/> </>: <Redirect to="/" />  } />
   

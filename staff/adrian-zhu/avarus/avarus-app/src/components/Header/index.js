@@ -22,9 +22,8 @@ export default withRouter(function ({ history, name, budget, onLogout}) {
                 <li className="menu-item">your buying power is {budget}</li>
                 <li className="menu-item"><Link to="/main">Main</Link></li>
                 <li className="menu-item"><Link to="/transactions">Transactions</Link></li>
-                {/*         
-                <li className="menu-item"><Link to="/favorite">Favorite</Link></li>
-                <li className="menu-item"><Link to="/userpage">Profile</Link></li> */}
+                <li className="menu-item"><Link to="/favorites">Favorite</Link></li>
+                {/* <li className="menu-item"><Link to="/userpage">Profile</Link></li>  */}
                 <li className="menu-item">
                     <label className="hamburger-close" htmlFor="show-menu">Close</label>
                 </li>

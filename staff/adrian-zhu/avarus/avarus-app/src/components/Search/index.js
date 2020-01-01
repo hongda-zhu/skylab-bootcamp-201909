@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom'
 
 export default withRouter (function ({handleNameQuery, handleCategoryQuery, companies, token}) {
 
-
     const [error, setError] = useState()
 
     function handleCloseError () {

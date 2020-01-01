@@ -4,8 +4,6 @@ import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
 import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
-import { set } from 'mongoose'
-
 
 function Main ({error, onClose, token }) { 
 

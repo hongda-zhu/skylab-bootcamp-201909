@@ -9,6 +9,7 @@ export default function ({token, companyId}) {
     useEffect(() => {
         (async () => {
             try {
+                
                 await refreshUserFav()
             } catch ({message}) {
                 console.log(message)
@@ -19,11 +20,9 @@ export default function ({token, companyId}) {
     async function refreshUserFav(){
         
         try {
-           
+                
                 
                 const updateCompany = await retrieveCompanyById(companyId, token)
-
-                debugger
                 
                 setCompany(updateCompany)
 
@@ -39,7 +38,7 @@ export default function ({token, companyId}) {
             event.preventDefault()
 
             await toggleFav(token, companyId) 
-            debugger   
+            
             await refreshUserFav()
 
         } catch ({message}) {

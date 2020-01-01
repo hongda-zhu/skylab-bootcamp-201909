@@ -8,7 +8,7 @@ function Transactions ({transactions }) {
 
     return <section className="transactions">
 
-    <span className="transactions-span">Aquí son transaciones</span>
+    <span className="transactions-span">Aquí están tus transaciones</span>
 
     {transactions &&  <ul className="transactions-lists lists">
         {transactions.map(transaction => <li className="lists-transaction" key={transaction.time}><TransactionsItem transaction={transaction} /></li>)}

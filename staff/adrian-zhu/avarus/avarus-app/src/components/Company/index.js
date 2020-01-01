@@ -5,10 +5,12 @@ import ButtonFavorite from '../ButtonFavorite'
 
 export default withRouter(function ({ history, company, token }) { 
 
+    if(!company.id) company.id = company._id
+    delete company._id
+
     const {id, name, image, description} = company
 
     function goToDetail() { 
-        if(!company.id) company.id = company._id
 
         const {id} = company
         history.push(`/detail/${id}`)
@@ -21,6 +23,6 @@ export default withRouter(function ({ history, company, token }) {
 
         <h3 className="profile-title">{name}</h3>
         <p className="profile-description">{description}</p>
-        <ButtonFavorite token={token} companyId={company.id}  />
+        <ButtonFavorite token={token} companyId={id}  />
     </a>
 })

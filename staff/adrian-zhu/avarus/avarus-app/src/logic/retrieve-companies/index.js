@@ -26,6 +26,7 @@ export default  function (token) {
         })
 
         if (res.status === 200) {
+
             const companies = JSON.parse(res.body)
             
             return companies

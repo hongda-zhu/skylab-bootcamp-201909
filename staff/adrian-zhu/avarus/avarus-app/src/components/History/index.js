@@ -15,7 +15,7 @@ function History ({sellRegisters, error, onClose }) {
 
         {sellRegisters.length > 0 ?  <ul className="sellRegisters-lists lists">
             {sellRegisters.map(sellRegister => <li className="lists-sellRegister" key={sellRegister.id}><HistoryItems sellRegister={sellRegister} /></li>)}
-        </ul>: <p className="lists-sellRegister">There has not any sales register related</p>}
+        </ul>: <p className="lists-sellRegister">There has not sales register related</p>}
 
         {error && < Feedback message={error} onClose={onClose}/>}
 

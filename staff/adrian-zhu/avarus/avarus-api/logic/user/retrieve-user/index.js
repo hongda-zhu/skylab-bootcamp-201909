@@ -18,13 +18,25 @@ module.exports = function (id) {
 
     return (async () => {
         
-        const usercase = await User.findById(id).populate({path:'transactions', populate: {path:'user company stock'}})
-
+        const usercase = await (await User.findById(id)
+        .populate('favorites')
+        .populate({path:'transactions', populate: {path:'user company stock'}}))
+        
         if (!usercase) throw new NotFoundError(`usercase with id ${id} not found`)
+        
+        const { name, surname, username, email, budget, favorites, transactions} = usercase
+
+        favorites.forEach(favorite => {
+
+            if(!favorite.id) favorite.id = favorite._id
+            
+            delete favorite._id
+
+            favorite.save()
+
+        })
 
         await usercase.save()
-
-        const { name, surname, username, email, budget, favorites, transactions} = usercase
 
         return { id, name, surname, username, email, budget, favorites, transactions }
     })()

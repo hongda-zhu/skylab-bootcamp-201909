@@ -79,7 +79,6 @@ router.get('/company/:companyId', jsonBodyParser, tokenVerifier, (req, res) => {
 
 
 router.get('/category/:category',jsonBodyParser, tokenVerifier, (req, res) => {
-    debugger
 
     const { id:userId, params: { category } } = req
 
@@ -102,8 +101,6 @@ router.get('/category/:category',jsonBodyParser, tokenVerifier, (req, res) => {
 })
 
 router.get('/query/:query',jsonBodyParser, tokenVerifier, (req, res) => {
-
-    debugger
 
     const { id:userId, params: { query } } = req
 
