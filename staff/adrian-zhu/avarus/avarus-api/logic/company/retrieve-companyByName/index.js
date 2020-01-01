@@ -21,25 +21,23 @@ module.exports = function (query) {
         
         const companies = await Company.find()
 
-        let companyByName
+        let companyByName = []
 
         if (companies.length === 0) throw new NotFoundError(`there has no company`)
 
-        companies.forEach(company => {
+        debugger
+
+        companies.forEach(company => { 
 
             company.id = company._id.toString();
 
             delete company._id
 
-            if(company.name.toUpperCase() === query.toUpperCase()){
-                companyByName = company
-            } else {
-                throw new NotFoundError(`company with query ${query} not found`)
-            }
-
-            
-            
+            if(company.name.toUpperCase().includes(query.toUpperCase()))companyByName.push(company)
+        
         })
+
+        if (companyByName.length < 0 ) throw new NotFoundError(`company with query ${query} not found`)
 
         return companyByName
             

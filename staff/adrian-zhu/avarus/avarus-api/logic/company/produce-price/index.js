@@ -12,8 +12,6 @@ const STOCKS_INTERVAL = 60000
  * 
  */
 
-
-
 module.exports = function () {
     return (async () => {
         const companies = await Company.find()
@@ -22,7 +20,7 @@ module.exports = function () {
             if (!company) throw new NotFoundError(`company with companyId ${companyId} not found`)
 
             if (!company.stocks.length) {
-                const stock = new Stock({ price: 150, time: new Date('2019-12-22 00:00:00') })
+                const stock = new Stock({ price: 150, time: new Date('2020-01-01 00:00:00') })
 
                 company.stocks.push(stock)
             }

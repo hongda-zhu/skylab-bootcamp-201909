@@ -6,7 +6,7 @@ const retrieveCompanyByName = require('.')
 const { errors: { NotFoundError } } = require('avarus-util')
 const { database, models: { Company } } = require('avarus-data')
 
-describe('logic - retrieve company by name', () => {
+describe.only('logic - retrieve company by name', () => {
 
     before(() => database.connect(TEST_DB_URL))
 

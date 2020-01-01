@@ -1,6 +1,6 @@
- 
 import React, { useState, useEffect }  from 'react'
 import {toggleFav, retrieveCompanyById} from '../../logic'
+import './index.sass'
 
 
 export default function ({userId, companyId}) {
@@ -22,9 +22,11 @@ export default function ({userId, companyId}) {
         try {
            
                 
-                const updatedUser = await retrieveCompanyById(companyId, userId)
+                const updateCompany = await retrieveCompanyById(companyId, userId)
+
+                debugger
                 
-                setCompany(updatedUser)
+                setCompany(updateCompany)
 
             
          } catch ({message}) {
@@ -41,8 +43,6 @@ export default function ({userId, companyId}) {
             debugger   
             await refreshUserFav()
 
-            
-           
         } catch ({message}) {
             console.log(message)
 
@@ -50,12 +50,11 @@ export default function ({userId, companyId}) {
         }
     }
 
-
     return  <>
                
                { company && (company.isFav ? 
-                    <button className="btn-fav" onClick={onFav}><i className="fas fa-heart"></i></button> :
-                    <button className="btn-fav" onClick={onFav}><i className="far fa-heart"></i></button>)
+                    <button className="btn-fav" onClick={onFav}><i className="fas fa-money-bill-alt"></i></button> :
+                    <button className="btn-fav" onClick={onFav}><i className="far fa-money-bill-alt"></i></button>)
                 }
                 
             </>

@@ -80,12 +80,12 @@ router.get('/company/:companyId/:userId', jsonBodyParser, (req, res) => {
 
 router.get('/category/:category',jsonBodyParser, (req, res) => {
 
+    const { params: { category } } = req
 
     try { 
-        const { params: { category } } = req
-
+        debugger
         retrieveCompanyCategory(category)
-            .then(company => res.json( company ))
+            .then( company => res.json( company ))
             .catch(error => {
                 const { message } = error
 
@@ -103,9 +103,10 @@ router.get('/category/:category',jsonBodyParser, (req, res) => {
 
 router.get('/name/:query',jsonBodyParser, (req, res) => {
 
-    try { 
-        const { params: { query } } = req
+    const { params: { query } } = req
 
+    try { 
+        debugger
         retrieveCompanyName(query)
             .then(company => res.json(company))
             .catch(error => {
@@ -125,8 +126,10 @@ router.get('/name/:query',jsonBodyParser, (req, res) => {
 
 
 router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+
+    const { params: { id }, body: { company: { name, description, risk, market, category, dependency, image, stocks}}} = req
+
     try {
-        const { params: { id }, body: { company: { name, description, risk, market, category, dependency, image, stocks}}} = req
 
         editCompany(id, name, description, risk, market, category, dependency, image, stocks)
             .then(() => res.status(200).end())
@@ -145,10 +148,9 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
 
 router.post('/:id/price', jsonBodyParser, (req, res) => {
 
+    const { params: { id }, body: { price }} = req
+
     try { 
-
-        const { params: { id }, body: { price }} = req
-
         createPrice(id, price)
             .then(() => res.status(200).end())
             .catch(error => {
@@ -188,6 +190,7 @@ router.post('/price', (req, res) => {
 router.get('/:id/avgprice', (req, res) => {
 
     const { params: { id }} = req
+
     try { 
 
         retrievePrices(id)
@@ -210,9 +213,8 @@ router.get('/:id/avgprice', (req, res) => {
 
 router.get('/:id/price', tokenVerifier, jsonBodyParser, (req, res) => {
 
+    const { params: { id }} = req
     try {
-        const { params: { id }} = req
-
         retrievePrice(id)
             .then((stocks) => res.json({stocks}))
             .catch(error => {

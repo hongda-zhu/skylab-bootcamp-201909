@@ -24,18 +24,19 @@ module.exports = function (category) {
 
         if (companies.length === 0) throw new NotFoundError(`there has no company`)
 
+        debugger
+
         companies.forEach(company => {
             
             company.id = company._id.toString();
 
             delete company._id
 
-            if(company.category.toUpperCase() === category.toUpperCase()){
-                companyByCategory.push(company)
-            } else {
-                throw new NotFoundError(`company with category ${category} not found`)
-            }
+            if(company.category.toUpperCase() === category.toUpperCase())companyByCategory.push(company)
+            
         })
+
+        if(companyByCategory.length < 0) throw new NotFoundError(`company with category ${category} not found`)
 
         return companyByCategory
             
