@@ -4,22 +4,24 @@ const { expect } = require('chai')
 const { random } = Math
 const toggleFavs = require('.')
 const { database, models: { User } } = require('avarus-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic- toggle favs', () => {
     before(() => database.connect(TEST_DB_URL))
-    let userId, name, surname, email, username, password
+    let email, username, password, verifiedPassword, budget
     idFav = '5de2a988d1698e73a5664b1e'
 
     beforeEach(async () => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
+        await User.deleteMany()
+
         email = `email-${random()}@mail.com`
         username = `username-${random()}`
-        password = `password-${random()}`
+        password = verifiedPassword = `password-${random()}`
+        budget = 5000
+        transactions = []
 
-        await User.deleteMany()
-        
-        const user = await User.create({ name, surname, email, username, password })
+        const user = await User.create({  email, username, password: await bcrypt.hash(password, 10), verifiedPassword, budget, transactions})
+
         userId = user.id
     })
 

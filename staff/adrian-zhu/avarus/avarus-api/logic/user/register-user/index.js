@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 
 /**
  *
- * create-buyIn-transaction
+ * register user
  * 
  * @param {name} string
  * @param {surname} string
@@ -19,28 +19,31 @@ const bcrypt = require('bcryptjs')
 
 
 
-module.exports = function (name, surname, email, username, password, budget) {
-    validate.string(name)
-    validate.string.notVoid('name', name)
-    validate.string(surname)
-    validate.string.notVoid('surname', surname)
+module.exports = function (email, username, password, verifiedPassword, budget) {
+    debugger
     validate.string(email)
-    validate.string.notVoid('e-mail', email)
+    validate.string.notVoid('email', email)
     validate.email(email)
     validate.string(username)
     validate.string.notVoid('username', username)
     validate.string(password)
     validate.string.notVoid('password', password)
+    validate.string(verifiedPassword)
+    validate.string.notVoid('verifiedPassword', verifiedPassword)
+
     validate.number(budget)
 
     return (async () => {
+        
         const user = await User.findOne({ username })
 
         if (user) throw new ConflictError(`user with username ${username} already exists`)
 
+        if (password !== verifiedPassword) throw new ConflictError (`failed to verify, passwords are not the same, please introduce correctly your password and verify password`)
+
         const hash = await bcrypt.hash(password, 10)
 
-        await User.create({ name, surname, email, username, password: hash, budget })
+        await User.create({username, email, password: hash, budget })
 
     })()
 }

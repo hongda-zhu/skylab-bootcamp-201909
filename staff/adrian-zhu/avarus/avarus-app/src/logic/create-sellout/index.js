@@ -40,7 +40,7 @@ export default function (userId, companyId, stockId, buyInTransactionId, operati
 
     return (async () => { 
 
-        debugger
+        
 
         const res = await call(`${API_URL}/users/${userId}/sellout`, {
             method: 'POST',

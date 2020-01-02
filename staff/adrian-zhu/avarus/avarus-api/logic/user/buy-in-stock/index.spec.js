@@ -5,6 +5,7 @@ const buyInStock = require('.')
 const { random, floor } = Math
 const { errors: { NotFoundError, ConflictError } } = require('avarus-util')
 const { database, models: { User, Company, Stock, Transaction } } = require('avarus-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - buy-in', () => {
     before(() => database.connect(TEST_DB_URL))
@@ -15,7 +16,7 @@ describe('logic - buy-in', () => {
 
     let userId, companyId, stockId, operation, quantity
 
-    let accountname, surname, username, email, password, budget 
+    let username, email, password, verifiedPassword, budget 
 
     let companyname, description, risk, market, category, dependency, stocks, image 
 
@@ -26,18 +27,12 @@ describe('logic - buy-in', () => {
 
           await Promise.all([User.deleteMany(), Company.deleteMany(), Stock.deleteMany(), Transaction.deleteMany()])
 
-          accountname = `name-${random()}`
-          surname = `surname-${random()}`
-          username = `username-${random()}`
           email = `email-${random()}@mail.com`
-          password = `password-${random()}`
+          username = `username-${random()}`
+          password = verifiedPassword = `password-${random()}`
           budget = 5000
-          transactions = []
-    
-          const user = await User.create({ name: accountname, surname, username, email, password, budget, transactions})
-          
-          await user.save()
-
+  
+          const user = await User.create({  email, username, password: await bcrypt.hash(password, 10), verifiedPassword, budget})
           userId = user.id
 
           companyname = `name-${random()}`
@@ -73,6 +68,8 @@ describe('logic - buy-in', () => {
 
       it('should process correctly the buy-in transaction when all the inputs are in correct form', async () => { 
 
+        debugger
+
         const buyInTransaction = await buyInStock(userId, companyId, stockId, operation, quantity) 
 
         expect(buyInTransaction).to.exist
@@ -104,7 +101,7 @@ describe('logic - buy-in', () => {
 
       })
 
-      it('should not create a new transaction if userID is wrong', async () => {
+      it('should not create a new transaction if user`s id is wrong', async () => {
 
         let userID = "5de407687f38731d659c98e5"
 
@@ -123,7 +120,7 @@ describe('logic - buy-in', () => {
       })
 
 
-      it('should not create a new transaction if CompanyID is wrong', async () => {
+      it('should not create a new transaction if Company`s id is wrong', async () => {
 
         let CompanyID = "5de407687f38731d659c98e5"
 
@@ -141,7 +138,7 @@ describe('logic - buy-in', () => {
 
       })
 
-      it('should not create a new transaction if stockID is wrong', async () => {
+      it('should not create a new transaction if stock`s id is wrong', async () => {
 
         let StockID = "5de407687f38731d659c98e5"
 

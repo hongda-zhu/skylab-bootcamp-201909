@@ -3,15 +3,6 @@ const { Schema, ObjectId } = mongoose
 // const transaction = require('./transaction')
 
 module.exports = new Schema({
-    name: {
-        type: String
-        // required: true
-    },
-
-    surname: {
-        type: String
-        // required: true
-    },
 
     username: {
         type: String,

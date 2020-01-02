@@ -18,7 +18,7 @@ module.exports = function (userId) {
     validate.string.notVoid('userId', userId)
     if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
 
-    debugger
+    
 
     return (async () => { 
 

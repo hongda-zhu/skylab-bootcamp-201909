@@ -1,5 +1,6 @@
-const { validate, errors: {NotFoundError } } = require('avarus-util')
+const { validate, errors: {NotFoundError, ContentError, ConflictError } } = require('avarus-util')
 const { ObjectId, models: { User } } = require('avarus-data')
+const bcrypt = require('bcryptjs')
 
 /**
  *
@@ -15,24 +16,27 @@ const { ObjectId, models: { User } } = require('avarus-data')
  */
 
 
-module.exports = function(id, name, surname, username) {
+module.exports = function(id, email, password, verifiedPassword) {
+  debugger
   validate.string(id)
   validate.string.notVoid('id', id)
   if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
-  if (name) {
-    validate.string(name)
-    validate.string.notVoid('name', name)
+  if (email) {
+    validate.string(email)
+    validate.string.notVoid('email', email)
+    validate.email(email)
   }
 
-  if (surname) {
-    validate.string(surname)
-    validate.string.notVoid('surname', surname)
+  if (password) {
+    validate.string(password)
+    validate.string.notVoid('password', password)
+    
   }
 
-  if (username) {
-    validate.string.notVoid('e-mail', username)
-    validate.string(username)
+  if (verifiedPassword) {
+    validate.string.notVoid('verifiedPassword', verifiedPassword)
+    validate.string(verifiedPassword)
   }
 
 
@@ -40,12 +44,17 @@ module.exports = function(id, name, surname, username) {
     const user = await User.findById(id)
 
     if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    
+    if((password || verifiedPassword) && (password !== verifiedPassword)) throw new ConflictError (`failed to modify password, passwords are not the same, please introduce correctly your password and it's verification`)
 
     const update = {}
 
-    name && (update.name = name)
-    surname && (update.surname = surname)
-    username && (update.username = username)
+    email && (update.email = email) 
+    debugger
+    if (password) {
+      const hash = await bcrypt.hash(password, 10)
+      update.password = hash
+    }
     
     update.lastAccess = new Date
 

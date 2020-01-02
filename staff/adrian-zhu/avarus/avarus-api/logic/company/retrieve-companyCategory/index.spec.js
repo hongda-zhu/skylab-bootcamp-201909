@@ -5,7 +5,8 @@ const { random, floor } = Math
 const retrieveCompanyByCategory = require('.')
 const { errors: { NotFoundError } } = require('avarus-util')
 const { database, models: { User, Company } } = require('avarus-data')
-1
+const bcrypt = require('bcryptjs')
+
 describe('logic - retrieve company by category', () => {
 
     before(() => database.connect(TEST_DB_URL))
@@ -16,20 +17,18 @@ describe('logic - retrieve company by category', () => {
 
     let name, description, risk, market, category, dependency, image, stocks
 
-    let accountname, surname, username, email, password, budget 
+    let email, username, password, verifiedPassword, budget
 
     beforeEach(async() => {  
         await Promise.all([User.deleteMany(), Company.deleteMany()])
         
-        accountname = `name-${random()}`
-        surname = `surname-${random()}`
-        username = `username-${random()}`
         email = `email-${random()}@mail.com`
-        password = `password-${random()}`
+        username = `username-${random()}`
+        password = verifiedPassword = `password-${random()}`
         budget = 5000
         transactions = []
-
-        const user = await User.create({ name: accountname, surname, username, email, password, budget, transactions})
+  
+        const user = await User.create({  email, username, password: await bcrypt.hash(password, 10), verifiedPassword, budget, transactions})
 
         await user.save()
         userId = user.id

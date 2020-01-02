@@ -1,4 +1,3 @@
- 
 require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
@@ -6,13 +5,14 @@ const { random, floor } = Math
 const retrieveBuyin = require('.')
 const { errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { database, models: { User, Company, Stock, Transaction } } = require('avarus-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - retrieve transaction of buy-in', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let userId, companyId, stockId, operation, quantity
 
-    let accountname, surname, username, email, password, budget 
+    let email, username, password, verifiedPassword, budget
 
     let companyname, description, risk, market, category, dependency, stocks, image 
 
@@ -25,15 +25,12 @@ describe('logic - retrieve transaction of buy-in', () => {
         beforeEach(async () => {
             await Promise.all([User.deleteMany(), Company.deleteMany(), Stock.deleteMany(), Transaction.deleteMany()])
 
-            accountname = `name-${random()}`
-            surname = `surname-${random()}`
-            username = `username-${random()}`
             email = `email-${random()}@mail.com`
-            password = `password-${random()}`
+            username = `username-${random()}`
+            password = verifiedPassword = `password-${random()}`
             budget = 5000
-            transactions = []
-      
-            const user = await User.create({ name: accountname, surname, username, email, password, budget, transactions})
+    
+            const user = await User.create({  email, username, password: await bcrypt.hash(password, 10), verifiedPassword, budget})
             
             await user.save()
   

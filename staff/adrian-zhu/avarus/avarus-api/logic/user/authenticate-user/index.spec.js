@@ -11,16 +11,17 @@ describe('logic - authenticate user', () => {
     
     before(() => database.connect(TEST_DB_URL))
 
-    let name, surname, email, username, password
+    let email, username, password, verifiedPassword, budget
+    
     beforeEach(async () => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
+        await User.deleteMany()
+
         email = `email-${random()}@mail.com`
         username = `username-${random()}`
-        password = `password-${random()}`
+        password = verifiedPassword = `password-${random()}`
+        budget = 5000
 
-        await User.deleteMany()
-        const user = await User.create({ name, surname, email, username, password: await bcrypt.hash(password, 10)})
+        const user = await User.create({  email, username, password: await bcrypt.hash(password, 10), verifiedPassword, budget})
         id = user.id
     })
 

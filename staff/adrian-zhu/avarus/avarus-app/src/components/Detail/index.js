@@ -23,7 +23,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
 
     const {token} = sessionStorage
 
-    debugger
+    
         
     useEffect(()=>{
         if (typeof refresher !== 'number' ) refresher = setInterval(()=>{

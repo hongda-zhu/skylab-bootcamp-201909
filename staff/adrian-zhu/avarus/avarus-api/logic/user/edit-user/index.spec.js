@@ -3,90 +3,136 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const modufyUser = require('.')
-const { errors: { NotFoundError } } = require('avarus-util')
+const { errors: { NotFoundError, ContentError, ConflictError } } = require('avarus-util')
 const { database, models: { User } } = require('avarus-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - edit user', () => {
   before(() => database.connect(TEST_DB_URL))
-
-  let id, name, surname, email, password
+  let email, username, password, verifiedPassword, budget, id
+  let newEmail, newPassword, newVerifiedPassword
 
   describe('when user is registed correctly', () => {
     beforeEach(async () => {
-      name = `name-${random()}`
-      surname = `surname-${random()}`
-      username = `username-${random()}`
-      email = `email-${random()}@mail.com`
-      password = `password-${random()}`
-
       await User.deleteMany()
 
-      const user = await User.create({ name, surname, username, email, password })
-      
-      await user.save()
+      email = `email-${random()}@mail.com`
+      username = `username-${random()}`
+      password = verifiedPassword = `password-${random()}`
+      budget = 5000
+      transactions = []
 
+      const user = await User.create({  email, username, password: await bcrypt.hash(password, 10), verifiedPassword, budget, transactions})
       id = user.id
     })
 
-    it('should succeed on modify name and correct user id', async () => {
-      newName = `name-${random()}`
-      newSurname = undefined
-      newUsername = undefined
+    it('should succeed on modify email using correct values', async () => {
+      newEmail = `email-${random()}@mail.com`
+      newPassword = newVerifiedPassword = undefined
+      
+      await modufyUser(id, newEmail, newPassword, newVerifiedPassword)
 
-      await modufyUser(id, newName, newSurname, newUsername)
       const user = await User.findById(id)
-
+    
       expect(user).to.exist
       expect(user.id).to.equal(id)
-      expect(user.name).to.equal(newName)
-      expect(user.surname).to.equal(surname)
-      expect(user.email).to.equal(email)
-      expect(user.password).to.equal(password)
+      expect(user.username).to.equal(username)
+      expect(user.email).to.equal(newEmail)
+
+      let match = await bcrypt.compare(password, user.password)
+      expect(match).to.be.true
+
     })
 
-    it('should succeed on modify surname and correct user id', async () => {
-      newName = undefined
-      newSurname = `surname-${random()}`
-      newUsername = undefined
+    it('should succeed on modify password using correct values', async () => {
 
-      await modufyUser(id, newName, newSurname, newUsername)
+      newEmail = undefined
+      newPassword = newVerifiedPassword = `password-${random()}`
+
+      await modufyUser(id, newEmail, newPassword, newVerifiedPassword)
       const user = await User.findById(id)
 
       expect(user).to.exist
       expect(user.id).to.equal(id)
-      expect(user.name).to.equal(name)
-      expect(user.surname).to.equal(newSurname)
+      expect(user.username).to.equal(username)
       expect(user.email).to.equal(email)
-      expect(user.password).to.equal(password)
+
+      let match = await bcrypt.compare(newPassword, user.password)
+      expect(match).to.be.true
+
     })
 
-    it('should succeed on modify email and correct user id', async () => {
-      newName = undefined
-      newSurname = undefined
-      newUsername = `email-${random()}@mail.com`
+    it('should failed on modify password without verified password', async () => {
+      newEmail = undefined
+      newPassword = `password-${random()}`
+      newVerifiedPassword =  undefined
 
-      await modufyUser(id, newName, newSurname, newUsername)
-      const user = await User.findById(id)
+      try {
 
-      expect(user).to.exist
-      expect(user.id).to.equal(id)
-      expect(user.name).to.equal(name)
-      expect(user.surname).to.equal(surname)
-      expect(user.username).to.equal(newUsername)
-      expect(user.password).to.equal(password)
+        await modufyUser(id, newEmail, newPassword, newVerifiedPassword)
+
+        throw Error(`should not reach this point`)
+
+      } catch (error) {
+
+        expect(error).to.exist
+        expect(error.message).to.exist
+        expect(typeof error.message).to.equal('string')
+        expect(error).to.be.an.instanceOf(ConflictError)
+        expect(error.message.length).to.be.greaterThan(0)
+        expect(error.message).to.equal(`failed to modify password, passwords are not the same, please introduce correctly your password and it's verification`)
+
+      }
+    })
+
+    it('should failed on modify password without verified password', async () => {
+      newEmail = undefined
+      newPassword = undefined
+      newVerifiedPassword =  `password-${random()}`
+
+      try {
+
+        await modufyUser(id, newEmail, newPassword, newVerifiedPassword)
+
+        throw Error(`should not reach this point`)
+
+      } catch (error) {
+
+        expect(error).to.exist
+        expect(error.message).to.exist
+        expect(typeof error.message).to.equal('string')
+        expect(error).to.be.an.instanceOf(ConflictError)
+        expect(error.message.length).to.be.greaterThan(0)
+        expect(error.message).to.equal(`failed to modify password, passwords are not the same, please introduce correctly your password and it's verification`)
+
+      }
     })
 
     it('should fail on wrong user id', async () => {
-      const id = '012345678901234567890123'
+      let wrongId = '012345678901234567890123'
 
       try {
-        await modufyUser(id)
+        await modufyUser(wrongId)
 
         throw Error('should not reach this point')
       } catch (error) {
         expect(error).to.exist
         expect(error).to.be.an.instanceOf(NotFoundError)
-        expect(error.message).to.equal(`user with id ${id} not found`)
+        expect(error.message).to.equal(`user with id ${wrongId} not found`)
+      }
+    })
+
+    it('should fail on invalid data type of user id', async () => {
+      let invalidId = 'sadasdasdasdasdasdas'
+
+      try {
+        await modufyUser(invalidId)
+
+        throw Error('should not reach this point')
+      } catch (error) {
+        expect(error).to.exist
+        expect(error).to.be.an.instanceOf(ContentError)
+        expect(error.message).to.equal(`${invalidId} is not a valid id`)
       }
     })
 
