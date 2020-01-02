@@ -92,7 +92,7 @@ describe('logic - retrieve company by category', () => {
         const userID = '123123123123'
 
         try {
-            debugger
+            
             await retrieveCompanyByCategory(category, userID)
 
             throw Error('should not reach this point')

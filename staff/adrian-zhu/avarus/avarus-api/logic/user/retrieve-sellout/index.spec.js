@@ -121,7 +121,7 @@ describe('logic - retrieve sell-out', () => {
 
             } catch (error) {
                 expect(error).to.exist
-                debugger
+                
                 expect(error).to.be.an.instanceOf(NotFoundError)
                 expect(error.message).to.equal(`we can't found this sellout with id ${iD}`)
             }

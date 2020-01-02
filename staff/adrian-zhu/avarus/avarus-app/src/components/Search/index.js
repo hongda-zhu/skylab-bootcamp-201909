@@ -35,7 +35,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     function handleSubmitSearch (event) { 
 
-        try { debugger
+        try { 
 
             event.preventDefault()
             

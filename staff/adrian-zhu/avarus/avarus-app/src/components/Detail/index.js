@@ -6,12 +6,9 @@ import Charts from '../Charts'
 import Stats from '../Stats'
 import About from '../About'
 import ButtonFavorite from '../ButtonFavorite'
-import {priceProducer} from '../../utils'
-import { Link } from 'react-router-dom';
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import {retrieveCompanyById, producePrice} from '../../logic'
-import { format } from 'path'
-const moment = require('moment')
+
 
 export default withRouter(function ({userId, companyId, history, onBuy}) { 
 
@@ -25,6 +22,8 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
     let refresher
 
     const {token} = sessionStorage
+
+    debugger
         
     useEffect(()=>{
         if (typeof refresher !== 'number' ) refresher = setInterval(()=>{
@@ -150,31 +149,3 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
 </section>} </>
 
 })
-
-
-// {return  detail? <section className="detail hidden">
-// <div className="detail-container container">
-
-//     <div className="container-description description">
-// <p className="description-title">{name}</p>
-//         <button className ="description-button" onClick={goBackMain} >goBack</button>
-//         <img src="https://dummyimage.com/200x250/000/fff" className="description-image" />
-//         <p className="description-currentValue">55$</p>
-//         <p className="description-percentage__red"><i className="fas fa-arrow-down"></i> 3.06 (5.59%)</p>
-//         <p className="description-percentage__green"><i className="fas fa-arrow-up"></i> 3.06 (5.59%)</p> 
-//     </div>
-
-//     <nav className="container-navegator navegator">
-
-//         <Slide handleslideName={handleslideName} />
-
-//         {slide === 'buy' && <Buy />}
-//         {slide === 'charts' && <Charts />}
-//         {slide === 'stats' && <Stats />}
-//         {slide === 'about' && <About />}
-//     </nav>
-
-// </div>
-// </section> : <> </>}
-
-// })

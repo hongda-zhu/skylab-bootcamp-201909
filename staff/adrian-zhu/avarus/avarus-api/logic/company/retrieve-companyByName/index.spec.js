@@ -80,7 +80,7 @@ describe('logic - retrieve company by name', () => {
         const wrongName = '123123123123'
 
         try {
-            debugger
+            
             await retrieveCompanyByName(wrongName, userId)
 
             throw Error('should not reach this point')
@@ -95,7 +95,7 @@ describe('logic - retrieve company by name', () => {
         const userID = '123123123123'
 
         try {
-            debugger
+            
             await retrieveCompanyByName(name, userID)
 
             throw Error('should not reach this point')

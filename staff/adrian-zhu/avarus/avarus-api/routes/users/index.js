@@ -169,6 +169,7 @@ router.post('/:id/sellout', jsonBodyParser, (req, res) => {
     try {
         sellOut(userId, companyId, stockId, buyInTransactionId, operation, quantity)
         .then(() => res.status(201).end())
+        // .then(sellout => res.json({ sellout }))
             .catch(error => {
                 const { message } = error
 
@@ -276,7 +277,7 @@ router.delete('/sellout/:id', (req, res) => {
 router.patch('/favs/:companyId', jsonBodyParser, tokenVerifier, (req, res) => {
     const {id:userId,  params:{companyId} } = req
 
-    debugger
+    
     
     try {
         toggleFav(userId, companyId)

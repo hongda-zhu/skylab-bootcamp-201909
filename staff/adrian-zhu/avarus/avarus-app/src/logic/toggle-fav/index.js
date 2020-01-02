@@ -21,7 +21,7 @@ export default function (token, companyId) {
 
     return (async () => {
 
-        debugger
+        
         const res = await call(`${API_URL}/users/favs/${companyId}`, {
             method: 'PATCH',
             headers: { 'Authorization': `Bearer ${token}` }

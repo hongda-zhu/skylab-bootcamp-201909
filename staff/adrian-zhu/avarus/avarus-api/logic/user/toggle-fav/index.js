@@ -23,7 +23,7 @@ module.exports = function (userId, companyId) {
 
     return (async () => {
 
-        debugger
+        
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError(`user with id ${userId} not found`)
         

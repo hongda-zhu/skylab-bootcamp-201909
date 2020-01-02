@@ -45,7 +45,7 @@ export default withRouter(function ({ history }) {
 
       refreshAll()
 
-    }, [sessionStorage.token, transactions, favorites])
+    }, [sessionStorage.token, favorites]) // transactions
 
 
     async function refreshAll(){

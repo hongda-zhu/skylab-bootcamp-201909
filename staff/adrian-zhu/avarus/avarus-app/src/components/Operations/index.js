@@ -37,7 +37,7 @@ export default withRouter(function ({history, transactionId, onSell}) {
 
                     const transactionDetail = await retrieveBuyin(transactionId)
                     setTransactionDetail(transactionDetail) 
-                    debugger
+                    
 
                     const {company} = transactionDetail
                     setDetail(company)             
@@ -130,12 +130,13 @@ export default withRouter(function ({history, transactionId, onSell}) {
 
     async function handleOnSell(userId, companyId, stockId, buyInTransactionId, operation, quantity){
         try {
-
+            
             quantity = parseInt(quantity)
 
             await sellOut(userId, companyId, stockId, buyInTransactionId, operation,quantity)
 
             onSell()
+
 
         }catch({message}) {
 
@@ -198,21 +199,11 @@ export default withRouter(function ({history, transactionId, onSell}) {
             </div>
 
         <form className="container-sellout sellout" onSubmit={ function(event){
-
-            try {
-
                 event.preventDefault()
                 const {quantity: {value: quantity}}= event.target
                 const operation = 'sell-out'
-                
+
                 handleOnSell(transactionDetail.user._id, transactionDetail.company._id, transactionDetail.stockSelected._id, transactionId, operation, quantity)
-
-            } catch ({message}) {
-
-                console.log(message)
-
-            }
-
         }
 
         }>
@@ -236,7 +227,7 @@ export default withRouter(function ({history, transactionId, onSell}) {
                     setGainResult(gain * currentPrice)} } value={gain}></input>: <div  className="detail-block"> 0 </div>}
 
 
-                    { gainResult >=0 ? <div className="detail-property" placeholder >{gainResult}</div> :  <div className="detail-property" placeholder > 0 </div> }
+                    { gainResult >=0 ? <div className="detail-property">{gainResult}</div> :  <div className="detail-property"> 0 </div> }
 
                 </div> 
             </div>

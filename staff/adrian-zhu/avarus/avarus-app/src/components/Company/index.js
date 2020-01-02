@@ -5,6 +5,8 @@ import ButtonFavorite from '../ButtonFavorite'
 
 export default withRouter(function ({ history, company, token }) { 
 
+    
+
     if(!company.id) company.id = company._id
     delete company._id
 

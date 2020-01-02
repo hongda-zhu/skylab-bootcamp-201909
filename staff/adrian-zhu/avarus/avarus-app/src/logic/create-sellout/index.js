@@ -40,15 +40,14 @@ export default function (userId, companyId, stockId, buyInTransactionId, operati
 
     return (async () => { 
 
+        debugger
+
         const res = await call(`${API_URL}/users/${userId}/sellout`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({companyId, stockId, buyInTransactionId, operation, quantity})
         })
-        if (res.status === 200) { 
-            let transaction = JSON.parse(res.body)
-            return transaction
-        }
+        if (res.status === 201) return 
 
         if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 

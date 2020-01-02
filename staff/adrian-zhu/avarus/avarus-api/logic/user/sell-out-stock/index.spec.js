@@ -83,7 +83,7 @@ describe('logic - sell-out', () => {
 
         const sellOutTransaction = await sellOutStock(userId, companyId, stockId, buyInTransactionId, operation2, quantity2)
 
-        debugger
+        
 
         expect(sellOutTransaction).to.exist
         expect(sellOutTransaction.id).to.be.a('string')
