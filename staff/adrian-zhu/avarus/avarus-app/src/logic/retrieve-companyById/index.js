@@ -11,13 +11,9 @@ const API_URL = process.env.REACT_APP_API_URL
  * @returns {Array} 
  * 
  */
-<<<<<<< HEAD
-export default function (companyId, token) {
-=======
-export default function (companyId, userId) {
 
-    debugger
->>>>>>> f39bdc1919e812a5b19d5158337d2e4ef1463343
+export default function (companyId, token) {
+
     validate.string(companyId)
     validate.string.notVoid('companyId', companyId)
 

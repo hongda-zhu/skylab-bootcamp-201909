@@ -8,15 +8,8 @@ import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory} fro
 function Main ({error, onClose, token }) { 
 
     const [companies, setCompanies] = useState([])
-<<<<<<< HEAD
-    
+
     // const [user, setUser] = useState()
-=======
-
-    const [user, setUser] = useState()
-
-    const {token} = sessionStorage
->>>>>>> f39bdc1919e812a5b19d5158337d2e4ef1463343
 
     useEffect(()=>{
 
@@ -42,14 +35,10 @@ function Main ({error, onClose, token }) {
     async function handleSearchAll(token){
 
         try { 
-<<<<<<< HEAD
+
             
             const companies = await retrieveCompanies(token)
-=======
- 
-            const companies = await retrieveCompanies(userId, token)
->>>>>>> f39bdc1919e812a5b19d5158337d2e4ef1463343
-                    
+      
             setCompanies(companies)
 
         }catch({message}){

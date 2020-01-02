@@ -58,7 +58,7 @@ export default withRouter(function ({userId, companyId, history, onBuy}) {
                     
                 }
             })()
-        }, 60000)
+        }, 60000);
  
         (async()=>{
             try{
