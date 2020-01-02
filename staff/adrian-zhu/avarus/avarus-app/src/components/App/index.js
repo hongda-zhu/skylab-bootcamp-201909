@@ -20,10 +20,6 @@ import { registerUser, authenticateUser, retrieveUser, editUser} from '../../log
 export default withRouter(function ({ history }) {
 
 
-    const [name, setName] = useState()
-
-    const [surname, setSurname] = useState()
-
     const [email, setEmail] = useState()
 
     const [username, setUsername] = useState()
@@ -54,12 +50,10 @@ export default withRouter(function ({ history }) {
         
           if (token) { 
               
-              const {id, name, surname, email, username, password, budget, transactions, favorites} = await retrieveUser(token)
+              const {id, email, username, password, budget, transactions, favorites} = await retrieveUser(token)
 
-              setName(name)
               setBudget(budget.toFixed(4))
               setId(id)
-              setSurname(surname)
               setUsername(username)
               setEmail(email)
               setPassword(password)
@@ -69,12 +63,12 @@ export default withRouter(function ({ history }) {
           }
     }
     
-    async function handleRegister(name, surname, email, username, password){
+    async function handleRegister(email, username, password, verifiedPassword){
         try {
         
           const budget = 5000
 
-          await registerUser(name, surname, email, username, password, budget)
+          await registerUser(email, username, password, verifiedPassword, budget)
         
           history.push('/login')
 
@@ -106,10 +100,15 @@ export default withRouter(function ({ history }) {
       }
   }
 
-  async function handleModifyUser(name, surname, email) {
+  async function handleModifyUser(email, password, verifiedPassword) {
+
+
     try {
-        
-        await editUser(name, surname, email) 
+        debugger 
+
+        const { token } = sessionStorage
+      
+        await editUser(token, email, password, verifiedPassword) 
         
 
         history.push('/main')
@@ -138,7 +137,7 @@ export default withRouter(function ({ history }) {
 
 
   return <> 
-      {token && <> <Header name={name} budget={budget} onLogout={handleLogout} /></>} 
+      {token && <> <Header name={username} budget={budget} onLogout={handleLogout} /></>} 
       
       <Route exact path='/' render={() => !token ? <Landing />: <Main error={error} onClose={handleCloseError} token={token}/> }/>
 
@@ -150,7 +149,7 @@ export default withRouter(function ({ history }) {
 
       <Route path = '/detail/:id' render={({ match: { params: { id:companyId } } })  => token && id ? <> <Detail userId={id} companyId={companyId} onBuy={refreshAll}/> </>: <Redirect to="/" />  } />
 
-      <Route path="/userpage" render={() => token ? <UserPage name={name} surname={surname} email={email} username={username} password={password} onModifyUser={handleModifyUser} onBack={handleGoBack} error={error} onClose={handleCloseError}  /> : <Redirect to="/" />} />
+      <Route path="/userpage" render={() => token ? <UserPage email={email} username={username} password={password} onModifyUser={handleModifyUser} onBack={handleGoBack} error={error} onClose={handleCloseError}  /> : <Redirect to="/" />} />
 
       <Route path = '/transactions' render={() => transactions && token && id && <Transactions  userId={id} transactions={transactions} error={error} onClose={handleCloseError} />  } />
 

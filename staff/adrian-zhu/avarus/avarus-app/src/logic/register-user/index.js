@@ -16,18 +16,20 @@ const API_URL = process.env.REACT_APP_API_URL
  */
 
 
-export default function (name, surname, email, username, password, budget) {
-    validate.string(name)
-    validate.string.notVoid('name', name)
-    validate.string(surname)
-    validate.string.notVoid('surname', surname)
+export default function (email, username, password, veryfiedPassword, budget) {
     validate.string(email)
-    validate.string.notVoid('e-mail', email)
+    validate.string.notVoid('email', email)
     validate.email(email)
+    
     validate.string(username)
     validate.string.notVoid('username', username)
+
     validate.string(password)
     validate.string.notVoid('password', password)
+
+    validate.string(veryfiedPassword)
+    validate.string.notVoid('veryfiedPassword', veryfiedPassword)
+
     validate.number(budget)
 
     return (async () => {
@@ -35,7 +37,7 @@ export default function (name, surname, email, username, password, budget) {
         const res = await call(`${API_URL}/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, surname, email, username, password, budget })
+            body: JSON.stringify({ email, username, password, veryfiedPassword, budget })
         })
         if (res.status === 201) return
 

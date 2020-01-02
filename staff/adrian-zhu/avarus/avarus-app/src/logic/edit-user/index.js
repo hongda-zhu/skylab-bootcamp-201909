@@ -13,26 +13,45 @@ const API_URL = process.env.REACT_APP_API_URL
  */
 
 
-export default  function (name, surname, email) {
-    validate.string(name)
-    validate.string.notVoid('name', name)
+export default  function (token, email, password, verifiedPassword) {
 
-    validate.string(surname)
-    validate.string.notVoid('surname', surname)
+    validate.string(token)
+    validate.string.notVoid('token', token)
 
-    validate.string(email)
-    validate.string.notVoid('e-mail', email)
+    if(email){
+
+        validate.string(email)
+        validate.string.notVoid('email', email)
+        validate.email(email)
+
+    }
+
+    if(password) {
+
+        validate.string(password)
+        validate.string.notVoid('password', password)
+
+    }
+
+    if(verifiedPassword) {
+
+        validate.string(verifiedPassword)
+        validate.string.notVoid('verifiedPassword', verifiedPassword)
+
+    }
 
     return (async () => {
-        const res = await call(`${API_URL}/users/update`, {
+        debugger
+        const res = await call(`${API_URL}/users`, {
             method: 'PATCH',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json' 
             },
-            body: JSON.stringify({ name, surname, email })
+            body: JSON.stringify({ email, password, verifiedPassword })
         })
 
-        if (res.status === 201)  return
+        if (res.status === 200)  return
           
         if (res.status === 400) throw new CredentialsError(JSON.parse(res.body).message)
         

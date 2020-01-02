@@ -2,32 +2,57 @@ import React from 'react'
 import './index.sass'
 import Feedback from '../Feedback'
 
-export default function ({name, surname, email, onModifyUser, username, password, onBack, error, onClose }) { 
+export default function ({ email, username, password, onModifyUser, onBack,  error, onClose }) { 
     return <section className="userpage">
             <div className="userpage__container container">
                 <h3 className="container__title">Personal Info</h3>
                 <form className="container__form form" onSubmit={ event => {
                             event.preventDefault()
                             
+                        const {
+                            email:{value: email},
+                            password:{value: password},
+                            verifiedPassword:{value: verifiedPassword},
+                        } = event.target
 
-                            const { name: { value: name }, surname: { value: surname }, email:{value: email} } = event.target
-                          
-                            onModifyUser(name, surname, email)
+                            debugger
+                        
+                            onModifyUser(email, password, verifiedPassword)
                         }}>
-                    <label>Name: <input type="text" className="sign-up__name" defaultValue={name} name="name" /></label>
 
-                    <label>Surname: <input type="text" className="sign-up__name" defaultValue={surname} name="surname" /></label>
+                    <div className="wrap-edit__input" data-validate="username is required">
+                        <input className="wrap-edit__input-container" type="username" name="username" placeholder="Username " defaultValue={username} readOnly/>
+                        <span className="wrap-edit__input-symbol">
+                            <i className="far fa-user"></i>
+                        </span>
+                    </div>
+                    
+                    <div className="wrap-edit__input" data-validate="email is required">
+                        <input className="wrap-edit__input-container" type="email" name="email" placeholder="Email" defaultValue={email}/>
+                        <span className="wrap-edit__input-symbol">
+                            <i className="far fa-envelope"></i>
+                        </span>
+                    </div>
 
-                    <label>Username: <input type="text" className="sign-up__name" name="username" defaultValue={username} /></label>
+                    <div className="wrap-edit__input" data-validate="password is required">
+                        <input className="wrap-edit__input-container" type="password" name="password" placeholder="Password" />
+                        <span className="wrap-edit__input-symbol">
+                            <i className="fas fa-unlock-alt"></i>
+                        </span>
+                    </div>
 
-                    <label>Email: <input type="email" className="sign-up__name" defaultValue={email} name="email" /></label>
-
-                    <label >Password: <input type="password" className="sign-up__name" name="password" defaultValue={password}/></label> 
-
+                    <div className="wrap-edit__input" data-validate="verified password is required">
+                        <input className="wrap-edit__input-container" type="password" name="verifiedPassword" placeholder="Verified Password"/>
+                        <span className="wrap-edit__input-symbol">
+                            <i className="fas fa-unlock-alt"></i>
+                        </span>
+                    </div>
                     <div className="form__buttons buttons">
+
                         <div className="buttons__modify-info modify-info">
                             <button className="modify-info__button">Modify Info</button>
                         </div>
+
                         <div className="buttons__back-button back-button">
                             <button className="back-button__button" onClick={event => {
                             event.preventDefault()
@@ -38,7 +63,7 @@ export default function ({name, surname, email, onModifyUser, username, password
                     </div>
                 </form>
                 
-                   
+                
             </div>
 
             {error && <Feedback message={error} onClose={onClose} />}

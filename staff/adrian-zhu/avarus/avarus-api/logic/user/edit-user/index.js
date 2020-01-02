@@ -59,5 +59,8 @@ module.exports = function(id, email, password, verifiedPassword) {
     update.lastAccess = new Date
 
     await User.updateOne({ _id: ObjectId(id) }, { $set: update })
+
+    user.save()
+    
   })()
 }

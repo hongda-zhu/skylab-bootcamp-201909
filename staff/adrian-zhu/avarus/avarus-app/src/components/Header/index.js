@@ -1,9 +1,9 @@
 import React from 'react'
 import './index.sass'
 import { Link } from 'react-router-dom';
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import {  withRouter } from 'react-router-dom'
 
-export default withRouter(function ({ history, name, budget, onLogout}) {
+export default withRouter(function ({ name, budget, onLogout}) {
     return <header className="header">
         <input id="show-menu" name="modal" type="checkbox" />
 
@@ -23,7 +23,7 @@ export default withRouter(function ({ history, name, budget, onLogout}) {
                 <li className="menu-item"><Link to="/main">Main</Link></li>
                 <li className="menu-item"><Link to="/transactions">Transactions</Link></li>
                 <li className="menu-item"><Link to="/favorites">Favorite</Link></li>
-                {/* <li className="menu-item"><Link to="/userpage">Profile</Link></li>  */}
+                <li className="menu-item"><Link to="/userpage">Profile</Link></li> 
                 <li className="menu-item">
                     <label className="hamburger-close" htmlFor="show-menu">Close</label>
                 </li>

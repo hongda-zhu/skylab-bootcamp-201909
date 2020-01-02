@@ -11,10 +11,10 @@ const jsonBodyParser = bodyParser.json()
 const router = Router()
 
 router.post('/', jsonBodyParser, (req, res) => {
-    const { body: { name, surname, email, username, password, budget = 5000} } = req
+    const { body: {email, username, password, veryfiedPassword, budget = 5000} } = req
 
     try {
-        registerUser(name, surname, email, username, password, budget)
+        registerUser(email, username, password, veryfiedPassword, budget)
             .then(() => res.status(201).end())
             .catch(error => {
                 const { message } = error
@@ -75,12 +75,14 @@ router.get('/', tokenVerifier, (req, res) => {
 
 
 
-router.patch('/:id', jsonBodyParser, (req, res) => {
-    const { params: { id }, body: { name, surname, username, password} } = req
+router.patch('/', jsonBodyParser, tokenVerifier, (req, res) => {
+
+    debugger
+    const {id , body: { email, password, verifiedPassword} } = req
     
     try {
-        editUser(id, name, surname, username, password)
-            .then(() => res.status(201).end())
+        editUser(id, email, password, verifiedPassword)
+            .then(() => res.status(200).end())
             .catch(error => {
                 const { message } = error
 
