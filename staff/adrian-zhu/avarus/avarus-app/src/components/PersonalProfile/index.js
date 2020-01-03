@@ -50,7 +50,7 @@ export default function ({ email, username, password, onModifyUser, onBack,  err
                     <div className="form__buttons buttons">
 
                         <div className="buttons__modify-info modify-info">
-                            <button className="modify-info__button">Modify Info</button>
+                            <button className="modify-info__button">Edoy Info</button>
                         </div>
 
                         <div className="buttons__back-button back-button">

@@ -40,6 +40,8 @@ export default function ({token, companyId}) {
 
             event.preventDefault()
 
+            event.stopPropagation()
+
             await toggleFav(token, companyId) 
             
             await refreshUserFav()
@@ -55,8 +57,9 @@ export default function ({token, companyId}) {
                
 
                { company && (company.isFav ? 
-                    <button className="btn-fav" onClick={onFav}><i className="fas fa-money-bill-alt"></i></button> :
-                    <button className="btn-fav" onClick={onFav}><i className="far fa-money-bill-alt"></i></button>)
+               
+                    <span className="btn-fav" onClick={onFav}><i className="fas fa-money-bill-alt"></i></span> :
+                    <span className="btn-fav" onClick={onFav}><i className="far fa-money-bill-alt"></i></span>)
 
                 }
                 
