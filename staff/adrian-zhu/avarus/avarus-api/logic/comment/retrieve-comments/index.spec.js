@@ -20,7 +20,7 @@ describe('logic - retrieve comments', () => {
     let risks = ['adverse', 'neutral', 'seek']
     let markets = ['bear','bull', 'neutral']
     let categories = ['tech', 'food', 'banking', 'sports', 'gaming', 'fashion']
-    let body = 'Stringdsfhuisdhfuidshguidfhgdhfuighdfighidufghdfiug'
+    let body = 'this is a comment'
     
     
         beforeEach(async () => {

@@ -20,5 +20,10 @@ module.exports = {
     retrievePrices: require('./company/retrieve-prices'),
     retrieveCompanyCategory: require('./company/retrieve-companyCategory'),
     retrieveCompanyName: require('./company/retrieve-companyByName'),
-    editCompany: require('./company/edit-company')
+    editCompany: require('./company/edit-company'),
+
+    // Comment
+    createComment: require('./comment/create-comment'),
+    retrieveComments: require('./comment/retrieve-comments'),
+    deleteComment: require('./comment/delete-comment')
 }
