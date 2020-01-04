@@ -1,17 +1,19 @@
 require('dotenv').config()
 const { env: { TEST_DB_URL} } = process
 const { expect } = require('chai')
-const createComment = require('.')
+const retrieveComments = require('.')
 const { random, floor } = Math
-const { errors: { NotFoundError, ConflictError, ContentError } } = require('avarus-util')
+const { errors: { NotFoundError, ContentError} } = require('avarus-util')
 const { ObjectId, database, models: { User, Company, Stock, Transaction, Comment } } = require('avarus-data')
 const bcrypt = require('bcryptjs')
 
-describe('logic - create comment', () => {
+describe('logic - retrieve comments', () => {
 
     before(() => database.connect(TEST_DB_URL))
 
     let userId, companyId, stockId, operation, buyInTransactionId, quantity
+    let userId1, email1, username1, password1, verifiedPassword1, budget1
+
     let email, username, password, verifiedPassword, budget
     let companyname, description, risk, market, category, dependency, stocks, image 
 
@@ -35,6 +37,17 @@ describe('logic - create comment', () => {
 
             userId = user.id
             await user.save()
+
+            email1 = `email1-${random()}@mail.com`
+            username1 = `username1-${random()}`
+            password1 = verifiedPassword1 = `password1-${random()}`
+            budget1 = 5000
+            transactions1 = []
+
+            const user1 = await User.create({  email1, username1, password1: await bcrypt.hash(password1, 10), verifiedPassword1, budget1, transactions1})
+
+            userId1 = user1.id
+            await user1.save()
 
             companyname = `name-${random()}`
             description = `description-${random()}`
@@ -64,22 +77,39 @@ describe('logic - create comment', () => {
 
             await transaction.save()
 
+            const comment = await Comment.create({user: userId, transaction: buyInTransactionId, body, date: new Date}) 
+            await comment.save()
+
+            const comment1 = await Comment.create({user: userId, transaction: buyInTransactionId, body, date: new Date}) 
+
+            await comment1.save()
+
+            const comment2 = await Comment.create({user: userId1, transaction: buyInTransactionId, body, date: new Date}) 
+
+            await comment2.save()
+
         })
     
         it('should create successfully a comment with correct information', async () => {
             
-            const newComment = await createComment(userId, buyInTransactionId, body)
+            const newComments = await retrieveComments(userId, buyInTransactionId)
             
-            expect(newComment).to.exist
-            expect(newComment).to.be.a('object')
+            expect(newComments).to.exist
+            expect(newComments).to.be.a('array')
 
-            expect(newComment.user).to.be.a('object')
-            expect(newComment.user.toString()).to.eql(userId)
-            expect(newComment.transaction).to.be.a('object')
-            expect(newComment.transaction.toString()).to.eql(buyInTransactionId)
-            expect(newComment.body).to.be.a('string')
-            expect(newComment.body).to.eql(body)
-            expect(newComment.date).to.be.an.instanceOf(Date)
+            newComments.forEach(newComment => {
+
+                
+                expect(newComment.user).to.be.a('object')
+                expect(newComment.user.toString()).to.eql(userId)
+                expect(newComment.transaction).to.be.a('object')
+                expect(newComment.transaction.toString()).to.eql(buyInTransactionId)
+                expect(newComment.body).to.be.a('string')
+                expect(newComment.body).to.eql(body)
+                expect(newComment.date).to.be.an.instanceOf(Date)
+
+            })
+
 
         })
 
@@ -88,7 +118,7 @@ describe('logic - create comment', () => {
             const wrongUserId = ObjectId().toString()
 
             try {
-                await createComment(wrongUserId, buyInTransactionId, body)
+                await retrieveComments(wrongUserId, buyInTransactionId)
 
                 throw Error(`should not reach this point`)
 
@@ -110,7 +140,7 @@ describe('logic - create comment', () => {
             const wrongBuyInTransactionId = ObjectId().toString()
 
             try {
-                await createComment(userId, wrongBuyInTransactionId, body)
+                await retrieveComments(userId, wrongBuyInTransactionId)
 
                 throw Error(`should not reach this point`)
 
@@ -126,35 +156,27 @@ describe('logic - create comment', () => {
         
         })
 
-    it('should fail on incorrect userId, companyId, transactionId, body or expression type and content', () => {
+        
+    it('should fail on incorrect userId, companyId, transactionId or expression type and content', () => {
 
         
-        expect(() => createComment(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => createComment(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createComment([])).to.throw(TypeError, ' is not a string')
-        expect(() => createComment({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createComment(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => createComment(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => createComment('')).to.throw(ContentError, 'userId is empty or blank')
-        expect(() => createComment(' \t\r')).to.throw(ContentError, 'userId is empty or blank')
+        expect(() => retrieveComments(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => retrieveComments(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => retrieveComments([])).to.throw(TypeError, ' is not a string')
+        expect(() => retrieveComments({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => retrieveComments(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => retrieveComments(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveComments('')).to.throw(ContentError, 'userId is empty or blank')
+        expect(() => retrieveComments(' \t\r')).to.throw(ContentError, 'userId is empty or blank')
 
-        expect(() => createComment(userId, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => createComment(userId, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createComment(userId, [])).to.throw(TypeError, ' is not a string')
-        expect(() => createComment(userId, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createComment(userId, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => createComment(userId, null)).to.throw(TypeError, 'null is not a string')
-        expect(() => createComment(userId, '')).to.throw(ContentError, 'transactionId is empty or blank')
-        expect(() => createComment(userId, ' \t\r')).to.throw(ContentError, 'transactionId is empty or blank')
-    
-        expect(() => createComment(userId, buyInTransactionId, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => createComment(userId, buyInTransactionId, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createComment(userId, buyInTransactionId, [])).to.throw(TypeError, ' is not a string')
-        expect(() => createComment(userId, buyInTransactionId, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createComment(userId, buyInTransactionId, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => createComment(userId, buyInTransactionId, null)).to.throw(TypeError, 'null is not a string')
-        expect(() => createComment(userId, buyInTransactionId, '')).to.throw(ContentError, 'body is empty or blank')
-        expect(() => createComment(userId, buyInTransactionId, ' \t\r')).to.throw(ContentError, 'body is empty or blank')
+        expect(() => retrieveComments(userId, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => retrieveComments(userId, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => retrieveComments(userId, [])).to.throw(TypeError, ' is not a string')
+        expect(() => retrieveComments(userId, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => retrieveComments(userId, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => retrieveComments(userId, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveComments(userId, '')).to.throw(ContentError, 'transactionId is empty or blank')
+        expect(() => retrieveComments(userId, ' \t\r')).to.throw(ContentError, 'transactionId is empty or blank')
 
     })
 

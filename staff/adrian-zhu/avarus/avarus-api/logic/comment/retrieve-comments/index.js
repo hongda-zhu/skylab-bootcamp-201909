@@ -7,14 +7,13 @@ const { ObjectId, models: { User, Comment, Transaction } } = require('avarus-dat
  * 
  * @param {userId} ObjectId
  * @param {transactionId} ObjectId
- * @param {body} string
  * 
- * @returns {Object} comment
+ * @returns {Array} comments
  * 
  */
 
-module.exports = function (userId, transactionId, body) {
-    
+module.exports = function (userId, transactionId) { 
+
     validate.string(userId)
     validate.string.notVoid('userId', userId)
     if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
@@ -22,24 +21,34 @@ module.exports = function (userId, transactionId, body) {
     validate.string(transactionId)
     validate.string.notVoid('transactionId', transactionId)
     if (!ObjectId.isValid(transactionId)) throw new ContentError(`${transactionId} is not a valid id`)
+    
 
-    validate.string(body)
-    validate.string.notVoid('body', body)
+    return (async () => { 
 
+        const user = await User.findById(userId)
 
-    return (async () => {
-        
-        const user = await User.findById( userId )
-        
-        if (!user) throw new NotFoundError(`user with id ${userId} does not exists`)
+        if(!user) throw new NotFoundError(`user with id ${userId} does not exists`)
 
         const transaction = await Transaction.findById( transactionId )
 
         if (!transaction) throw new NotFoundError(`transaction with id ${transactionId} does not exists`)
 
-        const comment = await Comment.create({user: userId, transaction: transactionId, body, date: new Date})
+        const allComments = await Comment.find().lean()
+        
+        console.log(allComments)
 
-        return comment
+        const comments = await Comment.find({user:userId, transaction:transactionId})
 
+        debugger
+
+        comments.forEach( async comment => {
+
+            comment.id = comment._id.toString()
+            delete comment._id
+            delete comment.__v
+            await comment.save()
+        })
+
+        return comments
     })()
 }
