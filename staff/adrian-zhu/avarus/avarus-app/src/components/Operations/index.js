@@ -12,7 +12,7 @@ const moment = require('moment')
 
 export default withRouter(function ({history, transactionId, onSell}) { 
 
-    const [slide, setSlide] = useState('register')
+    const [slide, setSlide] = useState('history')
     const [transactionDetail, setTransactionDetail] = useState()
     const [purchasedPrice, setPurchasedPrice] = useState()
     const [costs, setCosts] = useState()
@@ -112,13 +112,14 @@ export default withRouter(function ({history, transactionId, onSell}) {
 
         return () => { clearInterval(refresher)}
     },[error, transactionDetail, currentPrice, setGainResult, setGain, gain])
+
     
-    async function handleslideName(slideName, transactionDetail){
+    async function handleslideName(slideName){
         
         switch(slideName){
             case 'goback':
                 setSlide('goback');
-            break;
+                break;
             case 'history':
                 setSlide('history');
                 break;
@@ -153,7 +154,7 @@ export default withRouter(function ({history, transactionId, onSell}) {
             event.preventDefault()
             // history.push('/main')
             history.goBack()
-     
+    
         }catch({message}) {
 
             console.log(message)
@@ -168,7 +169,7 @@ export default withRouter(function ({history, transactionId, onSell}) {
     <div className="operations-boxes boxes">
 
         <div className="boxes-buyin buyin">
-           
+        
                 <div className="buyin-title">
                     
                     Purchase
@@ -251,8 +252,8 @@ export default withRouter(function ({history, transactionId, onSell}) {
                 <Slide handleslideName={handleslideName} detail={undefined}/>
 
 
-                {slide === 'register' && <History sellRegisters = {relatedTo} />}
-                {/* {slide === 'comments' && <Comments />} */}
+                {slide === 'undefined' || slide === 'history' && <History sellRegisters = {relatedTo} />}
+                {slide === 'comments' && <Comments />}
             
 
             </nav>

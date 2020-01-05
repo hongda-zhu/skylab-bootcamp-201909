@@ -24,6 +24,7 @@ module.exports = {
 
     // Comment
     createComment: require('./comment/create-comment'),
+    editComment: require('./comment/edit-comment'),
     retrieveComments: require('./comment/retrieve-comments'),
     deleteComment: require('./comment/delete-comment')
 }

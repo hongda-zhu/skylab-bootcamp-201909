@@ -3,7 +3,7 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('.')
-const { errors: { NotFoundError } } = require('avarus-util')
+const { errors: { NotFoundError, ContentError, TypeError } } = require('avarus-util')
 const { database, models: { User } } = require('avarus-data')
 const bcrypt = require('bcryptjs')
 
@@ -49,6 +49,19 @@ describe('logic - retrieve user', () => {
             expect(error).to.be.an.instanceOf(NotFoundError)
             expect(error.message).to.equal(`usercase with id ${id} not found`)
         }
+    })
+
+    it('should fail on incorrect userId, companyId, transactionId or expression type and content', () => {
+
+        expect(() => retrieveUser(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => retrieveUser(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => retrieveUser([])).to.throw(TypeError, ' is not a string')
+        expect(() => retrieveUser({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => retrieveUser(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => retrieveUser(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveUser('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveUser(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+
     })
 
     after(() => User.deleteMany().then(database.disconnect))

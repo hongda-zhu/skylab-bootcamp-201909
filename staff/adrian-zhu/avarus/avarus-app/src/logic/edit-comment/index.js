@@ -14,46 +14,31 @@ const API_URL = process.env.REACT_APP_API_URL
  */
 
 
-export default  function (token, email, password, verifiedPassword) {
+export default  function (commentId, newBody) {
 
-    validate.string(token)
-    validate.string.notVoid('token', token)
+    validate.string(commentId)
+    validate.string.notVoid('commentId', commentId)
 
-    if(email){
+    if(newBody){
 
-        validate.string(email)
-        validate.string.notVoid('email', email)
-        validate.email(email)
-
-    }
-
-    if(password) {
-
-        validate.string(password)
-        validate.string.notVoid('password', password)
-
-    }
-
-    if(verifiedPassword) {
-
-        validate.string(verifiedPassword)
-        validate.string.notVoid('verifiedPassword', verifiedPassword)
+        validate.string(newBody)
+        validate.string.notVoid('newBody', newBody)
 
     }
 
     return (async () => {
-        debugger
-        const res = await call(`${API_URL}/users`, {
+        
+        const res = await call(`${API_URL}/comments`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json' 
             },
-            body: JSON.stringify({ email, password, verifiedPassword })
+            body: JSON.stringify({commentId, newBody })
         })
 
         if (res.status === 200)  return
-          
+        
         if (res.status === 400) throw new CredentialsError(JSON.parse(res.body).message)
         
         if (res.status === 404) throw new NotFoundError(JSON.parse(res.body).message)

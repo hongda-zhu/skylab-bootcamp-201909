@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createComment, retrieveComments, deleteComment} = require('../../logic')
+const { createComment, retrieveComments, editComment ,deleteComment} = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
@@ -52,6 +52,28 @@ router.get('/', tokenVerifier,  (req, res) => {
         res.status(400).json({ message })
     }
 })
+
+router.patch('/', tokenVerifier, jsonBodyParser, (req, res) => {
+
+    const {body: {commentId, newBody}} = req
+
+    try {
+
+        editComment(commentId, newBody)
+            .then(() => res.status(200).end())
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
 
 router.delete('/:commentId', tokenVerifier, (req,res)=>{
     const { params:{commentId} } = req
