@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react'
 import './index.sass'
 import Slide from '../Slide'
 import Comments from '../Comments'
-import History from '../History'
+import Sellout from '../Sellout'
 import {priceProducer} from '../../utils'
 import { Link } from 'react-router-dom';
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import {retrieveBuyin, sellOut} from '../../logic'
+import {retrieveBuyin, sellOut, retrieveComments} from '../../logic'
 import { format, parse } from 'path'
 const moment = require('moment')
 
@@ -24,9 +24,11 @@ export default withRouter(function ({history, transactionId, onSell}) {
     const [gain, setGain] = useState(0)
     const [gainResult, setGainResult] = useState()
     const [relatedTo, setRelatedTo] = useState([])
+    // const [commentsList, setCommentsList] = useState([])
     
     let refresher
-    
+
+    const {token} = sessionStorage
         
     useEffect(()=>{
         if (typeof refresher !== 'number' ) refresher = setInterval(()=>{
@@ -38,7 +40,9 @@ export default withRouter(function ({history, transactionId, onSell}) {
                     const transactionDetail = await retrieveBuyin(transactionId)
                     setTransactionDetail(transactionDetail) 
                     
-
+                    // let commentsArray = await retrieveComments(token, transactionId)
+                    // setCommentsList(commentsArray)
+                    
                     const {company} = transactionDetail
                     setDetail(company)             
 
@@ -78,6 +82,9 @@ export default withRouter(function ({history, transactionId, onSell}) {
 
                 const transactionDetail = await retrieveBuyin(transactionId)
                 setTransactionDetail(transactionDetail) 
+
+                // let commentsArray = await retrieveComments(token, transactionId)
+                // setCommentsList(commentsArray)
 
                 const {company} = transactionDetail
                 setDetail(company) 
@@ -225,7 +232,7 @@ export default withRouter(function ({history, transactionId, onSell}) {
                 <div className="information-detail detail">
 
                     {transactionDetail.quantity > 0 ? <input className="detail-boxes " type="quantity" name="quantity" onChange={event => {setGain(event.target.value) 
-                    setGainResult(gain * currentPrice)} } value={gain}></input>: <div  className="detail-block"> 0 </div>}
+                    setGainResult(gain * currentPrice)}} value={gain}></input>: <div  className="detail-block"> 0 </div>}
 
 
                     { gainResult >=0 ? <div className="detail-property">{gainResult}</div> :  <div className="detail-property"> 0 </div> }
@@ -252,8 +259,8 @@ export default withRouter(function ({history, transactionId, onSell}) {
                 <Slide handleslideName={handleslideName} detail={undefined}/>
 
 
-                {slide === 'undefined' || slide === 'history' && <History sellRegisters = {relatedTo} />}
-                {slide === 'comments' && <Comments />}
+                {slide === 'history' && <Sellout sellRegisters = {relatedTo} />}
+                {slide === 'comments' && <Comments transactionId = {transactionId}/>}
             
 
             </nav>

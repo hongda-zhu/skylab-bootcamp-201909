@@ -12,7 +12,7 @@ export default withRouter (function ({ error, onRegister, onClose }) {
 
         <h1 className="form-register__title">Register</h1>
 
-            <form type="submit" className="wrap-register" onSubmit = {function(event){
+            <form type="submit" className="wrap-register" onSubmit = {event => {
 
                     event.preventDefault()
 

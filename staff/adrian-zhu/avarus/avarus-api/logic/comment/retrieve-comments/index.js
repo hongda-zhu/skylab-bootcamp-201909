@@ -1,5 +1,6 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
 const { ObjectId, models: { User, Comment, Transaction } } = require('avarus-data')
+const moment = require('moment')
 
 /**
  *
@@ -39,15 +40,19 @@ module.exports = function (userId, transactionId) {
 
         const comments = await Comment.find({user:userId, transaction:transactionId})
 
-        debugger
 
         comments.forEach( async comment => {
 
             comment.id = comment._id.toString()
             delete comment._id
             delete comment.__v
+            const timeCorrector = moment(comment.date).format("DD-MMM-YYYY HH:mm:ss")
+            comment.date = timeCorrector
+
             await comment.save()
         })
+
+        comments.sort((a, b) => (a.date > b.date) ? -1 : ((b.date > a.date) ? 1 : 0) )
 
         return comments
     })()

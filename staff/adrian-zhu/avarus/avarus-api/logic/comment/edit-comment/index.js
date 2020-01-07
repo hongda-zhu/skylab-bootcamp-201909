@@ -20,11 +20,18 @@ module.exports = function (commentId, newBody) {
     validate.string.notVoid('newBody', newBody)
 
     return (async () => {
-            
+        debugger
         const comment = await Comment.findById(commentId)
         if(!comment) throw new NotFoundError(`comment with id ${commentId} does not exists`)
+        let update = {}
+        update.body = newBody
+        update.date = new Date
 
-        await Comment.updateOne({_id: commentId}, {body: newBody})
+        debugger
+
+        await Comment.updateOne({_id: commentId}, {$set: update})
+
+        comment.save()
 
     })()
 }

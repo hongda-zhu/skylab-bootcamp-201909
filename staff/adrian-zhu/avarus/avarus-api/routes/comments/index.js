@@ -12,7 +12,7 @@ const router = Router()
 router.post('/', jsonBodyParser, tokenVerifier, (req, res) => { 
     
     const { id: userId, body: {transactionId, body} } = req
-
+    
     try {
         createComment(userId, transactionId, body)
             .then(() => res.status(201).end())
@@ -30,9 +30,9 @@ router.post('/', jsonBodyParser, tokenVerifier, (req, res) => {
 })
 
 
-router.get('/', tokenVerifier,  (req, res) => {
-
-    const {id:userId, body:{transactionId} } = req
+router.get('/:transactionId', jsonBodyParser, tokenVerifier, (req, res) => {
+    debugger
+    const {id:userId, params:{transactionId} } = req
 
     try { 
 
@@ -53,9 +53,9 @@ router.get('/', tokenVerifier,  (req, res) => {
     }
 })
 
-router.patch('/', tokenVerifier, jsonBodyParser, (req, res) => {
-
-    const {body: {commentId, newBody}} = req
+router.patch('/:commentId', tokenVerifier, jsonBodyParser, (req, res) => {
+    debugger
+    const {params:{commentId}, body: {newBody}} = req
 
     try {
 

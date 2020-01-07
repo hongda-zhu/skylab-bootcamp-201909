@@ -4,9 +4,9 @@ const API_URL = process.env.REACT_APP_API_URL
 
 /**
  *
- * create-buyIn-transaction
+ * create-comment
  * 
- * @param {userId} ObjectId
+ * @param {token} string
  * @param {transactionId} ObjectId
  * @param {body} string
  * 

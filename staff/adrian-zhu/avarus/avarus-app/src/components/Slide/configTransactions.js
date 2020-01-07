@@ -2,7 +2,7 @@ export default [
 
     {
         name: 'history',
-        contentText: 'History'
+        contentText: 'Sellout'
     },
     {
         name: 'comments',

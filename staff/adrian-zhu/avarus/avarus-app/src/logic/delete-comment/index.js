@@ -13,16 +13,16 @@ const API_URL = process.env.REACT_APP_API_URL
  * 
  */
 
-export default  function (token, transactionId) { 
+export default  function (token, commentId) { 
     validate.string(token)
     validate.string.notVoid('token', token)
 
-    validate.string(transactionId)
-    validate.string.notVoid('transactionId', transactionId)
+    validate.string(commentId)
+    validate.string.notVoid('commentId', commentId)
 
     return (async () => {  
 
-        const res = await call(`${API_URL}/comments`, {
+        const res = await call(`${API_URL}/comments/${commentId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

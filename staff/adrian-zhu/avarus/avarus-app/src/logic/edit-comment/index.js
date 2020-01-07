@@ -4,17 +4,19 @@ const API_URL = process.env.REACT_APP_API_URL
 
 /**
  *
- * edit-user
+ * edit-comment
  * 
  * @param {token} string
- * @param {email} string
- * @param {password} string
- * @param {verifiedPassword} string
+ * @param {commentId} string
+ * @param {newBody} string
  * 
  */
 
 
-export default  function (commentId, newBody) {
+export default  function (token, commentId, newBody) {
+
+    validate.string(token)
+    validate.string.notVoid('token', token)
 
     validate.string(commentId)
     validate.string.notVoid('commentId', commentId)
@@ -27,14 +29,14 @@ export default  function (commentId, newBody) {
     }
 
     return (async () => {
-        
-        const res = await call(`${API_URL}/comments`, {
+        debugger
+        const res = await call(`${API_URL}/comments/${commentId}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json' 
             },
-            body: JSON.stringify({commentId, newBody })
+            body: JSON.stringify({newBody })
         })
 
         if (res.status === 200)  return

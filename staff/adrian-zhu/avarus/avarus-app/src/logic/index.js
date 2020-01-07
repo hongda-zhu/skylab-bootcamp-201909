@@ -18,7 +18,7 @@
 
     import createComment from './create-coment'
     import editComment from './edit-comment'
-    import retriveComments from './retrieve-comments'
+    import retrieveComments from './retrieve-comments'
     import deleteComment from './delete-comment'
 
 // }
@@ -43,6 +43,6 @@ export {
 
     createComment,
     editComment,
-    retriveComments,
+    retrieveComments,
     deleteComment
 }
