@@ -6,11 +6,10 @@ const bcrypt = require('bcryptjs')
  *
  * register user
  * 
- * @param {name} string
- * @param {surname} string
  * @param {email} string
  * @param {username} string 
  * @param {password} string
+ * @param {verifiedPassword} string
  * @param {budget} number
  * 
  * @returns {Object} 

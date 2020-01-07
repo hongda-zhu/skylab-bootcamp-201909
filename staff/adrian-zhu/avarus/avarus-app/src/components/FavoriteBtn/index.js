@@ -21,8 +21,7 @@ export default function ({token, companyId}) {
     async function refreshUserFav(){
         
         try {
- 
-              
+            
                 const updateCompany = await retrieveCompanyById(companyId, token)
                 
                 setCompany(updateCompany)

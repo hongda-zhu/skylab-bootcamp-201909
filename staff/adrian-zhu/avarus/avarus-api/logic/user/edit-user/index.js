@@ -50,7 +50,7 @@ module.exports = function(id, email, password, verifiedPassword) {
     const update = {}
 
     email && (update.email = email) 
-    debugger
+    
     if (password) {
       const hash = await bcrypt.hash(password, 10)
       update.password = hash

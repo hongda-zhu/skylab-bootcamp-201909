@@ -3,5 +3,6 @@ module.exports = {
     company: require('./company'),
     stock: require('./stock'),
     transaction: require('./transaction'),
-    sellout: require('./sellout')
+    sellout: require('./sellout'),
+    comment: require('./comment')
 }

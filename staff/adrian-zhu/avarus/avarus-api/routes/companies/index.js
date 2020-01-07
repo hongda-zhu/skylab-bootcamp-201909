@@ -10,7 +10,7 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.post('/create', jsonBodyParser, (req, res) => { 
+router.post('/', jsonBodyParser, (req, res) => { 
     
     const { body: { name, description, risk, market, category, dependency, image, stocks } } = req
 

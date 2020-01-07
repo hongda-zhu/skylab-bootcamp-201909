@@ -1,6 +1,5 @@
 const { validate, errors: { ConflictError, NotFoundError } } = require('avarus-util')
 const {models: { Company, User, Stock, Transaction, Sellout } } = require('avarus-data')
-const moment = require('moment')
 
 /**
  *
