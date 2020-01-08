@@ -24,7 +24,9 @@ module.exports = new Schema({
         type: Number,
         require: true
     },
-
+    image: {
+        type: String
+    },
     favorites: [{
         type: ObjectId,
         ref: 'Company'

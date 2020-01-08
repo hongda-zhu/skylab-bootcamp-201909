@@ -113,7 +113,7 @@ function Comments({ transactionId }) {
 
                 <div className="sellRegisters_btnContainer btnContainer">
                     <input
-                        type="submit"
+                      type="submit"
                         className="btnContainer__btn"
                         value="Create"
                     ></input>

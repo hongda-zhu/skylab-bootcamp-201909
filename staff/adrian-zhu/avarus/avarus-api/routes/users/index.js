@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, retrieveBuyin, retrieveSellout, deleteUser, deleteStock, deleteBuyin, deleteSellout, editUser, buyIn, sellOut, toggleFav } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, retrieveBuyin, retrieveSellout, deleteUser, deleteStock, deleteBuyin, deleteSellout, editUser, buyIn, sellOut, toggleFav, saveUserPicture } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -297,6 +297,19 @@ router.patch('/favs/:companyId', jsonBodyParser, tokenVerifier, (req, res) => {
     } catch ({ message }) {
         res.status(400).json({ message })
     }
+})
+
+router.post('/profile', tokenVerifier, (req, res) => {
+    const {  id  } = req
+    const busboy = new Busboy({ headers: req.headers })
+    busboy.on('file', async(fieldname, file, filename, encoding, mimetype) => {
+        filename = 'profile.png'
+        await saveUserPicture(id, file, filename)
+    })
+    busboy.on('finish', () => {
+        res.end("That's all folks!")
+    })
+    return req.pipe(busboy)
 })
 
 module.exports = router

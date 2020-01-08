@@ -3,7 +3,7 @@ import './index.sass'
 import { Link } from 'react-router-dom';
 import {  withRouter } from 'react-router-dom'
 
-export default withRouter(function ({ name, budget, onLogout}) {
+export default withRouter(function ({ name, budget, onLogout, picture}) {
     return <header className="header">
         <input id="show-menu" name="modal" type="checkbox" />
 
@@ -15,6 +15,12 @@ export default withRouter(function ({ name, budget, onLogout}) {
             event.preventDefault()
             onLogout()
         }}>Logout</button>
+
+        <div class ="header-img img">
+
+        {<img className="img-figure" src={image ? image : "images/default/default-user.png.jpg"}/>}
+
+        </div>
 
         <nav className="header-nav nav">
             <ul className="nav-menu menu">
@@ -30,5 +36,5 @@ export default withRouter(function ({ name, budget, onLogout}) {
             </ul>
         </nav> 
 
-     </header>  
+    </header>  
 })

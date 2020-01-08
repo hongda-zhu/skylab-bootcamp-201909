@@ -8,6 +8,7 @@
     import registerUser from './register-user'
     import authenticateUser from './authenticate-user'
     import toggleFav  from './toggle-fav'
+    import saveUserPicture from './save-user-picture'
 
     import retrieveUser from './retrieve-user'
     import retrieveBuyin from './retrieve-buyin'
@@ -33,6 +34,7 @@ export {
     registerUser,
     authenticateUser,
     toggleFav,
+    saveUserPicture,
 
     retrieveUser, 
     retrieveBuyin,

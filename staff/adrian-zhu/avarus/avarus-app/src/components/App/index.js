@@ -32,6 +32,8 @@ export default withRouter(function ({ history }) {
 
     const [id, setId] = useState()
 
+    const [picture, setPicture] = useState()
+
     const [transactions, setTransactions] = useState([])
 
     const [favorites, setFavorites] = useState([])
@@ -50,7 +52,7 @@ export default withRouter(function ({ history }) {
         
           if (token) { 
               
-              const {id, email, username, password, budget, transactions, favorites} = await retrieveUser(token)
+              const {id, email, username, password, budget, transactions, favorites, image} = await retrieveUser(token)
 
               setBudget(budget.toFixed(4))
               setId(id)
@@ -59,6 +61,7 @@ export default withRouter(function ({ history }) {
               setPassword(password)
               setTransactions(transactions)
               setFavorites(favorites)
+              setPicture(image)
 
           }
     }
@@ -137,7 +140,7 @@ export default withRouter(function ({ history }) {
 
 
   return <> 
-      {token && <> <Header name={username} budget={budget} onLogout={handleLogout} /></>} 
+      {token && <> <Header name={username} budget={budget} onLogout={handleLogout} picture={picture}/></>} 
       
       <Route exact path='/' render={() => !token ? <Landing />: <Main error={error} onClose={handleCloseError} token={token}/> }/>
 
@@ -149,7 +152,7 @@ export default withRouter(function ({ history }) {
 
       <Route path = '/detail/:id' render={({ match: { params: { id:companyId } } })  => token && id ? <> <Detail userId={id} companyId={companyId} onBuy={refreshAll}/> </>: <Redirect to="/" />  } />
 
-      <Route path="/userpage" render={() => token ? <UserPage email={email} username={username} password={password} onModifyUser={handleModifyUser} onBack={handleGoBack} error={error} onClose={handleCloseError}  /> : <Redirect to="/" />} />
+      <Route path="/userpage" render={() => token ? <UserPage email={email} username={username} password={password} onModifyUser={handleModifyUser} onBack={handleGoBack} error={error} onClose={handleCloseError} refreshAll={refreshAll} /> : <Redirect to="/" />} />
 
       <Route path = '/transactions' render={() => transactions && token && id && <Transactions  userId={id} transactions={transactions} error={error} onClose={handleCloseError} />  } />
 

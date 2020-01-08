@@ -1,11 +1,41 @@
 import React from 'react'
 import './index.sass'
 import Feedback from '../Feedback'
+import {saveUserPicture} from '../../logic'
 
-export default function ({ email, username, password, onModifyUser, onBack, error, onClose }) {
+async function onSaveImage(event) {
+    
+    event.preventDefault()
+    const { file: { files: [image] } } = event.target
+    try {
+
+        const { token } = sessionStorage
+        await saveUserPicture(token, image)
+        await refreshAll()
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export default function ({ email, username, password, onModifyUser, onBack, error, onClose, refreshAll }) {
     return <section className="userpage">
         <div className="userpage__container container">
+
             <h3 className="container__title">Personal Info</h3>
+
+
+            <form className='edit-picture' onSubmit={
+                onSaveImage
+            }
+            >
+                <p className="instructions">Add a profile picture</p>
+                <input className="edit-form__image" type="file" name="file" accept="image/*" />
+                <button className="save-image">Save</button>
+            </form>
+
+
+
             <form className="container__form form" onSubmit={event => {
 
                 event.preventDefault()
