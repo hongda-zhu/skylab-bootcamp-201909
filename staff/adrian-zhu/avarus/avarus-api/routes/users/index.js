@@ -1,11 +1,11 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, retrieveBuyin, retrieveSellout, deleteUser, deleteStock, deleteBuyin, deleteSellout, editUser, buyIn, sellOut, toggleFav, saveUserPicture } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, retrieveBuyin, retrieveSellout, deleteUser, deleteStock, deleteBuyin, deleteSellout, editUser, buyIn, sellOut, toggleFav, saveUserPicture, loadUserPicture } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('../../../avarus-util')
-
+const Busboy = require('busboy')
 const jsonBodyParser = bodyParser.json()
 
 const router = Router()
@@ -300,6 +300,7 @@ router.patch('/favs/:companyId', jsonBodyParser, tokenVerifier, (req, res) => {
 })
 
 router.post('/profile', tokenVerifier, (req, res) => {
+    debugger
     const {  id  } = req
     const busboy = new Busboy({ headers: req.headers })
     busboy.on('file', async(fieldname, file, filename, encoding, mimetype) => {
@@ -310,6 +311,17 @@ router.post('/profile', tokenVerifier, (req, res) => {
         res.end("That's all folks!")
     })
     return req.pipe(busboy)
+})
+
+router.get('/load/:userId', async (req, res) => {
+
+    const { params: { userId } } = req
+
+    const stream = await loadUserPicture(userId) 
+
+    res.setHeader('Content-Type', 'image/jpeg')
+
+    return stream.pipe(res)
 })
 
 module.exports = router

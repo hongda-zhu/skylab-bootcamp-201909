@@ -24,7 +24,7 @@ module.exports = function (id) {
         
         if (!usercase) throw new NotFoundError(`usercase with id ${id} not found`)
         
-        const { name, surname, username, email, budget, favorites, transactions} = usercase
+        const { name, surname, username, email, budget, favorites, transactions, image} = usercase
 
         favorites.forEach(favorite => {
 
@@ -36,8 +36,10 @@ module.exports = function (id) {
 
         })
 
+        
+
         await usercase.save()
 
-        return { id, name, surname, username, email, budget, favorites, transactions }
+        return { id, name, surname, username, email, budget, favorites, transactions, image }
     })()
 }

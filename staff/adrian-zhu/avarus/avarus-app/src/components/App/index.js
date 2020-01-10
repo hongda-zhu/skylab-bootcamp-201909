@@ -43,7 +43,7 @@ export default withRouter(function ({ history }) {
 
       refreshAll()
 
-    }, [sessionStorage.token, favorites]) // transactions
+    }, []) // transactions, sessionStorage.token, favorites
 
 
     async function refreshAll(){
@@ -53,7 +53,7 @@ export default withRouter(function ({ history }) {
           if (token) { 
               
               const {id, email, username, password, budget, transactions, favorites, image} = await retrieveUser(token)
-
+              debugger
               setBudget(budget.toFixed(4))
               setId(id)
               setUsername(username)
@@ -140,7 +140,7 @@ export default withRouter(function ({ history }) {
 
 
   return <> 
-      {token && <> <Header name={username} budget={budget} onLogout={handleLogout} picture={picture}/></>} 
+      {token && <> <Header name={username} budget={budget} onLogout={handleLogout} picture={picture} picture={picture} userId={id}/></>} 
       
       <Route exact path='/' render={() => !token ? <Landing />: <Main error={error} onClose={handleCloseError} token={token}/> }/>
 

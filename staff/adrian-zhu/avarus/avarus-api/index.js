@@ -23,6 +23,7 @@ const { users, companies, comments } = require('./routes')
 api.use('/users', users)
 api.use('/companies', companies)
 api.use('/comments', comments)
+api.use(express.static('public'))
 
 database
     .connect(DB_URL)
