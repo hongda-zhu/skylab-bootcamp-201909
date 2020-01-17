@@ -2,20 +2,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { saveUserPicture } from '../../logic'
 import Feedback from '../Feedback'
+import './index.sass'
 
 
-export default function ({ email, username, password, onModifyUser, onBack, error, onClose, refreshAll }) {
+export default function ({ email, username, password, picture, onModifyUser, onBack, error, onClose, refreshAll }) {
 
-    async function onSaveImage(event) {
-        debugger
+    async function onSaveImageUser(event) {
+        
         event.preventDefault()
         const { file: { files: [image] } } = event.target
         try {
-            debugger
             const { token } = sessionStorage
             await saveUserPicture(token, image)
             await refreshAll()
-            console.log('success')
 
         } catch (error) {
             console.log(error)
@@ -26,14 +25,22 @@ export default function ({ email, username, password, onModifyUser, onBack, erro
         <div className="userpage__container container">
             <h3 className="container__title">Personal Info</h3>
             
-        <form className='edit-picture' onSubmit={
-                onSaveImage
-            }
-            >
-                <p className="instructions">Add a profile picture</p>
-                <input className="edit-form__image" type="file" name="file" accept="image/*" />
-                <button className="save-image">Save</button>
+            <form className='container-picture picture' onSubmit={
+                    onSaveImageUser}>
+                    <p className="picture-formula_title">Add a profile picture</p>
+                    <input className="picture-formula_inp" type="file" name="file" accept="image/*" />
+                    <button className="picture-formula_btn">Save</button>
             </form>
+
+            
+            <div className="conatiner-picture picture">
+
+            <label><img className="user-container_image" src={picture ? picture : "images/default/default-user.png"}/></label>
+
+            <div className="picture-btn btn"></div>
+            <button ></button>
+
+            </div>
 
             <form className="container__form form" onSubmit={event => {
 
@@ -93,7 +100,7 @@ export default function ({ email, username, password, onModifyUser, onBack, erro
                     </div>
                 </div>
             </form>
-        </div>
+    </div>
         
         {error && <Feedback message={error} onClose={onClose} />}
     </section>

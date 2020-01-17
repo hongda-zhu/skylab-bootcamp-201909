@@ -53,7 +53,7 @@ export default withRouter (function ({handleNameQuery, handleCategoryQuery, comp
 
     }
 
-    return<section>
+    return<section className="search-container">
     <nav className="main-nav">
         <form type="submit" className="main-search" onSubmit={handleSubmitSearch}>
             <div className="main-search__box">

@@ -9,6 +9,7 @@
   color: #000;
   z-index: 1;
   transition: .4s ease-out;
+  background: whitesmoke;
 
   a {
     text-decoration: none;
@@ -34,6 +35,21 @@
         &:nth-of-type(4) {
           transition-delay: .3s;
         }
+        // &:nth-of-type(5) {
+        //   transition-delay: .4s;
+        // }
+        // &:nth-of-type(6) {
+        //   transition-delay: .5s;
+        // }
+        // &:nth-of-type(7) {
+        //   transition-delay: .6s;
+        // }
+        // &:nth-of-type(8) {
+        //   transition-delay: .7s;
+        // }
+        // &:nth-of-type(9) {
+        //   transition-delay: .8s;
+        // }
 
       label {
         margin: .2rem;

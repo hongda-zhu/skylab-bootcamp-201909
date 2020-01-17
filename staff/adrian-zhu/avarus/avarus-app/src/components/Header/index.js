@@ -17,7 +17,7 @@ export default withRouter(function ({ name, budget, onLogout, picture, userId}) 
     //     }
     // })
 
-    picture && (picture = `${API_URL}/users/load/${userId}?timestamp=${Date.now()}`)
+    // picture && (picture = `${API_URL}/users/load/${userId}?timestamp=${Date.now()}`)
 
     return   <header className="main-header">
     <div className="logo">
