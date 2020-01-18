@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createCompany, retrieveCompanies, retrieveCompany, retrieveCompanyCategory, retrieveCompanyName, editCompany, createPrice, producePrice,retrievePrices, retrievePrice} = require('../../logic')
+const { createCompany, retrieveCompanies, retrieveCompany, editCompany, createPrice, producePrice,retrievePrices, retrievePrice} = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -31,13 +31,18 @@ router.post('/', jsonBodyParser, (req, res) => {
 })
 
 
-router.get('/', tokenVerifier,  (req, res) => {
+router.get('/:query', tokenVerifier, jsonBodyParser, (req, res) => {
 
-    const {id:userId } = req
+    const {id:userId, params:{query}} = req
+
+    let value = query
+
+    if(query == "undefined") value = false
 
     try { 
 
-        retrieveCompanies(userId)
+        retrieveCompanies(value, userId)
+
             .then(companies => res.json( companies ))
             .catch(error => {
                 const { message } = error
@@ -76,53 +81,6 @@ router.get('/company/:companyId', jsonBodyParser, tokenVerifier, (req, res) => {
         res.status(400).json({ message })
     }
 })
-
-
-router.get('/category/:category',jsonBodyParser, tokenVerifier, (req, res) => {
-
-    const { id:userId, params: { category } } = req
-
-    try { 
-        retrieveCompanyCategory(category, userId)
-            .then( company => res.json( company ))
-            .catch(error => {
-                const { message } = error
-
-                if (error instanceof NotFoundError)
-                    return res.status(404).json({ message })
-
-                res.status(500).json({ message })
-            })
-    } catch (error) {
-        const { message } = error
-
-        res.status(400).json({ message })
-    }
-})
-
-router.get('/query/:query',jsonBodyParser, tokenVerifier, (req, res) => {
-
-    const { id:userId, params: { query } } = req
-
-    try { 
-
-        retrieveCompanyName(query, userId)
-            .then(company => res.json(company))
-            .catch(error => {
-                const { message } = error
-
-                if (error instanceof NotFoundError)
-                    return res.status(404).json({ message })
-
-                res.status(500).json({ message })
-            })
-    } catch (error) {
-        const { message } = error
-
-        res.status(400).json({ message })
-    }
-})
-
 
 router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
 

@@ -12,13 +12,22 @@ const API_URL = process.env.REACT_APP_API_URL
  * 
  */
 
-export default  function (token) { 
+export default  function (query, token) { 
+
+    debugger
+    if(query) {
+            
+        validate.string(query)
+        validate.string.notVoid('query', query)
+        
+    }
+
     validate.string(token)
     validate.string.notVoid('token', token)
 
     return (async () => {  
 
-        const res = await call(`${API_URL}/companies`, {
+        const res = await call(`${API_URL}/companies/${query}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

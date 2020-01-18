@@ -1,47 +1,69 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('avarus-util')
-const { ObjectId, models: { User, Company } } = require('avarus-data')
+const { ObjectId, models: {User, Company } } = require('avarus-data')
 
 /**
  *
- * retrieve companies
+ * retrieve company by name
  * 
- * @param {ObjectId} userId => userId 
+ * @param {query} string
+ * @param {userId} objectId of user
  * 
- * @return {Promise}
- * @return {Array} the complete information of each company
- *  
+ * @returns {Array} 
+ * 
  */
 
-module.exports = function (userId) { 
+module.exports = function (query, userId) {
 
-    validate.string(userId)
-    validate.string.notVoid('userId', userId)
-    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
+    debugger
 
-    
+    if (query){
+        validate.string(query)
+        validate.string.notVoid('query', query)
+    }
 
-    return (async () => { 
+    if (userId) {
+        validate.string(userId)
+        validate.string.notVoid('userId', userId)
+        if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid user id`)
+    }
 
+    return (async () => {    
+
+        
         const user = await User.findById(userId)
 
         if(!user) throw new NotFoundError(`user with id ${userId} does not exist`)
 
-        const companies = await Company.find().lean()
-
-        const results = []
-
-        companies.forEach(company => {
-
-            company.id = company._id.toString()
-            delete company._id
-            delete company.__v
+        const companiesByQuery = await Company.find({
             
-            company.isFav = user.favorites.includes(company.id)
+                $or:[
+                    {"name": {$regex: `.*${query}*`}},
+                    {"category": {$in: query}}
+                ]
+            
+        })
 
-            results.push(company)
+        const companiesAll = await Company.find()
+
+        let results;
+
+        query ? results = companiesByQuery : results = companiesAll
+
+        if(results.length === 0) throw new NotFoundError(`companies with query ${query} does not exist`)
+
+        results.forEach(async company => { 
+
+            company.id = company._id.toString();
+
+            delete company._id
+
+            company.isFav = user.favorites.includes(company.id)
+            
+            await company.save()
+        
         })
 
         return results
+            
     })()
-
 }

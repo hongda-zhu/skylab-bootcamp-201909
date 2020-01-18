@@ -13,9 +13,7 @@
     import retrieveUser from './retrieve-user'
     import retrieveBuyin from './retrieve-buyin'
     import retrieveCompanies from './retrieve-companies'
-    import retrieveCompanyByName from './retrieve-companyByName'
     import retrieveCompanyById from './retrieve-companyById'
-    import retrieveCompanyByCategory from './retrieve-companyByCategory'
 
     import createComment from './create-coment'
     import editComment from './edit-comment'
@@ -39,10 +37,8 @@ export {
     retrieveUser, 
     retrieveBuyin,
     retrieveCompanies,
-    retrieveCompanyByName,
     retrieveCompanyById,
-    retrieveCompanyByCategory,
-
+    
     createComment,
     editComment,
     retrieveComments,
