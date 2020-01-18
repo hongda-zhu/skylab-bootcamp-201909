@@ -28,7 +28,7 @@ describe('logic - retrieve company', () => {
         password = verifiedPassword = `password-${random()}`
         budget = 5000
         transactions = []
-  
+        
         const user = await User.create({  email, username, password: await bcrypt.hash(password, 10), verifiedPassword, budget, transactions})
 
         await user.save()

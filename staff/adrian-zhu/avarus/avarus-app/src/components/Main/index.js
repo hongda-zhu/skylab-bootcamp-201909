@@ -3,7 +3,7 @@ import './index.sass'
 import {withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 import Search from '../Search'
-import {retrieveCompanies, retrieveCompanyByName, retrieveCompanyByCategory} from '../../logic'
+import {retrieveCompanies} from '../../logic'
 
 function Main ({error, onClose, token }) { 
 
@@ -36,9 +36,9 @@ function Main ({error, onClose, token }) {
 
         try { 
 
+            debugger
+            const companies = await retrieveCompanies(undefined, token)
             
-            const companies = await retrieveCompanies(token)
-      
             setCompanies(companies)
 
         }catch({message}){
@@ -53,7 +53,7 @@ function Main ({error, onClose, token }) {
 
         try { 
 
-            const companies = await retrieveCompanyByName(query, token)
+            const companies = await retrieveCompanies(query, token)
     
             setCompanies(companies)
 
@@ -69,7 +69,7 @@ function Main ({error, onClose, token }) {
 
         try {
 
-            const companies = await retrieveCompanyByCategory(categoryType, token)
+            const companies = await retrieveCompanies(categoryType, token)
     
             setCompanies(companies)
 
